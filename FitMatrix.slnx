@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/FitMatrix.Api.csproj" />
+    <Project Path="backend.tests/FitMatrix.Api.Tests.csproj" />
+  </Folder>
+</Solution>

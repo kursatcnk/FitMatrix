@@ -1,0 +1,10 @@
+$env:DOTNET_ROOT = 'C:\Program Files\dotnet'
+$env:DOTNET_CLI_HOME = 'D:\DevCaches\dotnet-home'
+$env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
+$env:NUGET_PACKAGES = 'D:\DevCaches\nuget'
+$env:NPM_CONFIG_CACHE = 'D:\DevCaches\npm'
+$env:NPM_CONFIG_PREFIX = 'D:\DevCaches\npm-global'
+$env:TEMP = 'D:\DevCaches\temp'
+$env:TMP = 'D:\DevCaches\temp'
+
+Write-Host 'FitMatrix geliştirme yolları bu PowerShell oturumu için hazırlandı.'
