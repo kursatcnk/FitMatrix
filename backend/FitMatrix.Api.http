@@ -1,0 +1,21 @@
+@FitMatrix.Api_HostAddress = http://127.0.0.1:5080
+
+GET {{FitMatrix.Api_HostAddress}}/api/system/health
+Accept: application/json
+
+###
+
+GET {{FitMatrix.Api_HostAddress}}/api/catalog/products?limit=100
+Accept: application/json
+
+###
+
+GET {{FitMatrix.Api_HostAddress}}/api/product-discovery/search?query=Dell%20U2723QE
+Accept: application/json
+
+###
+
+GET {{FitMatrix.Api_HostAddress}}/api/projects
+Accept: application/json
+
+###
