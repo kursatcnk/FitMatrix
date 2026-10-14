@@ -3,6 +3,7 @@ import { Box, Check, Copy, Database, Download, FolderOpen, LoaderCircle, Plus, R
 import { EditorCanvas } from './editor/EditorCanvas'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
+import { analyzeErgonomics, clampUserHeight, DEFAULT_USER_HEIGHT } from './editor/ergonomics'
 import { deleteCatalogProduct, getCatalog, getCatalogProductDetail, importDiscoveredProduct, type ApiCatalogProductDetail, type DiscoveryCatalogInput } from './services/catalogApi'
 import { deleteProject, duplicateProject, getProject, listProjects, saveProjectToApi, type ProjectSummary } from './services/projectApi'
 import { discoverProduct, type ExternalProductCandidate, type ProductDiscoveryResponse } from './services/productDiscoveryApi'
@@ -191,6 +192,17 @@ function NumberField({
   )
 }
 
+const USER_HEIGHT_KEY = 'fitmatrix.userHeightCm'
+
+function readStoredUserHeight() {
+  try {
+    const stored = Number(localStorage.getItem(USER_HEIGHT_KEY))
+    return stored ? clampUserHeight(stored) : DEFAULT_USER_HEIGHT
+  } catch {
+    return DEFAULT_USER_HEIGHT
+  }
+}
+
 function App() {
   const {
     projectId,
@@ -248,6 +260,18 @@ function App() {
   const selectedDefinition = selectedItem ? resolveEquipmentDefinition(selectedItem, catalog) : undefined
   const placement = selectedItem ? getPlacementStatus(selectedItem, items, desk, catalog) : null
   const invalidItemCount = items.filter((item) => !getPlacementStatus(item, items, desk, catalog).isValid).length
+  const [userHeight, setUserHeight] = useState(readStoredUserHeight)
+  const ergonomics = analyzeErgonomics(items, desk, userHeight, catalog)
+
+  const updateUserHeight = (height: number) => {
+    const next = clampUserHeight(height)
+    setUserHeight(next)
+    try {
+      localStorage.setItem(USER_HEIGHT_KEY, String(next))
+    } catch {
+      // Storage can be unavailable in private windows; the value still applies for this session.
+    }
+  }
   const externalProduct = discovery?.externalMatch
   const externalIsDesk = externalDraft?.model === 'desk'
   const externalPreviewDefinition: EquipmentDefinition | null = externalProduct && externalDraft && externalProduct.widthCm && externalProduct.heightCm && externalProduct.depthCm
@@ -910,6 +934,24 @@ function App() {
                   <NumberField label="Derinlik" value={desk.depth} suffix="cm" onChange={(depth) => updateDesk({ depth })} />
                 </div>
                 <NumberField label="Yükseklik" value={desk.height} suffix="cm" onChange={(height) => updateDesk({ height })} />
+              </section>
+              <section className="inspector-section ergonomics-section" aria-label="Ergonomi kontrolü">
+                <div className="ergonomics-heading">
+                  <h3>Ergonomi kontrolü</h3>
+                  <span className={`ergonomics-score ${ergonomics.score >= 80 ? 'good' : 'warning'}`}>%{ergonomics.score}</span>
+                </div>
+                <NumberField label="Kullanıcı boyu" value={userHeight} suffix="cm" onChange={updateUserHeight} />
+                <ul className="ergonomics-list">
+                  {ergonomics.checks.map((check) => (
+                    <li key={check.id} className={`ergonomics-check ${check.status}`}>
+                      <span className="ergonomics-mark" aria-hidden="true">{check.status === 'good' ? <Check size={11} /> : check.status === 'warning' ? '!' : '–'}</span>
+                      <div>
+                        <strong>{check.title}{check.value && <em>{check.value}</em>}</strong>
+                        <small>{check.message}</small>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </section>
             </>
           )}

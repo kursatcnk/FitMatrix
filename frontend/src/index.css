@@ -467,6 +467,23 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 }
 .empty-selection svg { flex: 0 0 auto; color: #7f8794; }
 .empty-selection p { margin: 0; font-size: 10px; line-height: 1.5; }
+.ergonomics-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+.ergonomics-heading h3 { margin: 0; }
+.ergonomics-score { padding: 3px 7px; border-radius: 999px; font-size: 9px; font-weight: 760; }
+.ergonomics-score.good { color: var(--success); background: var(--success-soft); }
+.ergonomics-score.warning { color: var(--warning); background: var(--warning-soft); }
+.ergonomics-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
+.ergonomics-check { display: flex; align-items: flex-start; gap: 9px; padding: 9px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); }
+.ergonomics-check > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.ergonomics-check strong { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 8px; color: #2b3547; font-size: 10px; font-weight: 700; }
+.ergonomics-check em { color: var(--subtle); font-size: 9px; font-style: normal; font-weight: 600; }
+.ergonomics-check small { color: var(--muted); font-size: 9px; line-height: 1.45; }
+.ergonomics-mark { display: grid; place-items: center; width: 18px; height: 18px; flex: 0 0 18px; border-radius: 50%; color: #fff; font-size: 10px; font-weight: 800; }
+.ergonomics-check.good .ergonomics-mark { background: var(--success); }
+.ergonomics-check.warning { border-color: #e7cfb3; background: var(--warning-soft); }
+.ergonomics-check.warning .ergonomics-mark { background: var(--warning); }
+.ergonomics-check.missing .ergonomics-mark { color: var(--muted); background: var(--line); }
+
 .storage-note {
   display: flex;
   gap: 9px;
