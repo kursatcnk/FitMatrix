@@ -732,15 +732,17 @@ function App() {
     <main className="app-shell">
       <header className="topbar">
         <div className="brand-block">
-          <div className="brand-mark" aria-hidden="true">F</div>
+          <div className="brand-mark" aria-hidden="true">
+            {Array.from({ length: 9 }, (_, index) => <i key={index} className={index === 4 ? 'filled' : ''} />)}
+          </div>
           <div>
-            <strong>FITMATRIX</strong>
-            <span>Masaüstü planlama</span>
+            <strong>FitMatrix</strong>
+            <span>1:1 · cm</span>
           </div>
         </div>
 
         <div className="project-title">
-          <span>PROJE</span>
+          <span>Proje</span>
           <input
             aria-label="Proje adı"
             value={projectName}

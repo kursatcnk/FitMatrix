@@ -498,7 +498,7 @@ function Scene() {
         <VesaMountHardware />
         {items.map((item) => <EquipmentItem key={item.instanceId} item={item} />)}
       </group>
-      <Grid args={[420, 420]} position={[0, 0.02, 0]} cellSize={10} cellThickness={0.35} cellColor="#b8b7b1" sectionSize={40} sectionThickness={0.72} sectionColor="#989b9f" fadeDistance={340} infiniteGrid />
+      <Grid args={[420, 420]} position={[0, 0.02, 0]} cellSize={10} cellThickness={0.35} cellColor="#c2b9a8" sectionSize={40} sectionThickness={0.72} sectionColor="#8c8474" fadeDistance={340} infiniteGrid />
       <ContactShadows position={[0, 0.04, 0]} opacity={0.28} scale={260} blur={2.6} far={220} />
       <CameraRig />
     </>
