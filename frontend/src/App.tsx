@@ -4,6 +4,7 @@ import { EditorCanvas } from './editor/EditorCanvas'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
 import { analyzeErgonomics, clampUserHeight, DEFAULT_USER_HEIGHT } from './editor/ergonomics'
+import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog } from './data/catalogFilter'
 import { deleteCatalogProduct, getCatalog, getCatalogProductDetail, importDiscoveredProduct, type ApiCatalogProductDetail, type DiscoveryCatalogInput } from './services/catalogApi'
 import { deleteProject, duplicateProject, getProject, listProjects, saveProjectToApi, type ProjectSummary } from './services/projectApi'
 import { discoverProduct, type ExternalProductCandidate, type ProductDiscoveryResponse } from './services/productDiscoveryApi'
@@ -243,6 +244,7 @@ function App() {
   const [projectsError, setProjectsError] = useState<string | null>(null)
   const [activeCategory, setActiveCategory] = useState<EquipmentCategory | 'all'>('all')
   const [catalogSearch, setCatalogSearch] = useState('')
+  const [catalogLimit, setCatalogLimit] = useState(CATALOG_PAGE_SIZE)
   const [catalogMessage, setCatalogMessage] = useState<string | null>(null)
   const [discoveryQuery, setDiscoveryQuery] = useState('')
   const [discovery, setDiscovery] = useState<ProductDiscoveryResponse | null>(null)
@@ -558,12 +560,9 @@ function App() {
     }
   }
 
-  const normalizedCatalogSearch = catalogSearch.trim().toLocaleLowerCase('tr-TR')
-  const filteredCatalog = catalog.filter((item) =>
-    (activeCategory === 'all' || item.category === activeCategory) &&
-    (!normalizedCatalogSearch || item.name.toLocaleLowerCase('tr-TR').includes(normalizedCatalogSearch)),
-  )
-  const visibleCatalog = filteredCatalog.slice(0, 150)
+  const filteredCatalog = filterCatalog(catalog, activeCategory, catalogSearch)
+  const categoryCounts = countByCategory(catalog)
+  const visibleCatalog = filteredCatalog.slice(0, catalogLimit)
 
   const updateSelectedDimension = (dimension: 'width' | 'height' | 'depth', rawValue: number) => {
     if (!selectedItem || !selectedDefinition || !Number.isFinite(rawValue)) return
@@ -769,14 +768,14 @@ function App() {
           </div>
 
           <div className="category-tabs" aria-label="Ekipman kategorileri">
-            <button className={activeCategory === 'all' ? 'active' : ''} onClick={() => setActiveCategory('all')}>Tümü</button>
+            <button className={activeCategory === 'all' ? 'active' : ''} onClick={() => { setActiveCategory('all'); setCatalogLimit(CATALOG_PAGE_SIZE) }}>Tümü</button>
             {Object.entries(categoryLabels).map(([key, label]) => (
               <button
                 key={key}
                 className={activeCategory === key ? 'active' : ''}
-                onClick={() => setActiveCategory(key as EquipmentCategory)}
+                onClick={() => { setActiveCategory(key as EquipmentCategory); setCatalogLimit(CATALOG_PAGE_SIZE) }}
               >
-                {label}
+                {label}<small>{categoryCounts.get(key as EquipmentCategory) ?? 0}</small>
               </button>
             ))}
           </div>
@@ -787,7 +786,7 @@ function App() {
               aria-label="Katalogda ara"
               placeholder="Katalogda veya internette ara"
               value={catalogSearch}
-              onChange={(event) => setCatalogSearch(event.target.value)}
+              onChange={(event) => { setCatalogSearch(event.target.value); setCatalogLimit(CATALOG_PAGE_SIZE) }}
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
                   event.preventDefault()
@@ -820,7 +819,9 @@ function App() {
               </button>
             )}
             {filteredCatalog.length > visibleCatalog.length && (
-              <p className="catalog-limit">İlk {visibleCatalog.length} ürün gösteriliyor. Sonucu daraltmak için arama kutusunu kullan.</p>
+              <button className="catalog-more" type="button" onClick={() => setCatalogLimit((limit) => limit + CATALOG_PAGE_SIZE)}>
+                Daha fazla göster <small>{visibleCatalog.length} / {filteredCatalog.length}</small>
+              </button>
             )}
           </div>
         </aside>
