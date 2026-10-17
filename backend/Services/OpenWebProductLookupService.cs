@@ -708,6 +708,94 @@ public sealed partial class OpenWebProductLookupService(
         }
     }
 
+    // Reads one product page found in a manufacturer's own sitemap. Unlike ReadProductDocumentAsync there is
+    // no search query to match against, so the identity comes from the page itself.
+    public async Task<ExternalProductCandidateDto?> ReadManufacturerPageAsync(
+        Uri pageUri,
+        string brand,
+        CancellationToken cancellationToken)
+    {
+        if (IsUnsafeSourceUri(pageUri)) return null;
+        using var response = await httpClient.GetAsync(pageUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+        if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            throw new HttpRequestException("Manufacturer site is rate limiting requests.", null, response.StatusCode);
+        if (!response.IsSuccessStatusCode) return null;
+        var finalUri = response.RequestMessage?.RequestUri ?? pageUri;
+        if (IsUnsafeSourceUri(finalUri)) return null;
+
+        var html = await ReadLimitedStringAsync(response.Content, 4_000_000, cancellationToken);
+        if (html is null) return null;
+        var title = ExtractPageProductName(html);
+        if (string.IsNullOrWhiteSpace(title)) return null;
+
+        var isDisplay = DisplayPageRegex().IsMatch($"{title} {finalUri.AbsolutePath}");
+        var specifications = ExtractSpecifications(html);
+        var measurements = ExtractMeasurements(specifications, html, isDisplay);
+        if (measurements.WidthCm is null || measurements.HeightCm is null || measurements.DepthCm is null ||
+            !MeasurementsArePlausible(measurements, isDisplay))
+            return null;
+
+        var displayName = ComposeDisplayName(brand, title);
+        var model = displayName[brand.Length..].Trim();
+        if (model.Length == 0) return null;
+
+        AddSpecification(specifications, "Kaynak", "Sayfa", finalUri.Host, null);
+        AddSpecification(specifications, "Kimlik", "Marka", brand, null);
+        AddSpecification(specifications, "Kimlik", "Sayfa başlığı", ExtractTitle(html), null);
+        AddSpecification(specifications, "Kimlik", "Sayfa açıklaması", MetaDescriptionRegex().Match(html) is { Success: true } description
+            ? WebUtility.HtmlDecode(description.Groups["text"].Value)
+            : null, null);
+        AddSpecification(specifications, "Fiziksel", "Genişlik", measurements.WidthCm, "cm");
+        AddSpecification(specifications, "Fiziksel", "Yükseklik", measurements.HeightCm, "cm");
+        AddSpecification(specifications, "Fiziksel", "Derinlik", measurements.DepthCm, "cm");
+        AddSpecification(specifications, "Fiziksel", "Ağırlık", measurements.WeightKg, "kg");
+
+        var official = IsBrandHost(finalUri.Host, brand);
+        return new ExternalProductCandidateDto(
+            official ? "Resmî üretici web kataloğu" : "Açık teknik ürün kataloğu",
+            displayName,
+            brand,
+            model,
+            null,
+            null,
+            measurements.WidthCm,
+            measurements.HeightCm,
+            measurements.DepthCm,
+            measurements.WeightKg,
+            new UriBuilder(finalUri) { Query = string.Empty, Fragment = string.Empty }.Uri.ToString(),
+            official ? "official-structured" : "source-structured",
+            "Ölçüler üreticinin ürün haritasında yayımlanan teknik sayfadan çıkarıldı.",
+            specifications.Take(200).ToList());
+    }
+
+    // "2021 ASUS TUF Gaming F15" → "ASUS TUF Gaming F15 (2021)": the model year moves behind the name (it still
+    // tells generations apart) and the brand goes to the front instead of being repeated.
+    internal static string ComposeDisplayName(string brand, string title)
+    {
+        var yearPrefix = Regex.Match(title, "^(?<year>(?:19|20)\\d{2})\\s+", RegexOptions.None, TimeSpan.FromMilliseconds(100));
+        var name = (yearPrefix.Success ? $"{title[yearPrefix.Length..].Trim()} ({yearPrefix.Groups["year"].Value})" : title).Trim();
+        if (name.StartsWith(brand, StringComparison.OrdinalIgnoreCase)) return name;
+        var brandIndex = name.IndexOf($" {brand} ", StringComparison.OrdinalIgnoreCase);
+        if (brandIndex >= 0) name = (name[..brandIndex] + " " + name[(brandIndex + brand.Length + 2)..]).Trim();
+        return $"{brand} {name}";
+    }
+
+    // og:title is usually the clean product name; <title> carries " | Brand" or "Buy ..." decorations.
+    internal static string? ExtractPageProductName(string html)
+    {
+        var raw = OpenGraphTitleRegex().Match(html) is { Success: true } og
+            ? og.Groups["title"].Value
+            : ExtractTitle(html);
+        if (string.IsNullOrWhiteSpace(raw)) return null;
+        var name = WebUtility.HtmlDecode(raw).Split([" | ", " – ", " — ", "｜"], StringSplitOptions.TrimEntries)[0];
+        name = Regex.Replace(name, "^(?:Buy|Shop)\\s+|[™®©]", string.Empty, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100)).Trim();
+        // Variant and region decorations: "Viper V3 Pro - Sentinels Edition", "Apex Pro Gen 3 - US", "Apex 3 US".
+        var dash = name.IndexOf(" - ", StringComparison.Ordinal);
+        if (dash >= 4) name = name[..dash].Trim();
+        name = Regex.Replace(name, "\\s+(?:US|UK|EU|Nordic|International)$", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(100)).Trim();
+        return name.Length is >= 3 and <= 200 ? name : null;
+    }
+
     private async Task<ExternalProductCandidateDto?> ReadPdfDocumentAsync(
         HttpContent content,
         Uri sourceUri,
@@ -1063,6 +1151,19 @@ public sealed partial class OpenWebProductLookupService(
                      .Concat(JsonMeasurementValueFirstRegex().Matches(html).Cast<Match>()))
             AddSpecification(specifications, seen, "Yapılandırılmış ölçüler", pair.Groups["name"].Value, pair.Groups["value"].Value, null);
 
+        // Storefront bundles (Next.js, SFCC, Vue) embed spec lists as object literals, often with unquoted keys:
+        // {facet:"Height",value:"1.62 in (41.1 mm)"}.
+        foreach (Match pair in ScriptLabelValueRegex().Matches(html))
+            AddSpecification(specifications, seen, "Yapılandırılmış ölçüler", pair.Groups["name"].Value, pair.Groups["value"].Value, null);
+
+        // Spec lists rendered as text, also inside JSON-escaped HTML: "<li>Length: 127.1 mm / 5.00 in</li>"
+        // (Razer) or "Length|||120.55mm / 4.75 inches" (SteelSeries).
+        // Tags become line breaks so each list item stays on its own line for the label look-behind.
+        var decodedText = WebUtility.HtmlDecode(HtmlTagRegex().Replace(JsonUnicodeEscapeRegex().Replace(html, match =>
+            ((char)Convert.ToInt32(match.Groups["hex"].Value, 16)).ToString()), "\n"));
+        foreach (Match axis in TextAxisMeasurementRegex().Matches(decodedText))
+            AddSpecification(specifications, seen, "Üretici ölçü listesi", axis.Groups["name"].Value, axis.Groups["value"].Value.Trim(), null);
+
         foreach (var card in ExtractCardSpecifications(html))
             AddSpecification(specifications, seen, "Teknik kartlar", card.Name, card.Value, null);
 
@@ -1184,6 +1285,26 @@ public sealed partial class OpenWebProductLookupService(
         return new MeasurementSet(dimensions.Max(), dimensions.Min(), dimensions.Order().ElementAt(1), null);
     }
 
+    // "1.62 in (41.1 mm)" mixes systems; reading the largest number with the first unit would yield 41.1 in.
+    // When several metric values are listed ("57.91mm (front), 67.03mm (back)") the largest is the body outline.
+    internal static string PreferMetricValue(string value)
+    {
+        var metrics = MetricMeasurementRegex().Matches(value);
+        if (metrics.Count == 0 || (metrics.Count == 1 && !ImperialMeasurementRegex().IsMatch(value))) return value;
+        var largest = metrics
+            .Select(match => (Match: match, Millimetres: decimal.Parse(match.Groups["number"].Value.Replace(',', '.'), CultureInfo.InvariantCulture) *
+                (match.Groups["unit"].Value.Equals("cm", StringComparison.OrdinalIgnoreCase) ? 10 : 1)))
+            .MaxBy(item => item.Millimetres)
+            .Match;
+        return $"{largest.Groups["number"].Value} {largest.Groups["unit"].Value}";
+    }
+
+    internal static (decimal? WidthCm, decimal? HeightCm, decimal? DepthCm) ReadBodyDimensions(string html, bool isDisplay = false)
+    {
+        var measurements = ExtractMeasurements(ExtractSpecifications(html), html, isDisplay);
+        return (measurements.WidthCm, measurements.HeightCm, measurements.DepthCm);
+    }
+
     private static decimal? FindNamedMeasurement(
         IReadOnlyList<ExternalSpecificationDto> specifications,
         IReadOnlyList<string> preferredNames,
@@ -1198,10 +1319,11 @@ public sealed partial class OpenWebProductLookupService(
                 .OrderByDescending(MeasurementCandidatePriority);
             foreach (var match in matches)
             {
-                var unit = match.Unit ?? UnitInLabelRegex().Match(match.Name).Groups["unit"].Value;
-                var number = ParseRangeMaximum(match.Value);
+                var value = PreferMetricValue(match.Value);
+                var unit = value == match.Value ? match.Unit ?? UnitInLabelRegex().Match(match.Name).Groups["unit"].Value : null;
+                var number = ParseRangeMaximum(value);
                 if (number is null) continue;
-                if (string.IsNullOrWhiteSpace(unit)) unit = UnitInLabelRegex().Match(match.Value).Groups["unit"].Value;
+                if (string.IsNullOrWhiteSpace(unit)) unit = UnitInLabelRegex().Match(value).Groups["unit"].Value;
                 if (string.IsNullOrWhiteSpace(unit)) unit = targetUnit;
                 return targetUnit == "kg" ? ToKilograms(number.Value, unit) : ToCentimeters(number.Value, unit);
             }
@@ -1521,6 +1643,31 @@ public sealed partial class OpenWebProductLookupService(
 
     [GeneratedRegex("[\\\"'](?:measure|text|value)[\\\"']\\s*:\\s*[\\\"'](?<value>\\d+(?:[.,]\\d+)?[^\\\"']{0,60})[\\\"'][^{}]{0,180}?[\\\"']name[\\\"']\\s*:\\s*[\\\"'](?<name>Width|Height|Depth|Length)[\\\"']", RegexOptions.IgnoreCase, 1000)]
     private static partial Regex JsonMeasurementValueFirstRegex();
+
+    [GeneratedRegex("[\\\"']?\\b(?:name|facet|label|title|key|attribute|specName|specLabel)\\b[\\\"']?\\s*:\\s*[\\\"'](?<name>(?:[^\\\"'\\\\]{0,40}?\\b)?(?:width|height|depth|length|dimensions?)(?:\\b[^\\\"'\\\\]{0,40})?)[\\\"']\\s*,\\s*[\\\"']?\\b(?:value|measure|text|specValue|displayValue|values)\\b[\\\"']?\\s*:\\s*\\[?\\s*[\\\"'](?<value>[^\\\"'\\\\]{1,120})[\\\"']", RegexOptions.IgnoreCase, 1000)]
+    private static partial Regex ScriptLabelValueRegex();
+
+    [GeneratedRegex("(?<number>\\d+(?:[.,]\\d+)?)\\s*(?<unit>mm|cm)\\b", RegexOptions.IgnoreCase, 250)]
+    private static partial Regex MetricMeasurementRegex();
+
+    [GeneratedRegex("<meta[^>]+property=[\\\"']og:title[\\\"'][^>]+content=[\\\"'](?<title>[^\\\"']{3,250})[\\\"']", RegexOptions.IgnoreCase, 500)]
+    private static partial Regex OpenGraphTitleRegex();
+
+    [GeneratedRegex("<meta[^>]+name=[\\\"']description[\\\"'][^>]+content=[\\\"'](?<text>[^\\\"']{3,400})[\\\"']", RegexOptions.IgnoreCase, 500)]
+    private static partial Regex MetaDescriptionRegex();
+
+    [GeneratedRegex("\\b(monitor|display|screen)s?\\b", RegexOptions.IgnoreCase, 250)]
+    private static partial Regex DisplayPageRegex();
+
+    [GeneratedRegex("\\\\u(?<hex>[0-9a-fA-F]{4})", RegexOptions.None, 1000)]
+    private static partial Regex JsonUnicodeEscapeRegex();
+
+    // The look-behind keeps "Cable length: 1.8 m" and similar qualified names out.
+    [GeneratedRegex("(?<![\\p{L}][ \\t]?)\\b(?<name>Length|Width|Height|Depth)\\s*(?:\\|\\|\\||:)\\s*(?<value>\\d+(?:[.,]\\d+)?\\s*(?:mm|cm)\\b(?:(?!\\b(?:Length|Width|Height|Depth|Weight)\\b)[^\\n<\"|]){0,70})", RegexOptions.IgnoreCase, 1000)]
+    private static partial Regex TextAxisMeasurementRegex();
+
+    [GeneratedRegex("\\d\\s*(?:in|inch|inches|\\\"|ft|lb|lbs)\\b", RegexOptions.IgnoreCase, 250)]
+    private static partial Regex ImperialMeasurementRegex();
 
     [GeneratedRegex("[\\\"']name[\\\"']\\s*:\\s*[\\\"'](?<name>[^\\\"']{1,100})[\\\"']\\s*,\\s*[\\\"']value[\\\"']\\s*:\\s*(?:[\\\"'](?<value>[^\\\"']{1,100})[\\\"']|(?<value>-?\\d+(?:[.,]\\d+)?))\\s*,\\s*[\\\"']unitText[\\\"']\\s*:\\s*[\\\"'](?<unit>[^\\\"']{1,30})[\\\"']", RegexOptions.IgnoreCase, 1000)]
     private static partial Regex JsonPropertyValueRegex();

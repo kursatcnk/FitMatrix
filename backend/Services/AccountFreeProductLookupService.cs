@@ -101,6 +101,7 @@ public sealed partial class AccountFreeProductLookupService(
                         .Select(ParseItem)
                         .Where(item => item is not null)
                         .Cast<UpcItem>()
+                        .Where(item => ProductMatchesQuery(item, providerQuery))
                         .OrderByDescending(item => Score(item, providerQuery))
                         .ToList();
                     if (primary.Count > 0) return primary;
@@ -177,8 +178,28 @@ public sealed partial class AccountFreeProductLookupService(
             "pc case" => title.Contains("case", StringComparison.Ordinal) || title.Contains("tower", StringComparison.Ordinal),
             "desk" => title.Contains("desk", StringComparison.Ordinal),
             "chair" => title.Contains("chair", StringComparison.Ordinal),
-            _ => true
+            _ => MatchesSpecificIdentity(item.Title, item.Brand, query)
         };
+    }
+
+    // Barcode indexes match short digit runs loosely ("G502" returned a protein powder with GTIN ...502),
+    // so a specific query only accepts items naming the brand and the model code.
+    internal static bool MatchesSpecificIdentity(string title, string? brand, string query)
+    {
+        var tokens = Normalize(query).Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(NormalizeCompact)
+            .Where(token => token.Length > 0)
+            .ToArray();
+        if (tokens.Length == 0) return false;
+        var digits = new string(query.Where(char.IsDigit).ToArray());
+        if (tokens.Length == 1 && digits.Length is 8 or 12 or 13 or 14) return true;
+
+        var haystack = NormalizeCompact($"{brand} {title}");
+        if (!haystack.Contains(tokens[0], StringComparison.Ordinal)) return false;
+        var modelTokens = tokens.Skip(1).Where(token => token.Any(char.IsDigit)).ToArray();
+        return modelTokens.Length == 0
+            ? tokens.Skip(1).All(token => haystack.Contains(token, StringComparison.Ordinal))
+            : modelTokens.Any(token => haystack.Contains(token, StringComparison.Ordinal));
     }
 
     private static string TranslateSearchQuery(string query)

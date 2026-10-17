@@ -1,0 +1,66 @@
+[
+  {
+    "name": "logitech",
+    "brand": "Logitech",
+    "sitemaps": ["https://www.logitech.com/sitemap.xml"],
+    "include": "^https://www\\.logitech\\.com/en-us/shop/p/[^/]+$"
+  },
+  {
+    "name": "logitechg",
+    "brand": "Logitech",
+    "sitemaps": ["https://www.logitechg.com/sitemap.xml"],
+    "include": "^https://www\\.logitechg\\.com/en-us/shop/p/[^/]+$"
+  },
+  {
+    "name": "razer",
+    "brand": "Razer",
+    "sitemaps": ["https://www.razer.com/sitemap.xml"],
+    "childInclude": "Product-en-US",
+    "include": "^https://www\\.razer\\.com/(gaming-keyboards|gaming-mice|gaming-laptops|gaming-headsets|gaming-mouse-mats|gaming-chairs|streaming-microphones|console-controllers|mobile-controllers|gaming-speakers|streaming-cameras|gamer-room-lights|gaming-keypads|mobile-handhelds)/[^/]+",
+    "dedupePathSegments": 2,
+    "hints": [
+      { "pattern": "/gaming-keyboards/|/gaming-keypads/", "category": "input", "model": "keyboard" },
+      { "pattern": "/gaming-mice/|/console-controllers/|/mobile-controllers/", "category": "input", "model": "mouse" },
+      { "pattern": "/gaming-laptops/", "category": "computer", "model": "laptop" },
+      { "pattern": "/gaming-headsets/", "category": "audio", "model": "headphone" },
+      { "pattern": "/gaming-mouse-mats/", "category": "accessory", "model": "mat" },
+      { "pattern": "/gaming-chairs/", "category": "furniture", "model": "chair" },
+      { "pattern": "/streaming-microphones/|/gaming-speakers/", "category": "audio", "model": "speaker" },
+      { "pattern": "/streaming-cameras/", "category": "imaging", "model": "camera" },
+      { "pattern": "/gamer-room-lights/", "category": "lighting", "model": "lamp" },
+      { "pattern": "/mobile-handhelds/", "category": "gaming", "model": "console" }
+    ]
+  },
+  {
+    "name": "steelseries",
+    "brand": "SteelSeries",
+    "sitemaps": ["https://steelseries.com/sitemap-products.xml"],
+    "include": "^https://steelseries\\.com/(gaming-headsets|gaming-in-ear-headsets|gaming-keyboards|gaming-mice|gaming-microphones|gaming-mousepads|gaming-speakers|gaming-controllers)/[^/]+$",
+    "hints": [
+      { "pattern": "/gaming-headsets/|/gaming-in-ear-headsets/", "category": "audio", "model": "headphone" },
+      { "pattern": "/gaming-keyboards/", "category": "input", "model": "keyboard" },
+      { "pattern": "/gaming-mice/|/gaming-controllers/", "category": "input", "model": "mouse" },
+      { "pattern": "/gaming-microphones/|/gaming-speakers/", "category": "audio", "model": "speaker" },
+      { "pattern": "/gaming-mousepads/", "category": "accessory", "model": "mat" }
+    ]
+  },
+  {
+    "name": "asus",
+    "brand": "ASUS",
+    "sitemaps": ["https://www.asus.com/sitemap.xml"],
+    "childInclude": "asus\\.com/us/sitemap/us\\d+\\.xml$",
+    "include": "^https://www\\.asus\\.com/us/(displays-desktops/(monitors|tower-pcs|nucs|mini-pcs|all-in-one-pcs)|laptops/[a-z-]+|networking-iot-servers/(wifi-routers|whole-home-mesh-systems|wifi-7|range-extenders)|accessories/(mice-and-mouse-pads|keyboards|headsets-and-audio)|mobile-handhelds/gaming-handhelds)/[a-z0-9-]+/[a-z0-9-]+/$",
+    "pageSuffix": "techspec/",
+    "hints": [
+      { "pattern": "/displays-desktops/monitors/|/all-in-one-pcs/", "category": "display", "model": "monitor" },
+      { "pattern": "/displays-desktops/(tower-pcs|nucs|mini-pcs)/", "category": "computer", "model": "tower" },
+      { "pattern": "/laptops/", "category": "computer", "model": "laptop" },
+      { "pattern": "/networking-iot-servers/", "category": "network", "model": "router" },
+      { "pattern": "/accessories/keyboards/", "category": "input", "model": "keyboard" },
+      { "pattern": "/accessories/mice-and-mouse-pads/.*(pad|sheath|scabbard|mat)", "category": "accessory", "model": "mat" },
+      { "pattern": "/accessories/mice-and-mouse-pads/", "category": "input", "model": "mouse" },
+      { "pattern": "/accessories/headsets-and-audio/", "category": "audio", "model": "headphone" },
+      { "pattern": "/gaming-handhelds/", "category": "gaming", "model": "console" }
+    ]
+  }
+]

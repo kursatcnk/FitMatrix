@@ -16,7 +16,7 @@ public sealed class ProductDiscoveryService(
     IcecatProductLookupService icecat,
     ILogger<ProductDiscoveryService> logger)
 {
-    public const string CacheVersion = "v59|";
+    public const string CacheVersion = "v60|";
     private static readonly JsonSerializerOptions CacheJsonOptions = new(JsonSerializerDefaults.Web);
     private static readonly HashSet<string> IdentityNoiseTerms = new(StringComparer.OrdinalIgnoreCase)
     {

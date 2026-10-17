@@ -17,4 +17,10 @@
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Data\Harvest\*.txt" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Data\Harvest\*.json" CopyToOutputDirectory="PreserveNewest" />
+    <InternalsVisibleTo Include="FitMatrix.Api.Tests" />
+  </ItemGroup>
+
 </Project>

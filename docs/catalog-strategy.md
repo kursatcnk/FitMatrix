@@ -88,6 +88,46 @@ Open Icecat kimlik bilgileri ortam değişkenleriyle zaten tanımlıysa yalnızc
 
 Gövde ölçüleri ve kaynak URL'si bulunan bir sonuç, `POST /api/catalog/products/from-discovery` ile yayın kataloğuna alınabilir. Önce gerçek santimetre footprint'i masada 0° ve 90° yönlerde taranır; sınır ve SAT çakışma denetiminden geçen merkeze en yakın boş konum seçilir. Boş alan yoksa ürün kataloğa kaydedilebilir ancak sahneye hatalı biçimde bindirilmez. Masa kategorisindeki sonuçlar ekipman gibi masanın üstüne konmaz; projenin çalışma alanı ve yüksekliği olarak uygulanır. Resmî yapılandırılmış ölçü kaydı `source-verified`, bağımsız teknik kaynak ise kaynak türü açıkça belirtilen veri olarak saklanır. Esnek teknik özellikler `ProductSpecifications` tablosunda grup, ad, değer, birim, kaynak URL'si ve son kontrol zamanı ile korunur; ürün veri sayfası bunları kaynak gruplarına göre gösterir.
 
+## Üretici ürün haritalarından toplama
+
+Kataloğu en hızlı büyüten yol, üreticilerin arama motorları için yayımladığı `sitemap.xml` dosyalarıdır. `backend/Data/Harvest/manufacturers.json` her üretici için haritaların adresini, hangi adreslerin masa ekipmanı ürün sayfası olduğunu (`include`), varyantların nasıl tekilleştirileceğini (`dedupePathSegments`), teknik sayfanın ürün adresine göre konumunu (`pageSuffix`, örneğin ASUS `techspec/`) ve adres kalıbından kategori ipuçlarını tutar. Şu an Logitech, Logitech G, Razer, SteelSeries ve ASUS tanımlıdır.
+
+İş arama motoruna hiç uğramaz: haritadaki her ürün sayfası doğrudan okunur, `robots.txt` içindeki `User-agent: *` yasakları uygulanır ve sayfalar arasında varsayılan 3 saniye beklenir. Ölçüler sayfadaki yapılandırılmış veriden (JSON-LD, tablolar, gömülü ürün verisi, `Width: 63.9 mm` gibi listeler) okunur; inç ve milimetre birlikte yazıldığında metrik değer, ön/arka gibi birden fazla değer olduğunda en büyüğü alınır.
+
+Kayıttan önce:
+
+- Masaya yatık ürünlerde (klavye, mouse, mousepad, dizüstü, tablet, telefon) en ince kenar yükseklik sayılır; üreticilerin eksen adları birbirini tutmaz.
+- Her ürün türü için en uzun kenar sınırı vardır (örneğin kulaklık 40 cm); kablo uzunluğu gibi yanlış okumalar reddedilir.
+- Paket/set ürünleri ve sınıflandırılamayan genel aksesuarlar (kablo, alıcı, kılıf) alınmaz.
+- Daha önce kaydedilmiş sayfalar ağa çıkmadan atlanır; iş kesilirse yeniden başlatıldığında kaldığı yerden sürer.
+
+Ürün sayfası ölçüyü sunucu tarafında yayımlamayan üreticiler (örneğin IKEA ve Razer klavyeleri) bu yoldan gelmez; onlar için model listeleri ve kullanıcı aramaları kullanılır.
+
+## Model listeleriyle toplu toplama
+
+Kullanıcı aramalarını beklemeden kataloğu binlerce ürüne çıkarmak için arka planda çalışan bir toplama işi vardır. İş, `backend/Data/Harvest/*.txt` dosyalarındaki gerçek marka + model adlarını (monitör, klavye, mouse, ses, bilgisayar, mobilya/aydınlatma, cihazlar) tek tek editörün kullandığı arama hattından geçirir. Listeler yalnızca ürün kimliği içerir; hiçbir ölçü elle yazılmaz. `[audio:headphone]` gibi bir satır, altındaki modellerin kategori ve 3D türünü belirler; böylece sayfasında "kasa" kelimesi geçmeyen `NZXT H5 Flow` da doğru sınıfa girer.
+
+Bir sonuç yalnızca şu koşullarda kataloğa yazılır:
+
+- Gövde genişliği, yüksekliği ve derinliğinin üçü de yayımlanmış olmalı.
+- Ölçünün alındığı sayfanın adresi bulunmalı.
+- Varsayılan olarak ölçü güveni `official-structured` veya `source-structured` olmalı; sağlayıcının tek satırlık sırası belirsiz ölçüleri (`provider-order`) ancak açıkça izin verilirse alınır.
+
+Kayıtlar GTIN, yoksa marka + MPN, o da yoksa marka + model adıyla tekilleştirilir; iş tekrar çalıştırıldığında var olan ürünler güncellenir, kopyalanmaz. Uzak sitelere yük bindirmemek için ağ isteği yapan her sorgudan sonra varsayılan 6 saniye beklenir; art arda 12 hata olursa iş kendini durdurur. Yerel katalogda doğrulanmış karşılığı olan sorgular ağa çıkmadan atlanır.
+
+Uç noktalar yalnızca Development ortamında açıktır:
+
+- `GET /api/admin/catalog/harvest/lists`: kullanılabilir listeler ve sorgu sayıları
+- `POST /api/admin/catalog/harvest`: `{ "lists": ["monitors"], "queries": [], "requireVerified": true, "delaySeconds": 6, "maxQueries": 20 }`
+- `GET /api/admin/catalog/harvest`: ilerleme ve son 60 sonuç
+- `GET /api/admin/catalog/harvest/manufacturers`: tanımlı üretici kaynakları
+- `POST /api/admin/catalog/harvest/manufacturers`: `{ "sources": ["logitech", "asus"], "delaySeconds": 3, "maxPagesPerSource": 20 }`
+- `DELETE /api/admin/catalog/harvest`: çalışan işi durdurur
+
+Komut satırından `scripts/harvest-catalog.ps1` aynı işi başlatır, durumunu gösterir ve durdurur.
+
+versus.com gibi karşılaştırma sitelerinin veritabanı bu iş için kaynak olarak kullanılmaz; o veriler sitenin kendi emeğidir ve kullanım şartları otomatik kopyalamaya izin vermez. Bunun yerine ürün kimliği listeden, ölçü üreticinin ve güvenilir teknik kaynakların sayfalarından gelir.
+
 ## Ölçekleme
 
 SQL Server ana katalog ve proje verisi için uygundur. Katalog endpoint'i kararlı sıralama ve `offset`/`limit` sayfalaması sunar; istemci bütün sayfaları yükler ve arayüz kategori/metin filtresi uygular. Arama çok daha büyük hacme ulaştığında SQL Server full-text search veya ayrı bir arama indeksi eklenebilir. Görseller ve 3D modeller veritabanına binary olarak gömülmez; dosya/nesne depolamasında tutulup veritabanında URL, lisans ve checksum saklanır.

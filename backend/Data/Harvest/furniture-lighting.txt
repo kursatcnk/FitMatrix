@@ -1,0 +1,136 @@
+# Masalar
+[furniture:desk]
+IKEA MICKE
+IKEA ALEX desk
+IKEA LAGKAPTEN ALEX desk
+IKEA BEKANT desk
+IKEA UPPSPEL gaming desk
+IKEA MITTZON desk
+IKEA TROTTEN desk sit/stand
+IKEA LINNMON ADILS desk
+IKEA PÅHL desk
+IKEA UTESPELARE gaming desk
+IKEA IDÅSEN desk sit/stand
+IKEA HEMNES desk
+IKEA MALM desk
+FlexiSpot E7 Pro
+FlexiSpot E7
+FlexiSpot E5
+FlexiSpot EG1
+FlexiSpot EF1
+FlexiSpot Q8
+UPLIFT V2 Standing Desk
+Fully Jarvis Bamboo Standing Desk
+Secretlab MAGNUS Pro
+Secretlab MAGNUS
+Herman Miller Ratio Standing Desk
+Herman Miller Nevi Sit-Stand Desk
+Autonomous SmartDesk Core
+Autonomous SmartDesk Pro
+Arozzi Arena Gaming Desk
+Corsair Platform:6
+Eureka Ergonomic Aero Pro
+Vari Electric Standing Desk
+# Sandalyeler
+[furniture:chair]
+Herman Miller Aeron
+Herman Miller Embody
+Herman Miller Mirra 2
+Herman Miller Sayl
+Herman Miller Vantum
+Herman Miller x Logitech G Embody Gaming Chair
+Steelcase Leap V2
+Steelcase Gesture
+Steelcase Series 2
+Steelcase Karman
+Secretlab TITAN Evo
+Secretlab TITAN Evo XL
+Secretlab TITAN Evo Lite
+Noblechairs HERO
+Noblechairs EPIC
+Corsair TC100 RELAXED
+Corsair TC200
+DXRacer Craft Series
+AndaSeat Kaiser 3
+Razer Iskur V2
+Razer Enki
+Cougar Armor One
+Cougar Explore S
+Branch Ergonomic Chair
+Autonomous ErgoChair Pro
+Sihoo M57
+Sihoo Doro C300
+IKEA MARKUS
+IKEA JÄRVFJÄLLET
+IKEA FLINTAN
+IKEA MATCHSPEL
+IKEA STYRSPEL
+IKEA HATTEFJÄLL
+Hbada P3
+Hawkgaming Tron
+# Aydınlatma
+[lighting:lamp]
+BenQ ScreenBar Halo
+BenQ ScreenBar Plus
+BenQ ScreenBar Pro
+BenQ e-Reading LED Desk Lamp
+Xiaomi Mi Computer Monitor Light Bar
+Xiaomi Mi LED Desk Lamp 1S
+Quntis ScreenLinear Pro
+Govee Flow Plus Light Bars
+Govee RGBIC TV Backlight
+Philips Hue Play Light Bar
+Philips Hue Play Gradient Lightstrip
+Philips Hue Go
+Nanoleaf Lines
+Nanoleaf Shapes Hexagons
+Elgato Key Light
+Elgato Key Light Air
+Elgato Key Light Mini
+Elgato Ring Light
+Logitech Litra Glow
+Logitech Litra Beam
+Razer Key Light Chroma
+IKEA FORSÅ work lamp
+IKEA TERTIAL work lamp
+IKEA NÄVLINGE LED clamp spotlight
+Dyson Solarcycle Morph Desk
+Yeelight LED Light Bar Pro
+# Monitör kolları ve standlar
+[accessory:stand]
+Ergotron LX Desk Monitor Arm
+Ergotron LX Dual Stacking Arm
+Ergotron HX Desk Monitor Arm
+Ergotron MXV Desk Monitor Arm
+Ergotron Neo-Flex Monitor Arm
+Amazon Basics Single Monitor Stand
+HUANUO Dual Monitor Stand
+North Bayou F80
+North Bayou F160
+VIVO STAND-V002
+VIVO STAND-V001
+Elgato Wave Mic Arm
+Elgato Wave Mic Arm LP
+Elgato Multi Mount
+Rode PSA1+
+Rode PSA1
+Heil PL-2T
+Fellowes Platinum Series Single Monitor Arm
+Humanscale M8.1
+Humanscale M2.1
+Arctic Z1 Pro Gen 3
+Arctic Z2 Pro Gen 3
+Arctic X1-3D
+Loctek D7A
+Kensington SmartFit One-Touch Height Adjustable Monitor Riser
+Satechi Aluminum Monitor Stand Hub
+Rain Design mStand
+Twelve South BookArc
+Nexstand K2
+Roost Laptop Stand
+Grovemade Desk Shelf
+[accessory:mat]
+Orbitkey Desk Mat
+Logitech Desk Mat
+Satechi Eco-Leather Deskmate
+Grovemade Wool Felt Desk Pad

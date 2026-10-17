@@ -1,0 +1,930 @@
+# Ağ, oyun, mobil, ofis, güç, mobilya — genişletilmiş liste
+[network:router]
+TP-Link Archer AX10
+TP-Link Archer AX20
+TP-Link Archer AX21
+TP-Link Archer AX23
+TP-Link Archer AX50
+TP-Link Archer AX80
+TP-Link Archer AX90
+TP-Link Archer AX6000
+TP-Link Archer AX11000
+TP-Link Archer AXE300
+TP-Link Archer BE550
+TP-Link Archer BE9700
+TP-Link Archer C80
+TP-Link Archer C64
+TP-Link Archer MR600
+TP-Link Archer VR400
+TP-Link Archer VX231v
+TP-Link Deco M4
+TP-Link Deco M5
+TP-Link Deco X20
+TP-Link Deco X55
+TP-Link Deco X60
+TP-Link Deco X68
+TP-Link Deco XE200
+TP-Link Deco BE85
+TP-Link RE315
+TP-Link RE605X
+TP-Link RE815X
+TP-Link TL-SG1005D
+TP-Link TL-SG1008D
+TP-Link TL-SG116
+TP-Link TL-SG1016D
+TP-Link TL-SG2008P
+TP-Link EAP245
+TP-Link EAP650
+TP-Link TL-MR6400
+ASUS RT-AX55
+ASUS RT-AX57
+ASUS RT-AX82U
+ASUS RT-AX86S
+ASUS RT-AX92U
+ASUS RT-AXE7800
+ASUS RT-BE88U
+ASUS RT-BE92U
+ASUS RT-AC68U
+ASUS RT-AC86U
+ASUS TUF Gaming AX5400
+ASUS TUF Gaming AX6000
+ASUS ROG Rapture GT-AX11000 Pro
+ASUS ROG Rapture GT-BE98
+ASUS ROG Strix GS-AX5400
+ASUS ZenWiFi AX XT8
+ASUS ZenWiFi AX Mini XD4
+ASUS ZenWiFi Pro ET12
+ASUS ZenWiFi BT8
+ASUS RP-AX56
+Netgear Nighthawk R7000
+Netgear Nighthawk RAX10
+Netgear Nighthawk RAX43
+Netgear Nighthawk RAX120
+Netgear Nighthawk RAXE500
+Netgear Nighthawk RS300
+Netgear Nighthawk RS500
+Netgear Nighthawk M6
+Netgear Orbi RBK752
+Netgear Orbi RBK852
+Netgear Orbi RBK962
+Netgear Orbi RBE973S
+Netgear EX6250
+Netgear EAX15
+Netgear GS108
+Netgear GS116
+Netgear GS305P
+Netgear GS308PP
+Netgear GS110EMX
+Ubiquiti UniFi Dream Router
+Ubiquiti UniFi Dream Machine SE
+Ubiquiti UniFi Dream Machine Pro Max
+Ubiquiti UniFi Cloud Gateway Max
+Ubiquiti UniFi U6 Lite
+Ubiquiti UniFi U6 Long-Range
+Ubiquiti UniFi U6+
+Ubiquiti UniFi U7 Pro
+Ubiquiti UniFi Switch Flex Mini
+Ubiquiti UniFi Switch Lite 16 PoE
+Ubiquiti UniFi Switch Pro 24
+Ubiquiti EdgeRouter X
+Ubiquiti UniFi Express 7
+Google Nest Wifi
+Google Wifi
+Eero 6+
+Eero Pro 6
+Eero Max 7
+Eero Pro 7
+Linksys Hydra Pro 6
+Linksys Atlas Max 6E
+Linksys Velop Pro 7
+Linksys E8450
+Linksys MR7350
+Xiaomi Mi Router AX1800
+Xiaomi Mi Router AX6000
+Xiaomi Mesh System AX3000
+Xiaomi Router BE7000
+Huawei WiFi AX2
+Huawei WiFi Mesh 3
+Huawei B535
+Huawei B818
+D-Link DIR-X1560
+D-Link DIR-X5460
+D-Link DIR-842
+D-Link COVR-X1862
+D-Link DGS-1008A
+D-Link DGS-1016D
+MikroTik hAP ac2
+MikroTik hAP ac3
+MikroTik RB5009UG+S+IN
+MikroTik CRS305-1G-4S+IN
+MikroTik CRS326-24G-2S+RM
+MikroTik L009UiGS-RM
+GL.iNet GL-MT3000 Beryl AX
+GL.iNet GL-AXT1800 Slate AX
+GL.iNet GL-MT6000 Flint 2
+GL.iNet GL-BE3600 Slate 7
+Fritz!Box 7590
+Fritz!Box 7530
+Fritz!Box 7690
+Fritz!Box 6660 Cable
+Fritz!Box 5590 Fiber
+Fritz!Repeater 3000 AX
+Zyxel NBG7815
+Zyxel VMG8825-T50
+Zyxel GS1200-8
+Cisco Catalyst 1000-8T-2G-L
+Cisco Meraki Go GR10
+Tenda AC10
+Tenda RX9 Pro
+Tenda Nova MW6
+Synology RT6600ax
+Synology WRX560
+Keenetic Giga
+Keenetic Hero 4G+
+Starlink Standard Kit
+Apple AirPort Extreme
+[gaming:console]
+Sony PlayStation 4 Pro
+Sony PlayStation 4 Slim
+Sony PlayStation VR
+Microsoft Xbox One X
+Microsoft Xbox One S
+Microsoft Xbox Series X Digital Edition
+Nintendo Switch Lite Coral
+Nintendo Wii U
+Nintendo 3DS XL
+Nintendo New 2DS XL
+Nintendo Switch Pro Controller
+Valve Index
+Valve Steam Controller
+HTC Vive Pro 2
+HTC Vive XR Elite
+HTC Vive Focus Vision
+Pico 4
+Pico 4 Ultra
+Meta Quest 2
+Samsung Odyssey VR
+PlayStation Classic
+Sega Genesis Mini 2
+Atari VCS
+Anbernic RG35XX Plus
+Anbernic RG556
+Retroid Pocket 4 Pro
+AYANEO 2S
+AYANEO Kun
+AYN Odin 2
+GPD Win 4
+Logitech G Cloud
+Razer Edge
+Nvidia Shield TV Pro
+Apple TV 4K
+Logitech G920
+Logitech G Pro Racing Wheel
+Thrustmaster T150
+Thrustmaster T128
+Thrustmaster T-GT II
+Thrustmaster TS-XW Racer
+Thrustmaster T.Flight Hotas X
+Thrustmaster T.16000M FCS
+Fanatec CSL DD Pro
+Fanatec GT DD Pro
+Fanatec ClubSport DD
+Moza R9
+Moza R3
+Simagic Alpha Mini
+Playseat Challenge
+Next Level Racing F-GT
+Next Level Racing GTtrack
+Trak Racer RS6
+Logitech G Saitek Pro Flight Yoke System
+Elgato Stream Deck Pedal
+[input:mouse]
+Sony DualShock 4
+Microsoft Xbox Adaptive Controller
+Nintendo Joy-Con Pair
+Razer Wolverine V2 Pro
+Razer Wolverine V3 Pro
+Razer Kishi V2
+Razer Raiju Ultimate
+SCUF Reflex Pro
+SCUF Instinct Pro
+Thrustmaster eSwap X Pro
+PowerA Enhanced Wired Controller for Xbox Series X|S
+8BitDo Pro 2
+8BitDo SN30 Pro
+8BitDo Ultimate 2C
+GameSir T4 Kaleid
+GameSir G7 SE
+Turtle Beach Stealth Ultra
+Victrix Pro BFG
+Hori Fighting Commander OCTA
+Nacon Revolution 5 Pro
+Backbone One
+[mobile:tablet]
+Apple iPad 9th generation
+Apple iPad Air 5th generation
+Apple iPad Pro 12.9 6th generation
+Apple iPad Pro 11 4th generation
+Apple iPad mini 6
+Samsung Galaxy Tab S10+
+Samsung Galaxy Tab S9+
+Samsung Galaxy Tab S8 Ultra
+Samsung Galaxy Tab S8
+Samsung Galaxy Tab S6 Lite
+Samsung Galaxy Tab A9
+Samsung Galaxy Tab A8
+Samsung Galaxy Tab Active5
+Xiaomi Pad 6S Pro
+Xiaomi Pad 7
+Xiaomi Pad 7 Pro
+Xiaomi Redmi Pad Pro
+Xiaomi Redmi Pad 2
+Lenovo Tab P11 Pro Gen 2
+Lenovo Tab P12 Pro
+Lenovo Tab M11
+Lenovo Tab M9
+Lenovo Legion Tab
+Lenovo Yoga Tab 13
+Huawei MatePad Pro 11
+Huawei MatePad Air
+Huawei MatePad SE 11
+Honor Pad 9
+Honor Pad X9
+OnePlus Pad 2
+OnePlus Pad Go
+Google Pixel Tablet
+Amazon Fire HD 10
+Amazon Fire HD 8
+Amazon Fire Max 11
+Amazon Kindle 11th generation
+Amazon Kindle Paperwhite Signature Edition
+Amazon Kindle Colorsoft
+Kobo Clara BW
+Kobo Libra Colour
+Kobo Sage
+PocketBook InkPad 4
+PocketBook Verse Pro
+Boox Note Air3 C
+Boox Tab Ultra C Pro
+Boox Page
+Boox Go 10.3
+reMarkable Paper Pro
+Supernote A5 X2 Manta
+Microsoft Surface Go 3
+Realme Pad 2
+TCL Tab 10 Gen 2
+Teclast T50 Pro
+[input:mouse]
+Wacom Intuos Pro L
+Wacom Intuos Pro S
+Wacom Intuos M Bluetooth
+Wacom Cintiq Pro 16
+Wacom Cintiq Pro 24
+Wacom Cintiq 22
+Wacom One 12
+Wacom Movink 13
+XP-Pen Deco 01 V2
+XP-Pen Deco Pro MW
+XP-Pen Artist 12 Pro
+XP-Pen Artist 22R Pro
+XP-Pen Artist Pro 16 Gen 2
+Huion Inspiroy H640P
+Huion Inspiroy Dial 2
+Huion Kamvas Pro 16
+Huion Kamvas 22 Plus
+Huion Kamvas Pro 24 4K
+Apple Pencil Pro
+Logitech Crayon
+[mobile:phone]
+Apple iPhone 16 Plus
+Apple iPhone 16e
+Apple iPhone 15 Pro Max
+Apple iPhone 15 Plus
+Apple iPhone 14 Pro Max
+Apple iPhone 14 Pro
+Apple iPhone 14 Plus
+Apple iPhone 13 Pro Max
+Apple iPhone 13 Pro
+Apple iPhone 13 mini
+Apple iPhone 12
+Apple iPhone 12 Pro
+Apple iPhone 11
+Samsung Galaxy S25 Ultra
+Samsung Galaxy S25+
+Samsung Galaxy S25
+Samsung Galaxy S24 FE
+Samsung Galaxy S23 Ultra
+Samsung Galaxy S23 FE
+Samsung Galaxy S22 Ultra
+Samsung Galaxy Z Fold5
+Samsung Galaxy Z Flip5
+Samsung Galaxy A56
+Samsung Galaxy A54
+Samsung Galaxy A34
+Samsung Galaxy A25
+Samsung Galaxy A16
+Samsung Galaxy A05s
+Samsung Galaxy M34
+Google Pixel 9 Pro XL
+Google Pixel 9 Pro Fold
+Google Pixel 9a
+Google Pixel 8
+Google Pixel 7a
+Google Pixel 7 Pro
+Xiaomi 15 Ultra
+Xiaomi 15
+Xiaomi 14T Pro
+Xiaomi 14T
+Xiaomi 13T Pro
+Xiaomi Redmi Note 14 Pro+
+Xiaomi Redmi Note 14 Pro
+Xiaomi Redmi Note 12 Pro
+Xiaomi Redmi 13C
+Xiaomi Redmi 14C
+Xiaomi Poco F6 Pro
+Xiaomi Poco F6
+Xiaomi Poco X6 Pro
+Xiaomi Poco M6 Pro
+OnePlus 13
+OnePlus 12R
+OnePlus Nord CE4
+OnePlus Open
+Nothing Phone (3a)
+Nothing Phone (3a) Pro
+Nothing CMF Phone 1
+Huawei Pura 70 Ultra
+Huawei Mate 60 Pro
+Huawei nova 12
+Honor Magic6 Pro
+Honor 200 Pro
+Honor X9b
+Oppo Find X8 Pro
+Oppo Reno12 Pro
+Oppo A79
+Vivo X200 Pro
+Vivo X100 Pro
+Vivo V30
+Realme GT 7 Pro
+Realme 12 Pro+
+Realme C67
+Motorola Edge 50 Pro
+Motorola Edge 50 Ultra
+Motorola Razr 50 Ultra
+Motorola Moto G84
+Motorola Moto G54
+Sony Xperia 1 VI
+Sony Xperia 10 VI
+Asus ROG Phone 8 Pro
+Asus Zenfone 11 Ultra
+Fairphone 5
+Tecno Camon 30 Pro
+Infinix Note 40 Pro
+TCL 50 SE
+Apple Watch SE 2nd generation
+Apple Watch Series 9
+Samsung Galaxy Watch Ultra
+Samsung Galaxy Watch6 Classic
+Google Pixel Watch 3
+Garmin Fenix 8
+Garmin Venu 3
+Garmin Instinct 2X Solar
+Huawei Watch GT 5 Pro
+Xiaomi Watch S3
+Amazfit GTR 4
+Fitbit Charge 6
+[office:printer]
+HP LaserJet Pro M15w
+HP LaserJet Pro MFP M28w
+HP LaserJet Pro MFP M428fdw
+HP LaserJet Enterprise M507dn
+HP LaserJet M209dw
+HP LaserJet MFP M234sdw
+HP Color LaserJet Pro MFP M479fdw
+HP Color LaserJet Pro MFP 4301fdw
+HP OfficeJet 8015e
+HP OfficeJet Pro 8025e
+HP OfficeJet Pro 9730e
+HP DeskJet 4120e
+HP DeskJet Plus 4155
+HP ENVY 6055e
+HP ENVY Photo 7855
+HP Smart Tank 5105
+HP Smart Tank Plus 555
+HP Sprocket Studio Plus
+HP ScanJet Pro 2600 f1
+Brother HL-L2300D
+Brother HL-L2321D
+Brother HL-L2390DW
+Brother HL-L2460DW
+Brother HL-L5210DW
+Brother HL-L8360CDW
+Brother DCP-L2530DW
+Brother DCP-L2620DW
+Brother MFC-L2710DW
+Brother MFC-L2800DW
+Brother MFC-L3770CDW
+Brother MFC-L8900CDW
+Brother MFC-J1010DW
+Brother MFC-J4335DW
+Brother MFC-J6955DW
+Brother DCP-T420W
+Brother DCP-T720DW
+Brother ADS-1700W
+Brother ADS-4300N
+Brother PT-P710BT
+Brother QL-1110NWB
+Canon PIXMA TS3350
+Canon PIXMA TS6350
+Canon PIXMA TS705a
+Canon PIXMA G6050
+Canon PIXMA G7050
+Canon PIXMA PRO-200
+Canon PIXMA iX6850
+Canon MAXIFY GX7050
+Canon MAXIFY MB2750
+Canon i-SENSYS LBP6030
+Canon i-SENSYS MF3010
+Canon i-SENSYS MF655Cdw
+Canon i-SENSYS LBP633Cdw
+Canon imageCLASS MF264dw II
+Canon SELPHY CP1500
+Canon CanoScan LiDE 400
+Canon imageFORMULA R40
+Epson EcoTank ET-2800
+Epson EcoTank ET-2810
+Epson EcoTank ET-3850
+Epson EcoTank ET-4800
+Epson EcoTank ET-5800
+Epson EcoTank ET-16650
+Epson EcoTank L3150
+Epson EcoTank L3210
+Epson EcoTank L8050
+Epson EcoTank L18050
+Epson Expression Premium XP-6100
+Epson Expression Photo XP-8700
+Epson SureColor P900
+Epson WorkForce Pro WF-3820
+Epson WorkForce Pro WF-4830
+Epson WorkForce ES-500W II
+Epson Perfection V600 Photo
+Epson Perfection V850 Pro
+Epson FastFoto FF-680W
+Xerox B210
+Xerox B225
+Xerox C230
+Xerox VersaLink C405
+Kyocera ECOSYS P2235dn
+Kyocera ECOSYS M2540dn
+Lexmark B2236dw
+Lexmark MB2236adw
+Lexmark C3326dw
+Pantum P2502W
+Pantum M6500W
+Ricoh SP 230DNw
+Samsung Xpress M2070
+OKI C332dn
+Zebra ZD421
+Rollo Wireless Printer
+Dymo LabelWriter 5XL
+Dymo LabelManager 280
+Fellowes Powershred 99Ci
+Fellowes Powershred 8Cd
+Fellowes Neutron A4 Laminator
+Rexel Optimum AutoFeed+ 150X
+AmazonBasics 8-Sheet Cross-Cut Paper Shredder
+Bambu Lab P1P
+Bambu Lab A1
+Bambu Lab H2D
+Prusa MINI+
+Prusa Core One
+Prusa XL
+Creality K1 Max
+Creality K1C
+Creality Ender 3 V3
+Creality CR-10 SE
+Elegoo Neptune 4 Pro
+Elegoo Saturn 4 Ultra
+Elegoo Mars 5 Ultra
+Anycubic Kobra 3 Combo
+Anycubic Photon Mono M7 Pro
+Qidi Tech Q1 Pro
+FlashForge Adventurer 5M Pro
+Formlabs Form 4
+xTool S1
+xTool M1 Ultra
+Glowforge Spark
+Cricut Maker 3
+Cricut Joy Xtra
+Silhouette Cameo 5
+[power:power]
+APC Back-UPS Pro BR900MI
+APC Back-UPS Pro BR1600SI
+APC Back-UPS BX950MI
+APC Back-UPS BX750MI
+APC Back-UPS BE850G2
+APC Back-UPS BVX700LI
+APC Easy UPS BVX1200LI
+APC Smart-UPS SMT750I
+APC Smart-UPS SMC1000I
+APC SurgeArrest Essential PM5-GR
+APC Essential SurgeArrest PM8
+CyberPower CP1000PFCLCD
+CyberPower CP850PFCLCD
+CyberPower CP900EPFCLCD
+CyberPower BR1200ELCD
+CyberPower UT1500E
+CyberPower OR1500ERM1U
+Eaton 5E 650i
+Eaton 5E 2000i
+Eaton Ellipse ECO 650
+Eaton 9SX 1000i
+Eaton 3S Mini 36W
+Eaton Protection Box 6
+Powerwalker VI 1500 STL
+Powerwalker VI 1000 SHL
+Riello iPlug IPG 800
+Legrand Keor SP 800
+Inform Guardian 1000AP
+Tescom Leo II Pro 1000VA
+Makelsan Lion X 1kVA
+Belkin SurgePlus 8-Outlet
+Belkin BoostCharge Pro 2-in-1 Qi2
+Belkin BoostCharge Pro 3-in-1 with Qi2
+Belkin 4-Port GaN Charger 108W
+Anker 547 Charger 120W
+Anker 735 Charger Nano II 65W
+Anker 715 Charger Nano II 65W
+Anker Prime 67W GaN Wall Charger
+Anker Prime 240W GaN Desktop Charger
+Anker Prime Power Bank 26250mAh 300W
+Anker 525 Charging Station
+Anker 637 Magnetic Charging Station
+Anker MagGo 3-in-1 Charging Station
+Anker 621 Magnetic Battery
+Anker Nano Power Bank 30W
+Anker SOLIX C1000
+Anker SOLIX C800 Plus
+EcoFlow River 2 Pro
+EcoFlow Delta 2
+EcoFlow Delta 3 Plus
+EcoFlow Trail 300 DC
+Jackery Explorer 1000 Plus
+Jackery Explorer 300 Plus
+Bluetti AC180
+Bluetti EB3A
+Ugreen Nexode 200W
+Ugreen Nexode 140W
+Ugreen Nexode 45W
+Ugreen Nexode Power Bank 20000mAh 130W
+Ugreen 25W PD Charger
+Baseus GaN3 Pro 65W
+Baseus Blade HD 20000mAh 100W
+Baseus EnerGeek GX11 Power Bank
+Satechi 165W USB-C 4-Port PD GaN Charger
+Satechi Trio Wireless Charging Pad
+Apple 20W USB-C Power Adapter
+Apple 70W USB-C Power Adapter
+Apple 140W USB-C Power Adapter
+Apple MagSafe Battery Pack
+Samsung 45W Power Adapter
+Samsung 25W Power Adapter
+Samsung Wireless Charger Trio
+Xiaomi 120W HyperCharge Adapter
+Xiaomi Mi Power Bank 3 Pro 20000mAh
+Xiaomi Smart Power Strip 2
+Mophie 3-in-1 Travel Charger with MagSafe
+Nomad Base One Max
+Native Union Drop Wireless Charger
+Twelve South HiRise 3 Deluxe
+ESR HaloLock 3-in-1 Wireless Charging Station
+Spigen ArcStation Pro 65W
+Philips SPN6080 Surge Protector
+Brennenstuhl Premium-Line 6-Way
+Brennenstuhl Primera-Tec 4-Way
+Ttec ReCharger Ultra 20000mAh
+Ttec SmartCharger Duo PD
+Ttec PowerStrip Smart
+Trust Maxo 100W
+Tripp Lite TLP1208SAT
+Monster Power Center
+[accessory:generic]
+CalDigit TS3 Plus
+CalDigit SOHO Dock
+CalDigit Thunderbolt 4 Element Dock
+OWC Thunderbolt Dock 11-Port
+Anker 778 Thunderbolt Docking Station
+Anker 777 Thunderbolt Docking Station
+Anker 568 USB-C Docking Station
+Anker 655 USB-C Hub
+Anker 341 USB-C Hub
+Ugreen Revodok 105
+Ugreen 10-in-1 USB-C Docking Station
+Ugreen 4-Port USB 3.0 Hub
+Satechi Thunderbolt 4 Dock
+Satechi Dual Dock Stand
+Plugable TBT4-UDZ
+Plugable UD-6950PDZ
+Dell WD19S
+Dell WD19TBS
+Dell UD22
+HP USB-C Dock G5
+HP Thunderbolt Dock G4
+Lenovo ThinkPad Thunderbolt 4 Workstation Dock
+Lenovo USB-C Dock Gen 2
+Microsoft Surface Dock 2
+Microsoft Surface Thunderbolt 4 Dock
+Belkin USB-C 11-in-1 Multiport Dock
+Belkin Thunderbolt 3 Dock Pro
+Kensington SD4842P
+Kensington SD5600T
+Razer USB-C Dock
+Sonnet Echo 11 Thunderbolt 4 Dock
+TP-Link UH700
+Elgato Thunderbolt 4 Dock
+Elgato Thunderbolt 4 Pro Dock
+Apple Studio Display stand
+Satechi USB-C Clamp Hub Pro
+Hyper HyperDrive Gen2 12-in-1
+StarTech DK30C2DAGPD
+[furniture:desk]
+IKEA ALEX drawer unit
+IKEA HELMER drawer unit
+IKEA KALLAX shelving unit
+IKEA BILLY bookcase
+IKEA LACK wall shelf
+IKEA RÅSKOG trolley
+IKEA SKÅDIS pegboard
+IKEA SIGNUM cable management
+IKEA BRÄNNBOLL desk
+IKEA RODULF desk sit/stand
+IKEA MITTZON conference table
+IKEA LAGKAPTEN tabletop
+IKEA KARLBY countertop
+IKEA OLOV leg
+IKEA ADILS leg
+FlexiSpot E6
+FlexiSpot E8
+FlexiSpot O2
+FlexiSpot Kana Pro
+FlexiSpot Comhar
+FlexiSpot Deskcise Pro V9
+FlexiSpot Theodore
+Fully Jarvis Standing Desk Frame
+Fully Remi Standing Desk
+UPLIFT V2 Commercial Standing Desk
+Autonomous SmartDesk 5
+Vari Standing Desk Converter
+VIVO Electric Stand Up Desk Frame
+Eureka Ergonomic Z1-S
+Eureka Ergonomic I1-60
+Arozzi Arena Leggero
+Secretlab MAGNUS Pro XL
+Secretlab MAGNUS Metal Desk
+Herman Miller Motia Gaming Desk
+Steelcase Migration SE
+Humanscale Float
+Ergotron WorkFit-TX
+Ergotron WorkFit-Z Mini
+Ergotron WorkFit-SR
+Ergotron LearnFit
+Desky Dual Bamboo Sit Stand Desk
+Branch Duo Standing Desk
+Mount-It! MI-7972
+Kensington SmartFit Sit/Stand Workstation
+Varidesk Pro Plus 36
+Lumi Legend 120
+Songmics Standing Desk
+Bush Furniture Cabot L Shaped Desk
+Sauder Harbor View Computer Desk
+[furniture:chair]
+Herman Miller Aeron Remastered
+Herman Miller Cosm
+Herman Miller Lino
+Herman Miller Celle
+Herman Miller Zeph
+Herman Miller Fern
+Steelcase Leap Plus
+Steelcase Amia
+Steelcase Think
+Steelcase Series 1
+Haworth Fern
+Haworth Zody
+Humanscale Freedom
+Humanscale Liberty
+Humanscale Diffrient Smart
+Knoll Generation
+Knoll ReGeneration
+Vitra ID Chair Concept
+Vitra Pacific Chair
+Okamura Contessa II
+Okamura Sylphy
+Ergohuman Elite
+Mavix M9
+Secretlab TITAN Evo NanoGen
+Secretlab Skins
+Noblechairs LEGEND
+Noblechairs ICON
+DXRacer Formula Series
+DXRacer Air
+AndaSeat Kaiser 4
+AndaSeat Dark Demon
+Corsair TC500 LUXE
+Corsair T3 RUSH
+Razer Iskur
+Razer Iskur X
+Razer Fujin Pro
+ThunderX3 Core
+Arozzi Verona Pro V2
+Arozzi Vernazza
+Cooler Master Caliber R3
+Cougar Terminator
+Cougar Armor S
+Hbada E3 Pro
+Sihoo M18
+Sihoo M90D
+Flexispot C7
+Flexispot BS11 Pro
+Autonomous ErgoChair Plus
+Branch Verve Chair
+X-Chair X2
+Staples Hyken
+Office Star ProGrid
+IKEA LÅNGFJÄLL
+IKEA ALEFJÄLL
+IKEA SKRUVSTA
+IKEA MILLBERGET
+IKEA SMÖRKULL
+IKEA LOBERGET
+IKEA FERM ARV
+Vitra Tip Ton
+Varier Variable Balans
+Gaiam Classic Balance Ball Chair
+[lighting:lamp]
+BenQ ScreenBar
+BenQ ScreenBar Halo 2
+BenQ WiT MindDuo 2
+BenQ AR17
+Xiaomi Mi Computer Monitor Light Bar 1S
+Xiaomi Mi Smart LED Desk Lamp Pro
+Baseus i-wok Pro Monitor Light Bar
+Quntis LED Monitor Light Bar
+Lamicall Monitor Light Bar
+Yeelight Smart LED Desk Lamp Pro
+Govee Glide Hexa Light Panels
+Govee RGBIC Floor Lamp
+Govee DreamView G1 Pro
+Govee Envisual T2
+Philips Hue Iris
+Philips Hue Signe Gradient
+Philips Hue Play HDMI Sync Box 8K
+Philips Hue Bloom
+Philips Hue Lightstrip Plus V4
+Nanoleaf 4D Screen Mirror
+Nanoleaf Canvas
+Nanoleaf Elements
+Nanoleaf Shapes Triangles
+Elgato Light Strip
+Elgato Key Light Neo
+Elgato Light Bar
+Logitech Litra Beam LX
+Razer Aether Monitor Light Bar
+Razer Aether Lamp Pro
+Corsair iCUE LT100
+Lume Cube Panel Pro 2
+Neewer 660 PRO II
+Neewer 18 inch Ring Light
+Ulanzi VL49
+Godox SL60IIBi
+Aputure Amaran 100x S
+Dyson Lightcycle Morph Desk
+Artemide Tolomeo Mini
+Anglepoise Type 75 Desk Lamp
+Anglepoise Original 1227
+IKEA RANARP work lamp
+IKEA HEKTAR work lamp
+IKEA BAROMETER table lamp
+IKEA VARV table lamp
+IKEA KVART work lamp
+IKEA TRÅDFRI LED bulb
+TaoTronics LED Desk Lamp TT-DL13
+Wobane LED Desk Lamp
+Opple LED Desk Lamp
+[accessory:stand]
+Ergotron LX Dual Side-by-Side Arm
+Ergotron LX Pro Desk Monitor Arm
+Ergotron HX Dual Monitor Arm
+Ergotron HX Triple Monitor Arm
+Ergotron LX Sit-Stand Desk Mount Monitor Arm
+Ergotron TRACE Single Monitor Mount
+Ergotron Neo-Flex Dual Monitor Lift Stand
+Humanscale M10
+Humanscale M/Flex
+Herman Miller Ollin Monitor Arm
+Herman Miller Flo Monitor Arm
+Fellowes Tallo Modular Monitor Arm
+Fellowes Platinum Series Dual Monitor Arm
+Fellowes Eppa Crossbar Monitor Arm
+Kensington One-Touch Height Adjustable Dual Monitor Arm
+Amazon Basics Premium Single Monitor Stand
+Amazon Basics Dual Monitor Stand
+HUANUO Single Monitor Arm
+HUANUO Triple Monitor Stand
+Mount-It! MI-2752
+VIVO STAND-V102F
+VIVO STAND-V003
+VIVO STAND-V012
+North Bayou F100A
+North Bayou G45
+Loctek D7D
+Loctek D8D
+Arctic Z1 Basic
+Arctic Z3 Pro Gen 3
+Arctic X1
+AVLT Single Monitor Arm
+Secretlab MAGNUS Monitor Arm
+Secretlab MAGNUS Heavy Duty Monitor Arm
+Elgato Wave Mic Arm LP
+Elgato Flex Arm Kit
+Elgato Master Mount L
+Elgato Solid Arm
+Rode PSA1+ Black
+Blue Compass Premium Tube-Style Broadcast Boom Arm
+HyperX Mic Arm
+Razer Seiren Arm
+Neewer Mic Arm Stand
+Gator Frameworks Deluxe Desk-Mounted Broadcast Mic Boom Stand
+K&M 23850 Microphone Desk Arm
+Rain Design iLevel 2
+Twelve South Curve Flex
+Twelve South HiRise Pro
+Satechi Aluminum Monitor Stand
+Satechi Vertical Laptop Stand
+Nulaxy C1 Laptop Stand
+OMOTON Laptop Stand
+Ugreen Laptop Stand
+Ugreen Vertical Laptop Stand
+Lamicall Adjustable Laptop Stand
+Majextand
+Bestand Laptop Stand
+Moft Invisible Laptop Stand
+Grovemade Monitor Stand
+Grovemade Laptop Stand
+Oakywood Dual Monitor Stand
+Fellowes Office Suites Monitor Riser
+Fellowes Smart Suites Monitor Riser
+Kensington SmartFit Monitor Stand Plus
+IKEA ELLOVEN monitor stand with drawer
+IKEA SIGFINN laptop stand
+IKEA BRÄDA laptop support
+Logitech Casa Pop-Up Desk Stand
+Elgato Green Screen MT
+Elgato Multi Mount System
+Elgato Wall Mount
+[accessory:mat]
+Logitech G840 XL
+Logitech G740
+Logitech G440
+Logitech Studio Series Desk Mat Large
+Razer Gigantus V2 Large
+Razer Goliathus Chroma 3XL
+Razer Firefly V2
+Razer Sphex V3
+Razer Acari
+Razer Atlas
+SteelSeries QcK Heavy XL
+SteelSeries QcK Edge XL
+SteelSeries QcK Prism XL
+SteelSeries QcK Performance Control XXL
+Corsair MM300 PRO Extended
+Corsair MM800 RGB POLARIS
+Corsair MM700 RGB 3XL
+HyperX Pulsefire Mat XL
+HyperX Pulsefire Mat RGB XL
+Glorious 3XL Extended Mouse Pad
+Glorious Padded Helios
+Artisan Zero Soft XL
+Artisan Raiden
+Artisan Hien
+Zowie G-SR
+Zowie G-SR-SE
+Zowie P-SR
+Lethal Gaming Gear Saturn Pro
+Pulsar ParaBrake V2
+Pulsar Superglide Glass Mousepad
+Wallhack SP-004
+Xtrfy GP4 XL
+Endgame Gear EM-C Plus
+Cooler Master MP511
+Cooler Master MP860
+ASUS ROG Scabbard II
+ASUS ROG Sheath
+Orbitkey Desk Mat Large
+Grovemade Leather Desk Pad
+Satechi Eco Leather Deskmate
+Ugreen Leather Desk Mat
+Nordik Desk Mat
+Keychron Desk Mat
+Keychron Felt Desk Mat
+Logitech Mouse Pad Studio Series
+IKEA LINNMON desk pad
+IKEA SKRUTT desk pad
