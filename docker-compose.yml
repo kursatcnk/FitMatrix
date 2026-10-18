@@ -1,0 +1,41 @@
+# One-command FitMatrix for any OS: SQL Server, the API and the editor.
+#   docker compose up --build      → http://localhost:8080
+# The API applies migrations, the starter catalog and backend/Data/Catalog/catalog-snapshot.json on first start.
+# Override the development SA password by creating a .env file (see .env.example).
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-FitMatrix_Dev_2026!}
+    volumes:
+      - fitmatrix-sql:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -Q \"SELECT 1\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${FITMATRIX_ENVIRONMENT:-Production}
+      ConnectionStrings__FitMatrix: Server=db;Database=FitMatrix;User Id=sa;Password=${MSSQL_SA_PASSWORD:-FitMatrix_Dev_2026!};TrustServerCertificate=True
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "${FITMATRIX_PORT:-8080}:80"
+    depends_on:
+      - api
+
+volumes:
+  fitmatrix-sql:

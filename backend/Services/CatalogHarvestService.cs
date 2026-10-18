@@ -206,14 +206,27 @@ public sealed partial class CatalogHarvestService(
         try
         {
             await using var scope = scopeFactory.CreateAsyncScope();
-            var discovery = scope.ServiceProvider.GetRequiredService<ProductDiscoveryService>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<FitMatrixDbContext>();
+            var visitKey = PageVisitKey($"query:{query.Query.Trim().ToLowerInvariant()}");
+            var now = DateTimeOffset.UtcNow;
+            // A model whose dimensions were not published a week ago will not be found again on this rerun.
+            var visit = await dbContext.ProductLookupCaches.AsNoTracking()
+                .Where(entry => entry.NormalizedQuery == visitKey && entry.ExpiresAt > now)
+                .Select(entry => entry.ResponseJson)
+                .FirstOrDefaultAsync(token);
+            if (visit == "no-dimensions")
+                return (CatalogHarvestOutcome.NoVerifiedMatch, null, "Son 30 günde arandı; doğrulanmış ölçü bulunamamıştı.", false);
 
+            var discovery = scope.ServiceProvider.GetRequiredService<ProductDiscoveryService>();
             var startedRequest = DateTimeOffset.UtcNow;
             var response = await discovery.SearchAsync(query.Query, token);
             var usedNetwork = DateTimeOffset.UtcNow - startedRequest > TimeSpan.FromMilliseconds(750);
 
             var plan = CatalogHarvestPlanner.Plan(response, requireVerified, query.Hint);
-            return await StoreAsync(scope, plan, usedNetwork, token);
+            var result = await StoreAsync(scope, plan, usedNetwork, token);
+            if (result.Outcome != CatalogHarvestOutcome.Failed && usedNetwork)
+                await RememberVisitAsync(dbContext, visitKey, result.Outcome, now, token);
+            return result;
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested)
         {
