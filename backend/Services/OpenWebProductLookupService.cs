@@ -724,7 +724,13 @@ public sealed partial class OpenWebProductLookupService(
         if (IsUnsafeSourceUri(finalUri)) return null;
 
         var html = await ReadLimitedStringAsync(response.Content, 4_000_000, cancellationToken);
-        if (html is null) return null;
+        return html is null ? null : ParseManufacturerPage(html, finalUri, brand);
+    }
+
+    // Shared by plain HTTP reads and headless-browser renders of a manufacturer product page.
+    public static ExternalProductCandidateDto? ParseManufacturerPage(string html, Uri finalUri, string brand)
+    {
+        if (IsUnsafeSourceUri(finalUri)) return null;
         var title = ExtractPageProductName(html);
         if (string.IsNullOrWhiteSpace(title)) return null;
 
@@ -1123,6 +1129,15 @@ public sealed partial class OpenWebProductLookupService(
         (result.DepthCm is not null ? 120 : 0) +
         result.Specifications.Count;
 
+    // True when the visible text just before a spec row is about the parcel ("Packaging", "Shipping"),
+    // so per-parcel width/height rows are not mistaken for the product body.
+    private static bool InPackagingContext(string html, int index)
+    {
+        var start = Math.Max(0, index - 1_500);
+        var preceding = CleanHtml(html[start..index]);
+        return PackagingTermsRegex().IsMatch(preceding[Math.Max(0, preceding.Length - 250)..]);
+    }
+
     private static List<ExternalSpecificationDto> ExtractSpecifications(string html)
     {
         var specifications = new List<ExternalSpecificationDto>();
@@ -1133,6 +1148,7 @@ public sealed partial class OpenWebProductLookupService(
 
         foreach (Match row in TableRowRegex().Matches(html))
         {
+            if (InPackagingContext(html, row.Index)) continue;
             var cells = TableCellRegex().Matches(row.Groups["row"].Value)
                 .Select(cell => CleanHtml(cell.Groups["cell"].Value))
                 .Where(cell => cell.Length > 0)
@@ -1141,10 +1157,10 @@ public sealed partial class OpenWebProductLookupService(
             if (cells.Length >= 2) AddSpecification(specifications, seen, "Teknik tablo", cells[0], string.Join(" · ", cells.Skip(1)), null);
         }
 
-        foreach (Match pair in DefinitionPairRegex().Matches(html))
+        foreach (Match pair in DefinitionPairRegex().Matches(html).Where(pair => !InPackagingContext(html, pair.Index)))
             AddSpecification(specifications, seen, "Teknik ayrıntılar", CleanHtml(pair.Groups["name"].Value), CleanHtml(pair.Groups["value"].Value), null);
 
-        foreach (Match pair in MeasurementSpanPairRegex().Matches(html))
+        foreach (Match pair in MeasurementSpanPairRegex().Matches(html).Where(pair => !InPackagingContext(html, pair.Index)))
             AddSpecification(specifications, seen, "Üretici ölçüleri", CleanHtml(pair.Groups["name"].Value), CleanHtml(pair.Groups["value"].Value), null);
 
         foreach (Match pair in JsonMeasurementNameFirstRegex().Matches(html).Cast<Match>()
@@ -1162,7 +1178,13 @@ public sealed partial class OpenWebProductLookupService(
         var decodedText = WebUtility.HtmlDecode(HtmlTagRegex().Replace(JsonUnicodeEscapeRegex().Replace(html, match =>
             ((char)Convert.ToInt32(match.Groups["hex"].Value, 16)).ToString()), "\n"));
         foreach (Match axis in TextAxisMeasurementRegex().Matches(decodedText))
-            AddSpecification(specifications, seen, "Üretici ölçü listesi", axis.Groups["name"].Value, axis.Groups["value"].Value.Trim(), null);
+        {
+            // Parcel sizes are listed with the same labels ("Packaging … Height: 3 cm"); skip them.
+            var context = decodedText.Substring(Math.Max(0, axis.Index - 250), Math.Min(250, axis.Index));
+            if (PackagingTermsRegex().IsMatch(context)) continue;
+            var name = WhitespaceRegex().Replace(axis.Groups["name"].Value, " ");
+            AddSpecification(specifications, seen, "Üretici ölçü listesi", name, axis.Groups["value"].Value.Trim(), null);
+        }
 
         foreach (var card in ExtractCardSpecifications(html))
             AddSpecification(specifications, seen, "Teknik kartlar", card.Name, card.Value, null);
@@ -1218,21 +1240,22 @@ public sealed partial class OpenWebProductLookupService(
             .FirstOrDefault(value => value is not null);
 
         var width = dimension?.WidthCm ?? FindNamedMeasurement(specifications, ["width", "product width", "genişlik"], "cm");
-        var height = dimension?.HeightCm ?? FindNamedMeasurement(specifications, ["height", "product height", "front height", "rear height", "yükseklik"], "cm");
+        // Sit/stand desks publish only a range; the lowest setting is the seated working height.
+        var height = dimension?.HeightCm ?? FindNamedMeasurement(specifications, ["height", "product height", "front height", "rear height", "yükseklik", "min. height", "minimum height", "max. height", "maximum height"], "cm");
         var depth = dimension?.DepthCm ?? FindNamedMeasurement(specifications, ["depth", "product depth", "length", "derinlik"], "cm");
         var weight = FindWeightMeasurement(specifications);
 
         if (width is null || height is null || depth is null)
         {
+            // The first "dimensions" on a page is often the package or a script blob; use the first product triple.
             var text = CleanHtml(html);
-            var generic = GenericDimensionRegex().Match(text);
-            if (generic.Success && !PackagingTermsRegex().IsMatch(generic.Value))
-            {
-                dimension = ParseDimensionTriple(generic.Groups["label"].Value, generic.Groups["value"].Value, isDisplay);
-                width ??= dimension?.WidthCm;
-                height ??= dimension?.HeightCm;
-                depth ??= dimension?.DepthCm;
-            }
+            dimension = GenericDimensionRegex().Matches(text)
+                .Where(match => !PackagingTermsRegex().IsMatch(match.Groups["label"].Value))
+                .Select(match => ParseDimensionTriple(match.Groups["label"].Value, match.Groups["value"].Value, isDisplay))
+                .FirstOrDefault(parsed => parsed is not null);
+            width ??= dimension?.WidthCm;
+            height ??= dimension?.HeightCm;
+            depth ??= dimension?.DepthCm;
         }
         return new MeasurementSet(width, height, depth, weight);
     }
@@ -1297,6 +1320,23 @@ public sealed partial class OpenWebProductLookupService(
             .MaxBy(item => item.Millimetres)
             .Match;
         return $"{largest.Groups["number"].Value} {largest.Groups["unit"].Value}";
+    }
+
+    // Development probe aid: every specification the readers extracted, with the reader that found it.
+    internal static IReadOnlyList<string> DescribeSpecifications(string html) =>
+        ExtractSpecifications(html).Select(spec => $"{spec.Group} | {spec.Name} = {spec.Value}").ToList();
+
+    // Development probe aid: the text around each "dimension" mention and what the triple reader made of it.
+    internal static IReadOnlyList<string> DescribeDimensionText(string html)
+    {
+        var text = CleanHtml(html);
+        var contexts = Regex.Matches(text, "dimension", RegexOptions.IgnoreCase, TimeSpan.FromSeconds(1))
+            .Take(8)
+            .Select(match => "text: " + text.Substring(Math.Max(0, match.Index - 20), Math.Min(140, text.Length - Math.Max(0, match.Index - 20))));
+        var triples = GenericDimensionRegex().Matches(text)
+            .Take(8)
+            .Select(match => $"triple: [{match.Groups["label"].Value}] [{match.Groups["value"].Value}]");
+        return contexts.Concat(triples).ToList();
     }
 
     internal static (decimal? WidthCm, decimal? HeightCm, decimal? DepthCm) ReadBodyDimensions(string html, bool isDisplay = false)
@@ -1644,7 +1684,7 @@ public sealed partial class OpenWebProductLookupService(
     [GeneratedRegex("[\\\"'](?:measure|text|value)[\\\"']\\s*:\\s*[\\\"'](?<value>\\d+(?:[.,]\\d+)?[^\\\"']{0,60})[\\\"'][^{}]{0,180}?[\\\"']name[\\\"']\\s*:\\s*[\\\"'](?<name>Width|Height|Depth|Length)[\\\"']", RegexOptions.IgnoreCase, 1000)]
     private static partial Regex JsonMeasurementValueFirstRegex();
 
-    [GeneratedRegex("[\\\"']?\\b(?:name|facet|label|title|key|attribute|specName|specLabel)\\b[\\\"']?\\s*:\\s*[\\\"'](?<name>(?:[^\\\"'\\\\]{0,40}?\\b)?(?:width|height|depth|length|dimensions?)(?:\\b[^\\\"'\\\\]{0,40})?)[\\\"']\\s*,\\s*[\\\"']?\\b(?:value|measure|text|specValue|displayValue|values)\\b[\\\"']?\\s*:\\s*\\[?\\s*[\\\"'](?<value>[^\\\"'\\\\]{1,120})[\\\"']", RegexOptions.IgnoreCase, 1000)]
+    [GeneratedRegex("[\\\"']?\\b(?:name|facet|label|title|key|attribute|specName|specLabel)\\b[\\\"']?\\s*:\\s*[\\\"'](?<name>(?:[^\\\"'\\\\]{0,40}?\\b)?(?:width|height|depth|length|dimensions?)(?:\\b[^\\\"'\\\\]{0,40})?)[\\\"']\\s*,\\s*[\\\"']?\\b(?:value|measure|text|specValue|displayValue|values)\\b[\\\"']?\\s*:\\s*\\[?\\s*[\\\"'](?<value>[^\\\"'\\\\]{0,40}?\\d+(?:[.,]\\d+)?\\s*(?:mm|cm|in|inch|inches)(?![a-z])[^\\\"'\\\\]{0,70})[\\\"']", RegexOptions.IgnoreCase, 1000)]
     private static partial Regex ScriptLabelValueRegex();
 
     [GeneratedRegex("(?<number>\\d+(?:[.,]\\d+)?)\\s*(?<unit>mm|cm)\\b", RegexOptions.IgnoreCase, 250)]
@@ -1663,7 +1703,8 @@ public sealed partial class OpenWebProductLookupService(
     private static partial Regex JsonUnicodeEscapeRegex();
 
     // The look-behind keeps "Cable length: 1.8 m" and similar qualified names out.
-    [GeneratedRegex("(?<![\\p{L}][ \\t]?)\\b(?<name>Length|Width|Height|Depth)\\s*(?:\\|\\|\\||:)\\s*(?<value>\\d+(?:[.,]\\d+)?\\s*(?:mm|cm)\\b(?:(?!\\b(?:Length|Width|Height|Depth|Weight)\\b)[^\\n<\"|]){0,70})", RegexOptions.IgnoreCase, 1000)]
+    // Separators: "Width: 63.9 mm", "Length|||120 mm", or a label line followed by its value line ("Width\n160 cm").
+    [GeneratedRegex("(?<![\\p{L}][ \\t]?)\\b(?<name>(?:(?:min|max)(?:imum|\\.)?[ \\t]+)?(?:Length|Width|Height|Depth))[ \\t]*(?:\\|\\|\\||:|\\r?\\n)\\s*(?<value>\\d+(?:[.,]\\d+)?\\s*(?:mm|cm)\\b(?:(?!\\b(?:Length|Width|Height|Depth|Weight)\\b)[^\\n<\"|]){0,70})", RegexOptions.IgnoreCase, 1000)]
     private static partial Regex TextAxisMeasurementRegex();
 
     [GeneratedRegex("\\d\\s*(?:in|inch|inches|\\\"|ft|lb|lbs)\\b", RegexOptions.IgnoreCase, 250)]
@@ -1675,7 +1716,7 @@ public sealed partial class OpenWebProductLookupService(
     [GeneratedRegex("(?<a>\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?)\\s*(?:\\([WHD]\\))?\\s*[x×]\\s*(?<b>\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?)\\s*(?:\\([WHD]\\))?\\s*[x×]\\s*(?<c>\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?)\\s*(?:\\([WHD]\\))?\\s*(?<unit>mm|cm|m|inches|inch|in|\\\")?", RegexOptions.IgnoreCase, 500)]
     private static partial Regex DimensionTripleRegex();
 
-    [GeneratedRegex("(?<label>(?:product\\s+)?dimensions?[^:]{0,70})[:\\s]+(?<value>\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?\\s*[x×]\\s*\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?\\s*[x×]\\s*\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?\\s*(?:mm|cm|m|inches|inch|in|\\\"))", RegexOptions.IgnoreCase, 500)]
+    [GeneratedRegex("(?<label>(?:product\\s+)?dimensions?[^:\\d]{0,70}?)[:\\s]+(?<value>\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?\\s*[x×]\\s*\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?\\s*[x×]\\s*\\d+(?:[.,]\\d+)?(?:\\s*[~-]\\s*\\d+(?:[.,]\\d+)?)?\\s*(?:mm|cm|m|inches|inch|in|\\\"))", RegexOptions.IgnoreCase, 500)]
     private static partial Regex GenericDimensionRegex();
 
     [GeneratedRegex("(?<name>(?:product\\s+)?dimensions?\\s*(?:(?:with|without|incl\\.?|excl\\.?)\\s+stand)?\\s*(?:\\([^)]{0,60}\\))?)\\s*[:=-]?\\s*(?<value>\\d+(?:[.,]\\d+)?\\s*[x×]\\s*\\d+(?:[.,]\\d+)?\\s*[x×]\\s*\\d+(?:[.,]\\d+)?\\s*(?:mm|cm|m|inches|inch|in|\\\"))", RegexOptions.IgnoreCase, 750)]
@@ -1690,7 +1731,8 @@ public sealed partial class OpenWebProductLookupService(
     [GeneratedRegex("[\\p{L}\\p{Nd}]+(?:[-_][\\p{L}\\p{Nd}]+)*", RegexOptions.None, 500)]
     private static partial Regex QueryTokenRegex();
 
-    [GeneratedRegex("(?<unit>mm|cm|kg|g|lb|lbs|inches|inch|in)\\b", RegexOptions.IgnoreCase, 250)]
+    // The look-behind stops words such as "Min." or "Main" from reading as inches.
+    [GeneratedRegex("(?<![a-z])(?<unit>mm|cm|kg|g|lb|lbs|inches|inch|in)\\b", RegexOptions.IgnoreCase, 250)]
     private static partial Regex UnitInLabelRegex();
 
     [GeneratedRegex("package|packaging|shipping|boxed|box dimensions|gross weight", RegexOptions.IgnoreCase, 250)]
