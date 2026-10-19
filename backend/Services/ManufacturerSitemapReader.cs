@@ -16,8 +16,44 @@ public sealed record ManufacturerSource(
     string? Exclude = null,
     string? PageSuffix = null,
     IReadOnlyList<ManufacturerUrlHint>? Hints = null,
-    int? DedupePathSegments = null)
+    int? DedupePathSegments = null,
+    bool Render = false,
+    bool MergeColourVariants = false,
+    string? TypeFromUrl = null)
 {
+    // IKEA titles mix orders ("MICKE desk, white, 105x50 cm" and "VADHOLMA brown, stained ash, drawer unit").
+    // The product type is taken from the URL instead; the series name is the leading upper-case words and
+    // any segment with a number (a size) is kept, so colour variants of one size share a name.
+    public string? NameFromUrl(Uri pageUri, string productName)
+    {
+        if (TypeFromUrl is null) return null;
+        var match = Regex.Match(pageUri.AbsoluteUri, TypeFromUrl, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100));
+        if (!match.Success) return null;
+
+        var withoutBrand = productName.StartsWith(Brand, StringComparison.OrdinalIgnoreCase) ? productName[Brand.Length..].Trim() : productName;
+        var seriesTokens = withoutBrand.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(token => token.TrimEnd(','))
+            .TakeWhile(token => token == "/" || (token.Any(char.IsLetter) && token == token.ToUpperInvariant()))
+            .ToList();
+        if (seriesTokens.Count == 0) return null;
+
+        var sizes = withoutBrand.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+            .Skip(1)
+            .Where(segment => segment.Any(char.IsDigit));
+        var type = match.Groups["type"].Value.Replace('-', ' ');
+        return string.Join(", ", new[] { $"{Brand} {string.Join(' ', seriesTokens)} {type}" }.Concat(sizes));
+    }
+
+    // "MICKE desk, white, 105x50 cm" → "MICKE desk, 105x50 cm": comma segments without a number (colours,
+    // finishes) are dropped so colour variants of one size become a single catalog product.
+    public static string WithoutPlainSegments(string name)
+    {
+        var segments = name.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        return segments.Length <= 1
+            ? name.Trim()
+            : string.Join(", ", segments.Take(1).Concat(segments.Skip(1).Where(segment => segment.Any(char.IsDigit))));
+    }
+
     // Colour/SKU variants share the leading path segments (/gaming-mice/razer-viper-v3-pro/RZ01-...).
     public string DedupeKey(Uri uri)
     {

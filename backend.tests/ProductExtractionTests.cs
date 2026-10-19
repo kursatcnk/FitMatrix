@@ -73,6 +73,52 @@ public sealed class ProductExtractionTests
         Assert.Equal(21.4m, depth);
     }
 
+    [Fact]
+    public void ReadBodyDimensions_ReadsLabelLinesAndSkipsParcelSizes()
+    {
+        // Shape of IKEA's rendered "Weight & measurements" section followed by the parcel list.
+        const string html = """
+            <h3>Weight &amp; measurements</h3>
+            <dl><dt>Width</dt><dd>160 cm</dd><dt>Depth</dt><dd>80 cm</dd>
+            <dt>Max. height</dt><dd>118 cm</dd><dt>Min. height</dt><dd>71 cm</dd></dl>
+            <h3>Packaging</h3>
+            <p>Article number 606.134.50</p><dl><dt>Width:</dt><dd>85 cm</dd><dt>Height:</dt><dd>3 cm</dd><dt>Length:</dt><dd>169 cm</dd></dl>
+            """;
+
+        var (width, height, depth) = OpenWebProductLookupService.ReadBodyDimensions(html);
+
+        Assert.Equal((160m, 71m, 80m), (width!.Value, height!.Value, depth!.Value));
+    }
+
+    [Fact]
+    public void ReadBodyDimensions_IgnoresUnitlessScriptValuesSuchAsImageSizes()
+    {
+        const string html = """
+            <script>{images:[{key:"height",value:"1080"},{key:"width",value:"1920"}]}</script>
+            <dl><dt>Product dimensions (L × W × H)</dt><dd>447 x 215 x 469 mm</dd></dl>
+            """;
+
+        var (width, height, depth) = OpenWebProductLookupService.ReadBodyDimensions(html);
+
+        Assert.Equal((21.5m, 46.9m, 44.7m), (width!.Value, height!.Value, depth!.Value));
+    }
+
+    [Fact]
+    public void ReadBodyDimensions_SkipsPackageTriplesAndHonoursLabelOrder()
+    {
+        const string html = """
+            <script>{"dimensions":"12 x 34"}</script>
+            <dl><dt>Product dimensions (L × W × H)</dt><dd>447 x 215 x 469 mm</dd>
+            <dt>Package dimensions (L × W × H)</dt><dd>565 x 326 x 553 mm</dd></dl>
+            """;
+
+        var (width, height, depth) = OpenWebProductLookupService.ReadBodyDimensions(html);
+
+        Assert.Equal(21.5m, width);
+        Assert.Equal(46.9m, height);
+        Assert.Equal(44.7m, depth);
+    }
+
     [Theory]
     [InlineData("<meta property=\"og:title\" content=\"MX Master 3S Performance Wireless Mouse\">", "MX Master 3S Performance Wireless Mouse")]
     [InlineData("<title>Buy Razer Viper V3 Pro | Razer United States</title>", "Razer Viper V3 Pro")]
@@ -105,6 +151,28 @@ public sealed class ProductExtractionTests
     public void ComposeDisplayName_PutsTheBrandFirstOnce(string title, string expected)
     {
         Assert.Equal(expected, OpenWebProductLookupService.ComposeDisplayName("ASUS", title));
+    }
+
+    [Theory]
+    [InlineData("IKEA MICKE desk, white, 105x50 cm", "IKEA MICKE desk, 105x50 cm")]
+    [InlineData("IKEA MARKUS office chair, Vissle dark grey", "IKEA MARKUS office chair")]
+    [InlineData("IKEA ALEX drawer unit", "IKEA ALEX drawer unit")]
+    public void WithoutPlainSegments_MergesColourVariants(string name, string expected)
+    {
+        Assert.Equal(expected, ManufacturerSource.WithoutPlainSegments(name));
+    }
+
+    [Theory]
+    [InlineData("https://www.ikea.com/gb/en/p/vadholma-drawer-unit-brown-stained-ash-50374332/", "IKEA VADHOLMA brown, stained ash, drawer unit", "IKEA VADHOLMA drawer unit")]
+    [InlineData("https://www.ikea.com/gb/en/p/micke-desk-white-80354276/", "IKEA MICKE desk, white, 105x50 cm", "IKEA MICKE desk, 105x50 cm")]
+    [InlineData("https://www.ikea.com/gb/en/p/lagkapten-alex-desk-white-s29521704/", "IKEA LAGKAPTEN / ALEX Desk, white, 140x60 cm", "IKEA LAGKAPTEN / ALEX desk, 140x60 cm")]
+    [InlineData("https://www.ikea.com/gb/en/p/vattenkar-desktop-shelf-white-20541568/", "IKEA VATTENKAR Desktop shelf, white, 49x15 cm", "IKEA VATTENKAR desktop shelf, 49x15 cm")]
+    public void NameFromUrl_UsesTheUrlTypeAndKeepsSizes(string url, string title, string expected)
+    {
+        var source = new ManufacturerSource("ikea", "IKEA", [], ".*",
+            TypeFromUrl: "/p/[a-z0-9-]*?-(?<type>desk|drawer-unit|desktop-shelf)-");
+
+        Assert.Equal(expected, source.NameFromUrl(new Uri(url), title));
     }
 
     [Fact]

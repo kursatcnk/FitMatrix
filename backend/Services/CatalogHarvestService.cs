@@ -290,19 +290,23 @@ public sealed partial class CatalogHarvestService(
         Uri page,
         CancellationToken token)
     {
-        var openWeb = scope.ServiceProvider.GetRequiredService<OpenWebProductLookupService>();
         ExternalProductCandidateDto? candidate;
         try
         {
-            candidate = await openWeb.ReadManufacturerPageAsync(page, source.Brand, token);
+            candidate = await ReadPageAsync(scope, source, page, token);
         }
         catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.TooManyRequests)
         {
             logger.LogInformation("{Source} is rate limiting; pausing for a minute.", source.Name);
             await Task.Delay(TimeSpan.FromMinutes(1), token);
-            candidate = await openWeb.ReadManufacturerPageAsync(page, source.Brand, token);
+            candidate = await ReadPageAsync(scope, source, page, token);
         }
         if (candidate is null) return (CatalogHarvestOutcome.NoVerifiedMatch, null, "Sayfada üç eksen gövde ölçüsü yok.", true);
+        if (source.MergeColourVariants)
+        {
+            var name = source.NameFromUrl(page, candidate.ProductName) ?? ManufacturerSource.WithoutPlainSegments(candidate.ProductName);
+            candidate = candidate with { ProductName = name, ModelName = name[source.Brand.Length..].Trim() };
+        }
         if (BundleRegex().IsMatch(candidate.ProductName))
             return (CatalogHarvestOutcome.NoVerifiedMatch, candidate.ProductName, "Paket ürün; parçalar ayrı ayrı kataloglanır.", true);
 
@@ -312,6 +316,20 @@ public sealed partial class CatalogHarvestService(
         var response = new ProductDiscoveryResponseDto(candidate.ProductName, [], candidate, [candidate], SitemapProvider);
         var plan = CatalogHarvestPlanner.Plan(response, requireVerified: true, hint);
         return await StoreAsync(scope, plan, true, token);
+    }
+
+    // Sources marked "render" load their specifications with JavaScript, so they go through a headless browser.
+    private static async Task<ExternalProductCandidateDto?> ReadPageAsync(
+        AsyncServiceScope scope,
+        ManufacturerSource source,
+        Uri page,
+        CancellationToken token)
+    {
+        if (!source.Render)
+            return await scope.ServiceProvider.GetRequiredService<OpenWebProductLookupService>().ReadManufacturerPageAsync(page, source.Brand, token);
+
+        var rendered = await scope.ServiceProvider.GetRequiredService<RenderedPageService>().RenderAsync(page, token);
+        return rendered is null ? null : OpenWebProductLookupService.ParseManufacturerPage(rendered.Html, rendered.FinalUri, source.Brand);
     }
 
     // Manufacturer URLs often redirect, so the stored source URL alone cannot tell a rerun which sitemap
