@@ -56,7 +56,7 @@ Yerel kullanım için tamamlanan uygulama:
 - Ürün araması için dakikada 20 istek hız sınırı, istemci zaman aşımı, güvenli URL/SSRF kontrolleri ve genel hata yanıtları
 - Veritabanı bağlantısını ve canlı ürün/proje sayılarını denetleyen sağlık endpoint'i
 - Klavye erişimi, belirgin odak stilleri ve azaltılmış hareket tercihi desteği
-- Kataloğu arka planda binlerce ürüne büyüten toplu toplama: Logitech, Razer, SteelSeries ve ASUS ürün haritalarını robots.txt kurallarına uyarak okur; ayrıca 2.000'den fazla gerçek model adını arama hattından geçirir. Yalnızca üç eksen ölçüsü ve kaynağı doğrulanan, ürün türüne göre makul boyuttaki ürünler kaydedilir
+- Kataloğu arka planda binlerce ürüne büyüten toplu toplama: Logitech, Razer, SteelSeries, ASUS, IKEA ve Fractal Design ürün haritalarını robots.txt kurallarına uyarak okur (ölçüleri JavaScript ile yükleyen siteler Playwright ve kurulu Edge ile açılır); ayrıca 2.000'den fazla gerçek model adını arama hattından geçirir. Yalnızca üç eksen ölçüsü ve kaynağı doğrulanan, ürün türüne göre makul boyuttaki ürünler kaydedilir
 - Katalog panelinde kelime sırasından ve Türkçe karakterden bağımsız arama, kategori başına ürün sayısı ve "Daha fazla göster" ile sayfalı liste
 - Kullanıcı boyuna göre ergonomi kontrolü: masa yüksekliği, ekran üst kenarının göz hizası, görüş mesafesi, ekran ortalama ve klavye mesafesi için canlı puan ve öneriler
 
@@ -222,7 +222,7 @@ npm test -- --run
 npm run build
 ```
 
-Mevcut otomatik kapsam 79 backend ve 27 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
+Mevcut otomatik kapsam 88 backend ve 27 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
 
 ## Tamamlanma sınırı
 

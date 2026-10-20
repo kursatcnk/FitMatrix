@@ -101,7 +101,22 @@ Kayıttan önce:
 - Paket/set ürünleri ve sınıflandırılamayan genel aksesuarlar (kablo, alıcı, kılıf) alınmaz.
 - Daha önce kaydedilmiş sayfalar ağa çıkmadan atlanır; iş kesilirse yeniden başlatıldığında kaldığı yerden sürer.
 
-Ürün sayfası ölçüyü sunucu tarafında yayımlamayan üreticiler (örneğin IKEA ve Razer klavyeleri) bu yoldan gelmez; onlar için model listeleri ve kullanıcı aramaları kullanılır.
+### JavaScript ile yüklenen sayfalar
+
+Bazı üreticiler (IKEA, Fractal Design) teknik özellikleri sayfaya tarayıcıda JavaScript ile ekler; düz HTTP isteğiyle gelen HTML'de ölçü yoktur. Bu kaynaklar `manufacturers.json` içinde `"render": true` ile işaretlenir ve Playwright ile başsız tarayıcıda açılır:
+
+- Windows'ta kurulu Microsoft Edge kullanılır (`BrowserRendering:Channel = msedge`); ayrı tarayıcı indirilmez. Diğer sistemlerde `playwright install chromium` ile Chromium kurulduysa o kullanılır, kurulmadıysa bu kaynaklar sessizce atlanır (Docker imajı varsayılan olarak tarayıcı içermez).
+- Sayfa yüklendikten sonra "Specifications", "Measurements", "Dimensions/Weights" gibi bölümler açılır; görünür metin de okunur, böylece ayrı öğelere bölünmüş "Width: 105 cm" satırları yakalanır.
+- Aynı anda tek sayfa açılır; bot korumasıyla yanıt veren siteler (Dell, Corsair, MSI, Herman Miller) atlanır, koruma aşılmaya çalışılmaz.
+- `"mergeColourVariants": true` renk varyantlarını tek ürüne indirir; IKEA için ürün türü adresten (`typeFromUrl`) alınır: "IKEA MICKE desk, 105x50 cm".
+
+Yeni bir üreticiyi eklemeden önce tek bir ürün sayfası Development ortamında denenebilir:
+
+```text
+GET /api/admin/catalog/page-probe?url=<ürün adresi>&brand=<marka>&render=true&debug=true
+```
+
+Ürün sayfası ölçüyü hiç yayımlamayan ya da yalnızca parça ölçüleri veren ürünler (Razer klavyeleri, Secretlab sandalyeleri) bu yoldan da gelmez; onlar için model listeleri ve kullanıcı aramaları kullanılır.
 
 ## Model listeleriyle toplu toplama
 
