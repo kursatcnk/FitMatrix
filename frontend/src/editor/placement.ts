@@ -152,3 +152,35 @@ export function findAvailablePlacement(
   }
   return null
 }
+
+export interface EdgeClearances {
+  left: number
+  right: number
+  back: number
+  front: number
+  bounds: { minX: number; maxX: number; minZ: number; maxZ: number }
+}
+
+// Free space between an item's (rotated) footprint and each desk edge, in centimetres. Negative values
+// mean the footprint sticks out past that edge.
+export function getEdgeClearances(item: PlacedEquipment, definition: EquipmentDefinition, desk: DeskDimensions): EdgeClearances {
+  const footprint = getPlacementFootprint(item, definition)
+  const angle = toRadians(item.rotation)
+  const cos = Math.abs(Math.cos(angle))
+  const sin = Math.abs(Math.sin(angle))
+  const halfX = (footprint.width / 2) * cos + (footprint.depth / 2) * sin
+  const halfZ = (footprint.width / 2) * sin + (footprint.depth / 2) * cos
+  const bounds = {
+    minX: item.position.x - halfX,
+    maxX: item.position.x + halfX,
+    minZ: item.position.z - halfZ,
+    maxZ: item.position.z + halfZ,
+  }
+  return {
+    left: bounds.minX + desk.width / 2,
+    right: desk.width / 2 - bounds.maxX,
+    back: bounds.minZ + desk.depth / 2,
+    front: desk.depth / 2 - bounds.maxZ,
+    bounds,
+  }
+}

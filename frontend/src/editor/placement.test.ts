@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { findAvailablePlacement, getPlacementStatus } from './placement'
+import { findAvailablePlacement, getEdgeClearances, getPlacementStatus } from './placement'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment } from '../types/editor'
 
 const desk: DeskDimensions = { width: 160, depth: 80, height: 75 }
@@ -92,5 +92,32 @@ describe('findAvailablePlacement', () => {
   it('returns null when the product exceeds the desk in both orientations', () => {
     const definition = product(170, 90)
     expect(findAvailablePlacement(definition, [], desk, [definition])).toBeNull()
+  })
+})
+
+describe('getEdgeClearances', () => {
+  const definition: EquipmentDefinition = {
+    id: 'box',
+    name: 'Box',
+    category: 'accessory',
+    width: 40,
+    height: 10,
+    depth: 20,
+    footprintWidth: 40,
+    footprintDepth: 20,
+    defaultRotation: 0,
+    color: '#222222',
+    model: 'generic',
+  }
+
+  it('measures the free space to every desk edge', () => {
+    const clearances = getEdgeClearances(item('box', 'box', 10, -20), definition, desk)
+    expect([clearances.left, clearances.right, clearances.back, clearances.front]).toEqual([70, 50, 10, 50])
+  })
+
+  it('uses the rotated outline of the footprint', () => {
+    const clearances = getEdgeClearances(item('box', 'box', 0, 0, 90), definition, desk)
+    expect(clearances.left).toBeCloseTo(70)
+    expect(clearances.back).toBeCloseTo(20)
   })
 })

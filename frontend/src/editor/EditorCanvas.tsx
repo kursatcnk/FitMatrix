@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
-import { ContactShadows, Edges, Grid, OrbitControls, RoundedBox, TransformControls } from '@react-three/drei'
+import { ContactShadows, Edges, Grid, Html, Line, OrbitControls, RoundedBox, TransformControls } from '@react-three/drei'
 import { Quaternion, Vector3, type Group, type PerspectiveCamera } from 'three'
 import { resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import { useEditorStore } from '../store/editorStore'
 import { eyePoint } from './ergonomics'
-import { getPlacementFootprint, getPlacementStatus } from './placement'
+import { getEdgeClearances, getPlacementFootprint, getPlacementStatus } from './placement'
 import type { EquipmentDefinition, PlacedEquipment } from '../types/editor'
 
 function Desk() {
@@ -497,6 +497,42 @@ function CameraRig() {
     : <OrbitControls makeDefault target={target} minDistance={80} maxDistance={440} maxPolarAngle={Math.PI / 2.02} />
 }
 
+// Drafting-style dimension lines from the selected item to each desk edge, drawn just above the desktop.
+function SelectionClearances() {
+  const { items, desk, catalog, selectedId } = useEditorStore()
+  const item = items.find((candidate) => candidate.instanceId === selectedId)
+  const definition = item ? resolveEquipmentDefinition(item, catalog) : undefined
+  if (!item || !definition || definition.model === 'desk') return null
+
+  const { left, right, back, front, bounds } = getEdgeClearances(item, definition, desk)
+  const y = desk.height + 0.35
+  const centerX = (bounds.minX + bounds.maxX) / 2
+  const centerZ = (bounds.minZ + bounds.maxZ) / 2
+  const segments: Array<{ key: string; from: [number, number, number]; to: [number, number, number]; value: number }> = [
+    { key: 'left', from: [-desk.width / 2, y, centerZ], to: [bounds.minX, y, centerZ], value: left },
+    { key: 'right', from: [bounds.maxX, y, centerZ], to: [desk.width / 2, y, centerZ], value: right },
+    { key: 'back', from: [centerX, y, -desk.depth / 2], to: [centerX, y, bounds.minZ], value: back },
+    { key: 'front', from: [centerX, y, bounds.maxZ], to: [centerX, y, desk.depth / 2], value: front },
+  ]
+
+  return (
+    <group>
+      {segments.filter((segment) => segment.value >= 0.5).map((segment) => (
+        <group key={segment.key}>
+          <Line points={[segment.from, segment.to]} color="#161513" lineWidth={1.2} dashed dashSize={1.6} gapSize={1.1} />
+          <Html
+            position={[(segment.from[0] + segment.to[0]) / 2, y + 0.4, (segment.from[2] + segment.to[2]) / 2]}
+            center
+            zIndexRange={[5, 0]}
+          >
+            <span className="clearance-label">{Math.round(segment.value * 10) / 10} cm</span>
+          </Html>
+        </group>
+      ))}
+    </group>
+  )
+}
+
 function Scene() {
   const items = useEditorStore((state) => state.items)
   const selectItem = useEditorStore((state) => state.selectItem)
@@ -512,6 +548,7 @@ function Scene() {
         <Desk />
         <VesaMountHardware />
         {items.map((item) => <EquipmentItem key={item.instanceId} item={item} />)}
+        <SelectionClearances />
       </group>
       <Grid args={[420, 420]} position={[0, 0.02, 0]} cellSize={10} cellThickness={0.35} cellColor="#c2b9a8" sectionSize={40} sectionThickness={0.72} sectionColor="#8c8474" fadeDistance={340} infiniteGrid />
       <ContactShadows position={[0, 0.04, 0]} opacity={0.28} scale={260} blur={2.6} far={220} />
