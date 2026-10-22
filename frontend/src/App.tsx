@@ -3,7 +3,7 @@ import { Box, Check, Copy, Database, Download, FolderOpen, LoaderCircle, Plus, R
 import { EditorCanvas } from './editor/EditorCanvas'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
-import { analyzeErgonomics, clampUserHeight, DEFAULT_USER_HEIGHT } from './editor/ergonomics'
+import { analyzeErgonomics } from './editor/ergonomics'
 import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog } from './data/catalogFilter'
 import { deleteCatalogProduct, getCatalog, getCatalogProductDetail, importDiscoveredProduct, type ApiCatalogProductDetail, type DiscoveryCatalogInput } from './services/catalogApi'
 import { deleteProject, duplicateProject, getProject, listProjects, saveProjectToApi, type ProjectSummary } from './services/projectApi'
@@ -193,17 +193,6 @@ function NumberField({
   )
 }
 
-const USER_HEIGHT_KEY = 'fitmatrix.userHeightCm'
-
-function readStoredUserHeight() {
-  try {
-    const stored = Number(localStorage.getItem(USER_HEIGHT_KEY))
-    return stored ? clampUserHeight(stored) : DEFAULT_USER_HEIGHT
-  } catch {
-    return DEFAULT_USER_HEIGHT
-  }
-}
-
 function App() {
   const {
     projectId,
@@ -228,6 +217,8 @@ function App() {
     setCatalog,
     setCameraMode,
     resetCamera,
+    userHeight,
+    setUserHeight,
     setTransformMode,
     toggleSnap,
     undo,
@@ -262,18 +253,7 @@ function App() {
   const selectedDefinition = selectedItem ? resolveEquipmentDefinition(selectedItem, catalog) : undefined
   const placement = selectedItem ? getPlacementStatus(selectedItem, items, desk, catalog) : null
   const invalidItemCount = items.filter((item) => !getPlacementStatus(item, items, desk, catalog).isValid).length
-  const [userHeight, setUserHeight] = useState(readStoredUserHeight)
   const ergonomics = analyzeErgonomics(items, desk, userHeight, catalog)
-
-  const updateUserHeight = (height: number) => {
-    const next = clampUserHeight(height)
-    setUserHeight(next)
-    try {
-      localStorage.setItem(USER_HEIGHT_KEY, String(next))
-    } catch {
-      // Storage can be unavailable in private windows; the value still applies for this session.
-    }
-  }
   const externalProduct = discovery?.externalMatch
   const externalIsDesk = externalDraft?.model === 'desk'
   const externalPreviewDefinition: EquipmentDefinition | null = externalProduct && externalDraft && externalProduct.widthCm && externalProduct.heightCm && externalProduct.depthCm
@@ -839,6 +819,7 @@ function App() {
             <span className="toolbar-divider" />
             <button onClick={() => setCameraMode('perspective')} className={cameraMode === 'perspective' ? 'active' : ''}>Perspektif</button>
             <button onClick={() => setCameraMode('top')} className={cameraMode === 'top' ? 'active' : ''}>Üstten görünüm</button>
+            <button onClick={() => setCameraMode('eye')} className={cameraMode === 'eye' ? 'active' : ''} title="Kullanıcı boyuna göre oturan kişinin göz hizasından bakar">Göz hizası</button>
             <button onClick={resetCamera}>Kamerayı sıfırla</button>
             <span className="toolbar-divider" />
             <button onClick={toggleSnap} className={snapEnabled ? 'active' : ''}>Grid {snapEnabled ? 'açık' : 'kapalı'}</button>
@@ -943,7 +924,7 @@ function App() {
                   <h3>Ergonomi kontrolü</h3>
                   <span className={`ergonomics-score ${ergonomics.score >= 80 ? 'good' : 'warning'}`}>%{ergonomics.score}</span>
                 </div>
-                <NumberField label="Kullanıcı boyu" value={userHeight} suffix="cm" onChange={updateUserHeight} />
+                <NumberField label="Kullanıcı boyu" value={userHeight} suffix="cm" onChange={setUserHeight} />
                 <ul className="ergonomics-list">
                   {ergonomics.checks.map((check) => (
                     <li key={check.id} className={`ergonomics-check ${check.status}`}>

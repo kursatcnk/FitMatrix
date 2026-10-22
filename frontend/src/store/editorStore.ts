@@ -1,9 +1,10 @@
 import { create } from 'zustand'
 import { equipmentCatalog, resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import { findAvailablePlacement } from '../editor/placement'
+import { clampUserHeight, DEFAULT_USER_HEIGHT } from '../editor/ergonomics'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment, SavedProject } from '../types/editor'
 
-type CameraMode = 'perspective' | 'top'
+export type CameraMode = 'perspective' | 'top' | 'eye'
 type TransformMode = 'translate' | 'rotate'
 
 interface EditorSnapshot {
@@ -23,6 +24,7 @@ interface EditorState {
   snapEnabled: boolean
   cameraMode: CameraMode
   cameraRevision: number
+  userHeight: number
   transformMode: TransformMode
   historyPast: EditorSnapshot[]
   historyFuture: EditorSnapshot[]
@@ -38,6 +40,7 @@ interface EditorState {
   setCatalog: (catalog: EquipmentDefinition[]) => void
   setCameraMode: (mode: CameraMode) => void
   resetCamera: () => void
+  setUserHeight: (height: number) => void
   setTransformMode: (mode: TransformMode) => void
   toggleSnap: () => void
   beginHistoryBatch: () => void
@@ -46,6 +49,17 @@ interface EditorState {
   redo: () => void
   resetProject: () => void
   loadProject: (project: SavedProject) => void
+}
+
+const USER_HEIGHT_KEY = 'fitmatrix.userHeightCm'
+
+function readStoredUserHeight() {
+  try {
+    const stored = Number(localStorage.getItem(USER_HEIGHT_KEY))
+    return stored ? clampUserHeight(stored) : DEFAULT_USER_HEIGHT
+  } catch {
+    return DEFAULT_USER_HEIGHT
+  }
 }
 
 const defaultDesk: DeskDimensions = { width: 160, depth: 80, height: 75 }
@@ -82,6 +96,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   snapEnabled: true,
   cameraMode: 'perspective',
   cameraRevision: 0,
+  userHeight: readStoredUserHeight(),
   transformMode: 'translate',
   historyPast: [],
   historyFuture: [],
@@ -173,6 +188,15 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   setCatalog: (catalog) => set({ catalog }),
   setCameraMode: (cameraMode) => set({ cameraMode }),
   resetCamera: () => set((state) => ({ cameraMode: 'perspective', cameraRevision: state.cameraRevision + 1 })),
+  setUserHeight: (height) => {
+    const userHeight = clampUserHeight(height)
+    try {
+      localStorage.setItem(USER_HEIGHT_KEY, String(userHeight))
+    } catch {
+      // Storage can be unavailable in private windows; the value still applies for this session.
+    }
+    set({ userHeight })
+  },
   setTransformMode: (transformMode) => set({ transformMode }),
   toggleSnap: () => set((state) => ({ snapEnabled: !state.snapEnabled })),
 
