@@ -386,6 +386,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .project-backup-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 34px; padding: 0 10px; border: 1px solid var(--ink); border-radius: 2px; background: var(--paper-raised); font-size: 12px; font-weight: 600; }
 .project-backup-actions button:hover { background: var(--tape); }
 .project-backup-actions input { display: none; }
+.project-backup-actions .span-two { grid-column: 1 / -1; }
 .drawer-error, .drawer-empty { padding: 16px 0; color: var(--graphite); font-size: 13px; line-height: 1.5; }
 .drawer-error { color: var(--bad); }
 

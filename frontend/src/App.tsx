@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { Box, Check, Copy, Database, Download, FolderOpen, LoaderCircle, Plus, Redo2, RotateCcw, Ruler, Save, Search, Trash2, Undo2, Upload, Wifi, X } from 'lucide-react'
+import { Box, Check, Copy, Database, Download, FolderOpen, ListChecks, LoaderCircle, Plus, Redo2, RotateCcw, Ruler, Save, Search, Trash2, Undo2, Upload, Wifi, X } from 'lucide-react'
 import { EditorCanvas } from './editor/EditorCanvas'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
 import { analyzeErgonomics } from './editor/ergonomics'
 import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog } from './data/catalogFilter'
+import { buildPartsList, partsListToCsv } from './data/partsList'
 import { deleteCatalogProduct, getCatalog, getCatalogProductDetail, importDiscoveredProduct, type ApiCatalogProductDetail, type DiscoveryCatalogInput } from './services/catalogApi'
 import { deleteProject, duplicateProject, getProject, listProjects, saveProjectToApi, type ProjectSummary } from './services/projectApi'
 import { discoverProduct, type ExternalProductCandidate, type ProductDiscoveryResponse } from './services/productDiscoveryApi'
@@ -493,6 +494,25 @@ function App() {
     URL.revokeObjectURL(href)
   }
 
+  const exportPartsList = async () => {
+    // Source links come from the catalog detail; a product whose detail cannot be loaded is listed without one.
+    const databaseIds = [...new Set(items
+      .map((item) => resolveEquipmentDefinition(item, catalog)?.databaseId)
+      .filter((id): id is string => Boolean(id)))]
+    const details = await Promise.allSettled(databaseIds.map((id) => getCatalogProductDetail(id)))
+    const sources: Record<string, string> = {}
+    details.forEach((result, index) => {
+      if (result.status === 'fulfilled' && result.value.sources[0]) sources[databaseIds[index]] = result.value.sources[0].sourceUrl
+    })
+    const rows = buildPartsList(items, catalog, desk, (category) => categoryLabels[category], sources)
+    const href = URL.createObjectURL(new Blob([partsListToCsv(rows)], { type: 'text/csv;charset=utf-8' }))
+    const anchor = document.createElement('a')
+    anchor.href = href
+    anchor.download = `${projectName.trim().replace(/[^\p{L}\p{Nd}]+/gu, '-').replace(/^-|-$/g, '') || 'fitmatrix-proje'}-malzeme-listesi.csv`
+    anchor.click()
+    URL.revokeObjectURL(href)
+  }
+
   const importProjectBackup = async (file: File) => {
     setProjectsError(null)
     try {
@@ -958,6 +978,7 @@ function App() {
             <div className="project-backup-actions">
               <button onClick={exportProjectBackup}><Download size={15} /> Açık projeyi yedekle</button>
               <button onClick={() => backupInputRef.current?.click()}><Upload size={15} /> Yedekten aç</button>
+              <button className="span-two" onClick={() => void exportPartsList()}><ListChecks size={15} /> Malzeme listesi (CSV)</button>
               <input
                 ref={backupInputRef}
                 type="file"
