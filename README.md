@@ -4,6 +4,8 @@
 
 FitMatrix, masaüstü bilgisayar kurulumlarını gerçek fiziksel ölçülerle 3D ortamda planlamak için geliştirilen bir web uygulamasıdır.
 
+![FitMatrix editörü: katalog, 3D masa sahnesi ve ergonomi kontrolü](docs/images/editor.png)
+
 > **English:** FitMatrix is a 3D desk setup planner that works in real centimetres. Pick monitors, keyboards, mice, laptops, chairs and more from a catalog of 1,100+ products whose dimensions come from manufacturers' own pages, place them on your desk with collision checks, and get an ergonomics score for your height. Run it with `docker compose up --build` and open http://localhost:8080.
 
 ## Docker ile çalıştırma
