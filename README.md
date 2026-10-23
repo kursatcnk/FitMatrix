@@ -42,6 +42,7 @@ Yerel kullanım için tamamlanan uygulama:
 - Ürün araması için dakikada 20 istek hız sınırı, istemci zaman aşımı, güvenli URL/SSRF kontrolleri ve genel hata yanıtları
 - Veritabanı bağlantısını ve canlı ürün/proje sayılarını denetleyen sağlık endpoint'i
 - Klavye erişimi, belirgin odak stilleri ve azaltılmış hareket tercihi desteği
+- Kullanıcı boyuna göre ergonomi kontrolü: masa yüksekliği, ekran üst kenarının göz hizası, görüş mesafesi, ekran ortalama ve klavye mesafesi için canlı puan ve öneriler
 
 ## Dizin yapısı
 
@@ -183,7 +184,7 @@ npm test -- --run
 npm run build
 ```
 
-Mevcut otomatik kapsam 15 backend ve 12 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
+Mevcut otomatik kapsam 15 backend ve 21 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
 
 ## Tamamlanma sınırı
 
