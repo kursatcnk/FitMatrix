@@ -103,7 +103,7 @@ public sealed partial class RenderedPageService(
     {
         try
         {
-            await page.WaitForLoadStateAsync(LoadState.NetworkIdle, new PageWaitForLoadStateOptions { Timeout = 10_000 });
+            await page.WaitForLoadStateAsync(LoadState.NetworkIdle, new PageWaitForLoadStateOptions { Timeout = 4_000 });
         }
         catch (TimeoutException)
         {
@@ -124,7 +124,7 @@ public sealed partial class RenderedPageService(
                 var toggle = toggles.Nth(index);
                 if (!await toggle.IsVisibleAsync()) continue;
                 await toggle.ClickAsync(new LocatorClickOptions { Timeout = 3_000 });
-                await page.WaitForTimeoutAsync(800);
+                await page.WaitForTimeoutAsync(500);
             }
             catch (Exception exception) when (exception is PlaywrightException or TimeoutException)
             {
