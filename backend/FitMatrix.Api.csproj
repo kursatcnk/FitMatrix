@@ -4,6 +4,9 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Ship only the Playwright driver for the OS being built (Windows dev box or the Linux container). -->
+    <PlaywrightPlatform Condition="'$(OS)' == 'Windows_NT'">win</PlaywrightPlatform>
+    <PlaywrightPlatform Condition="'$(OS)' != 'Windows_NT'">linux</PlaywrightPlatform>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Playwright" Version="1.63.0" />
     <PackageReference Include="PdfPig" Version="0.1.16" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
   </ItemGroup>

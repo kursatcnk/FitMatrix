@@ -45,6 +45,8 @@ builder.Services.AddHttpClient<ManufacturerSitemapReader>(client =>
     client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) FitMatrix/0.1 catalog-sitemap-reader");
 });
 builder.Services.AddSingleton<CatalogHarvestService>();
+builder.Services.Configure<BrowserRenderingOptions>(builder.Configuration.GetSection(BrowserRenderingOptions.SectionName));
+builder.Services.AddSingleton<RenderedPageService>();
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;

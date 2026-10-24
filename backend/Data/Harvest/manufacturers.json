@@ -45,6 +45,38 @@
     ]
   },
   {
+    "name": "ikea",
+    "brand": "IKEA",
+    "sitemaps": ["https://www.ikea.com/sitemaps/sitemap.xml"],
+    "childInclude": "prod-en-GB_\\d+\\.xml$",
+    "include": "^https://www\\.ikea\\.com/gb/en/p/[a-z0-9-]*-(desk|desk-combination|office-chair|desk-chair|gaming-chair|swivel-chair|work-lamp|desk-lamp|led-work-lamp|desktop-shelf|monitor-stand|laptop-stand|laptop-support|drawer-unit|drawer-unit-on-castors|footrest|desk-pad|pegboard|cable-management-box|cable-management-tray)-[a-z0-9-]*\\d{8}/$",
+    "exclude": "children|kids|cover|seat-pad|cushion|organiser|-and-",
+    "render": true,
+    "mergeColourVariants": true,
+    "typeFromUrl": "/p/[a-z0-9-]*?-(?<type>desk-combination|desk|office-chair|desk-chair|gaming-chair|swivel-chair|led-work-lamp|work-lamp|desk-lamp|desktop-shelf|monitor-stand|laptop-stand|laptop-support|drawer-unit-on-castors|drawer-unit|footrest|desk-pad|pegboard|cable-management-box|cable-management-tray)-",
+    "hints": [
+      { "pattern": "-(desk|desk-combination)-", "category": "furniture", "model": "desk" },
+      { "pattern": "-(office-chair|desk-chair|gaming-chair|swivel-chair)-", "category": "furniture", "model": "chair" },
+      { "pattern": "-(work-lamp|desk-lamp|led-work-lamp)-", "category": "lighting", "model": "lamp" },
+      { "pattern": "-(desktop-shelf|monitor-stand|laptop-stand|laptop-support|pegboard)-", "category": "accessory", "model": "stand" },
+      { "pattern": "-desk-pad-", "category": "accessory", "model": "mat" },
+      { "pattern": "-(drawer-unit|drawer-unit-on-castors|footrest|cable-management-box|cable-management-tray)-", "category": "furniture", "model": "generic" }
+    ]
+  },
+  {
+    "name": "fractal",
+    "brand": "Fractal Design",
+    "sitemaps": ["https://www.fractal-design.com/sitemap.xml"],
+    "include": "^https://www\\.fractal-design\\.com/products/(cases|chairs|headsets)/[a-z0-9-]+/[a-z0-9-]+/[a-z0-9-]+/$",
+    "dedupePathSegments": 4,
+    "render": true,
+    "hints": [
+      { "pattern": "/products/cases/", "category": "computer", "model": "tower" },
+      { "pattern": "/products/chairs/", "category": "furniture", "model": "chair" },
+      { "pattern": "/products/headsets/", "category": "audio", "model": "headphone" }
+    ]
+  },
+  {
     "name": "asus",
     "brand": "ASUS",
     "sitemaps": ["https://www.asus.com/sitemap.xml"],
