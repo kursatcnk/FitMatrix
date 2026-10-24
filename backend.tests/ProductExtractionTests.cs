@@ -153,6 +153,19 @@ public sealed class ProductExtractionTests
         Assert.Equal(expected, OpenWebProductLookupService.ComposeDisplayName("ASUS", title));
     }
 
+    [Fact]
+    public void DedupeKey_StripsColourSuffixes()
+    {
+        var source = new ManufacturerSource("elgato", "Elgato", [], ".*", DedupeStrip: "-(black|white)$");
+
+        Assert.Equal(
+            source.DedupeKey(new Uri("https://www.elgato.com/us/en/p/wave-3-black")),
+            source.DedupeKey(new Uri("https://www.elgato.com/us/en/p/wave-3-white")));
+        Assert.NotEqual(
+            source.DedupeKey(new Uri("https://www.elgato.com/us/en/p/wave-3-black")),
+            source.DedupeKey(new Uri("https://www.elgato.com/us/en/p/wave-1-black")));
+    }
+
     [Theory]
     [InlineData("IKEA MICKE desk, white, 105x50 cm", "IKEA MICKE desk, 105x50 cm")]
     [InlineData("IKEA MARKUS office chair, Vissle dark grey", "IKEA MARKUS office chair")]
