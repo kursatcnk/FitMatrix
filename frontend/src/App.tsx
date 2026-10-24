@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { Box, Check, Copy, Database, Download, FolderOpen, ListChecks, LoaderCircle, Plus, Redo2, RotateCcw, Ruler, Save, Search, Trash2, Undo2, Upload, Wifi, X } from 'lucide-react'
+import { Box, Check, Copy, Database, Download, FolderOpen, Link2, ListChecks, LoaderCircle, Plus, Redo2, RotateCcw, Ruler, Save, Search, Trash2, Undo2, Upload, Wifi, X } from 'lucide-react'
 import { EditorCanvas } from './editor/EditorCanvas'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
 import { analyzeErgonomics } from './editor/ergonomics'
 import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog } from './data/catalogFilter'
 import { buildPartsList, partsListToCsv } from './data/partsList'
+import { createShareHash, readShareHash } from './data/shareLink'
 import { deleteCatalogProduct, getCatalog, getCatalogProductDetail, importDiscoveredProduct, type ApiCatalogProductDetail, type DiscoveryCatalogInput } from './services/catalogApi'
 import { deleteProject, duplicateProject, getProject, listProjects, saveProjectToApi, type ProjectSummary } from './services/projectApi'
 import { discoverProduct, type ExternalProductCandidate, type ProductDiscoveryResponse } from './services/productDiscoveryApi'
@@ -228,6 +229,7 @@ function App() {
     loadProject,
   } = useEditorStore()
   const [savedAt, setSavedAt] = useState<string | null>(null)
+  const [shareState, setShareState] = useState<'copied' | 'failed' | null>(null)
   const [saveTarget, setSaveTarget] = useState<'sql' | 'local' | null>(null)
   const [isSaving, setIsSaving] = useState(false)
   const [showProjects, setShowProjects] = useState(false)
@@ -299,16 +301,34 @@ function App() {
     } catch {
       localStorage.removeItem('fitmatrix-project')
     }
-    const localDefinitions = snapshot?.catalog ?? []
-    getCatalog()
-      .then((apiCatalog) => setCatalog([
-        ...apiCatalog.filter((definition) => !localDefinitions.some((local) => local.id === definition.id)),
+
+    const loadCatalog = async () => {
+      // A shared link replaces the local draft; its definitions cover products this database lacks.
+      const shared = await readShareHash(window.location.hash)
+      if (shared) {
+        loadProject({ version: 1, projectId: null, projectName: shared.projectName, desk: shared.desk, items: shared.items })
+        window.history.replaceState(null, '', window.location.pathname + window.location.search)
+      }
+      const localDefinitions = shared?.catalog ?? snapshot?.catalog ?? []
+      const baseCatalog = await getCatalog().catch(() => equipmentCatalog)
+      setCatalog([
+        ...baseCatalog.filter((definition) => !localDefinitions.some((local) => local.id === definition.id)),
         ...localDefinitions,
-      ]))
-      .catch(() => setCatalog([
-        ...equipmentCatalog.filter((definition) => !localDefinitions.some((local) => local.id === definition.id)),
-        ...localDefinitions,
-      ]))
+      ])
+    }
+    void loadCatalog()
+
+    // A share link pasted into an already open tab only changes the fragment, without a reload.
+    const onHashChange = async () => {
+      const shared = await readShareHash(window.location.hash)
+      if (!shared) return
+      loadProject({ version: 1, projectId: null, projectName: shared.projectName, desk: shared.desk, items: shared.items })
+      const current = useEditorStore.getState().catalog
+      setCatalog([...current.filter((definition) => !shared.catalog.some((local) => local.id === definition.id)), ...shared.catalog])
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    }
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
   }, [loadProject, setCatalog])
 
   useEffect(() => {
@@ -492,6 +512,24 @@ function App() {
     anchor.download = `${projectName.trim().replace(/[^\p{L}\p{Nd}]+/gu, '-').replace(/^-|-$/g, '') || 'fitmatrix-proje'}.fitmatrix.json`
     anchor.click()
     URL.revokeObjectURL(href)
+  }
+
+  const copyShareLink = async () => {
+    const definitionIds = new Set(items.map((item) => item.definitionId))
+    const hash = await createShareHash({
+      projectName,
+      desk,
+      items,
+      catalog: catalog.filter((definition) => definitionIds.has(definition.id)),
+    })
+    const url = `${window.location.origin}${window.location.pathname}${hash}`
+    try {
+      await navigator.clipboard.writeText(url)
+      setShareState('copied')
+    } catch {
+      setShareState('failed')
+    }
+    window.setTimeout(() => setShareState(null), 3000)
   }
 
   const exportPartsList = async () => {
@@ -753,6 +791,8 @@ function App() {
           {savedAt && <span className="save-state"><Check size={14} /> {savedAt} · {saveTarget === 'sql' ? 'SQL' : 'YEREL'}</span>}
           <button className="icon-action" aria-label="Geri al" title="Geri al (Ctrl+Z)" disabled={historyPast.length === 0} onClick={undo}><Undo2 size={15} /></button>
           <button className="icon-action" aria-label="İleri al" title="İleri al (Ctrl+Y)" disabled={historyFuture.length === 0} onClick={redo}><Redo2 size={15} /></button>
+          {shareState && <span className={`save-state ${shareState === 'failed' ? 'share-failed' : ''}`} role="status">{shareState === 'copied' ? <><Check size={14} /> Bağlantı kopyalandı</> : 'Bağlantı kopyalanamadı'}</span>}
+          <button className="icon-action" aria-label="Paylaşım bağlantısını kopyala" title="Düzeni bağlantı olarak paylaş" onClick={() => void copyShareLink()}><Link2 size={15} /></button>
           <button className="button ghost" onClick={() => setShowProductFinder(true)}><Search size={15} /> Ürün bul</button>
           <button className="button ghost" onClick={openProjectLibrary}><FolderOpen size={15} /> Projeler</button>
           <button className="button ghost" onClick={startNewProject}><Plus size={16} /> Yeni düzen</button>

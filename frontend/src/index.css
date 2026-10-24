@@ -100,6 +100,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .project-title input:focus { border-color: var(--ink); background: var(--paper-raised); }
 
 .topbar-actions { display: flex; align-items: center; gap: 6px; padding: 0 14px; }
+.save-state.share-failed { color: var(--bad); }
 .save-state { display: inline-flex; align-items: center; gap: 5px; margin-right: 8px; color: var(--ok); font-family: var(--mono); font-size: 11px; }
 
 .button, .icon-action {
