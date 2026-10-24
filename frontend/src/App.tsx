@@ -221,6 +221,8 @@ function App() {
     resetCamera,
     userHeight,
     setUserHeight,
+    posture,
+    setPosture,
     setTransformMode,
     toggleSnap,
     undo,
@@ -256,7 +258,7 @@ function App() {
   const selectedDefinition = selectedItem ? resolveEquipmentDefinition(selectedItem, catalog) : undefined
   const placement = selectedItem ? getPlacementStatus(selectedItem, items, desk, catalog) : null
   const invalidItemCount = items.filter((item) => !getPlacementStatus(item, items, desk, catalog).isValid).length
-  const ergonomics = analyzeErgonomics(items, desk, userHeight, catalog)
+  const ergonomics = analyzeErgonomics(items, desk, userHeight, catalog, posture)
   const externalProduct = discovery?.externalMatch
   const externalIsDesk = externalDraft?.model === 'desk'
   const externalPreviewDefinition: EquipmentDefinition | null = externalProduct && externalDraft && externalProduct.widthCm && externalProduct.heightCm && externalProduct.depthCm
@@ -985,6 +987,10 @@ function App() {
                   <span className={`ergonomics-score ${ergonomics.score >= 80 ? 'good' : 'warning'}`}>%{ergonomics.score}</span>
                 </div>
                 <NumberField label="Kullanıcı boyu" value={userHeight} suffix="cm" onChange={setUserHeight} />
+                <div className="segmented-control" role="group" aria-label="Çalışma duruşu">
+                  <button className={posture === 'sitting' ? 'active' : ''} onClick={() => setPosture('sitting')}>Oturarak</button>
+                  <button className={posture === 'standing' ? 'active' : ''} onClick={() => setPosture('standing')}>Ayakta</button>
+                </div>
                 <ul className="ergonomics-list">
                   {ergonomics.checks.map((check) => (
                     <li key={check.id} className={`ergonomics-check ${check.status}`}>
