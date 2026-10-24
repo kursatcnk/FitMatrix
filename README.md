@@ -1,6 +1,20 @@
 # FitMatrix
 
+[![CI](https://github.com/kursatcnk/FitMatrix/actions/workflows/ci.yml/badge.svg)](https://github.com/kursatcnk/FitMatrix/actions/workflows/ci.yml)
+
 FitMatrix, masaüstü bilgisayar kurulumlarını gerçek fiziksel ölçülerle 3D ortamda planlamak için geliştirilen bir web uygulamasıdır.
+
+> **English:** FitMatrix is a 3D desk setup planner that works in real centimetres. Pick monitors, keyboards, mice, laptops, chairs and more from a catalog of 1,100+ products whose dimensions come from manufacturers' own pages, place them on your desk with collision checks, and get an ergonomics score for your height. Run it with `docker compose up --build` and open http://localhost:8080.
+
+## Docker ile çalıştırma
+
+Windows, macOS veya Linux'ta tek komut yeterlidir; SQL Server, API ve editör birlikte açılır:
+
+```bash
+docker compose up --build
+```
+
+Ardından http://localhost:8080 adresini aç. İlk açılışta veritabanı oluşturulur ve depodaki katalog anlık görüntüsü (`backend/Data/Catalog/catalog-snapshot.json`) yüklenir; editör 1.100'den fazla ölçüsü doğrulanmış ürünle başlar. Veritabanı `fitmatrix-sql` Docker biriminde kalıcıdır. Geliştirme parolasını veya portu değiştirmek için `.env.example` dosyasını `.env` olarak kopyalayıp düzenle. Apple Silicon Mac'lerde SQL Server imajı Docker Desktop'ın Rosetta emülasyonuyla çalışır.
 
 ## Yerel sürüm durumu
 
@@ -159,6 +173,14 @@ Kataloğu toplu büyütmek için backend çalışırken:
 .\scripts\harvest-catalog.ps1 -Cancel
 ```
 
+Toplanan katalog yalnızca yerel veritabanında durur. Depoyla paylaşmak için Development ortamında çalışan backend'den anlık görüntüyü güncelle ve dosyayı commit et:
+
+```powershell
+Invoke-RestMethod -Method Post http://127.0.0.1:5080/api/admin/catalog/snapshot
+```
+
+Anlık görüntü yalnızca kimlik alanlarını, fiziksel ölçüleri ve kaynak bağlantılarını içerir; üretici sayfalarının metinleri dağıtılmaz. Her sürüm bir veritabanına bir kez uygulanır: kullanıcının sildiği ürünler geri gelmez, yerelde zaten olan ürünler değiştirilmez.
+
 Üretici kaynakları `backend/Data/Harvest/manufacturers.json`, model listeleri `backend/Data/Harvest/*.txt` dosyalarındadır; `[kategori:model]` satırı altındaki ürünlerin 3D türünü belirler. Ayrıntılar `docs/catalog-strategy.md` içindeki "Üretici ürün haritalarından toplama" ve "Model listeleriyle toplu toplama" bölümlerindedir.
 
 Gerçek ürün verisi yaklaşımı ve kalite kuralları `docs/catalog-strategy.md` dosyasında açıklanmıştır. Örnek içe aktarma gövdesi `docs/samples/catalog-import.example.json` dosyasındadır. Katalog altyapısı GTIN veya marka + MPN ile tekilleştirme yapar; fiziksel ölçüler, kategoriye özel teknik özellikler ve her kaydın sağlayıcı/lisans kaynağı birlikte tutulur.
@@ -200,7 +222,7 @@ npm test -- --run
 npm run build
 ```
 
-Mevcut otomatik kapsam 75 backend ve 27 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
+Mevcut otomatik kapsam 79 backend ve 27 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
 
 ## Tamamlanma sınırı
 

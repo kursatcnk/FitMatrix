@@ -91,9 +91,14 @@ await using (var scope = app.Services.CreateAsyncScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<FitMatrixDbContext>();
     await dbContext.Database.MigrateAsync();
     await ExpandedCatalogSeed.SeedAsync(dbContext);
+    var snapshotProducts = await CatalogSnapshot.ApplyAsync(dbContext, CatalogSnapshot.DefaultPath);
+    if (snapshotProducts > 0)
+        app.Logger.LogInformation("Catalog snapshot added {Count} products.", snapshotProducts);
+    // Snapshot markers record which catalog versions were applied; they never expire with the lookup cache.
     await dbContext.ProductLookupCaches
-        .Where(entry => !entry.NormalizedQuery.StartsWith(ProductDiscoveryService.CacheVersion) ||
-                        entry.ExpiresAt < DateTimeOffset.UtcNow.AddDays(-1))
+        .Where(entry => !entry.NormalizedQuery.StartsWith(CatalogSnapshot.MarkerPrefix) &&
+                        (!entry.NormalizedQuery.StartsWith(ProductDiscoveryService.CacheVersion) ||
+                         entry.ExpiresAt < DateTimeOffset.UtcNow.AddDays(-1)))
         .ExecuteDeleteAsync();
 }
 

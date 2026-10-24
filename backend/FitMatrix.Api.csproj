@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Data\Harvest\*.txt" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="Data\Harvest\*.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Data\Harvest\*.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="Data\Harvest\*.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="Data\Catalog\*.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <InternalsVisibleTo Include="FitMatrix.Api.Tests" />
   </ItemGroup>
 

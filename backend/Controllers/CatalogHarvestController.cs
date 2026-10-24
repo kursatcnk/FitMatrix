@@ -56,6 +56,23 @@ public sealed class CatalogHarvestController(
         return Accepted(harvest.GetStatus());
     }
 
+    // Writes the current catalog as the snapshot shipped with the repository (backend/Data/Catalog).
+    [HttpPost("/api/admin/catalog/snapshot")]
+    public async Task<ActionResult<object>> ExportSnapshot(
+        [FromServices] FitMatrix.Api.Data.FitMatrixDbContext dbContext,
+        CancellationToken cancellationToken)
+    {
+        if (!environment.IsDevelopment()) return NotFound();
+        var document = await FitMatrix.Api.Data.CatalogSnapshot.ExportAsync(dbContext, cancellationToken);
+        var projectRoot = System.IO.File.Exists(Path.Combine(environment.ContentRootPath, "FitMatrix.Api.csproj"))
+            ? environment.ContentRootPath
+            : Path.Combine(environment.ContentRootPath, "backend");
+        var target = Path.Combine(projectRoot, "Data", "Catalog", "catalog-snapshot.json");
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        await System.IO.File.WriteAllTextAsync(target, FitMatrix.Api.Data.CatalogSnapshot.Serialize(document), cancellationToken);
+        return Ok(new { document.Version, document.ProductCount, path = target });
+    }
+
     [HttpDelete]
     public IActionResult Cancel()
     {
