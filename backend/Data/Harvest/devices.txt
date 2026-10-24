@@ -1,0 +1,287 @@
+# Webcam ve yayın ekipmanı
+[imaging:camera]
+Logitech C920
+Logitech C922 Pro Stream
+Logitech C930e
+Logitech Brio 4K
+Logitech MX Brio
+Logitech Brio 500
+Logitech Brio 300
+Logitech StreamCam
+Razer Kiyo Pro
+Razer Kiyo Pro Ultra
+Razer Kiyo X
+Elgato Facecam
+Elgato Facecam MK.2
+Elgato Facecam Pro
+[input:keyboard]
+Elgato Stream Deck MK.2
+Elgato Stream Deck XL
+Elgato Stream Deck Mini
+Elgato Stream Deck +
+Elgato Stream Deck Neo
+[imaging:camera]
+Elgato HD60 X
+Elgato 4K60 Pro MK.2
+Elgato Cam Link 4K
+[accessory:generic]
+Elgato Green Screen
+[imaging:camera]
+Insta360 Link
+Insta360 Link 2
+OBSBOT Tiny 2
+OBSBOT Tiny 2 Lite
+OBSBOT Meet 2
+Anker PowerConf C200
+Microsoft LifeCam HD-3000
+AVerMedia Live Gamer Ultra 2.1
+Sony ZV-E10
+Sony ZV-1
+Sony a6400
+Canon EOS M50 Mark II
+Canon EOS R50
+Fujifilm X-S20
+[input:keyboard]
+Loupedeck Live S
+# Ağ ekipmanı
+[network:router]
+TP-Link Archer AX55
+TP-Link Archer AX73
+TP-Link Archer AXE75
+TP-Link Archer BE800
+TP-Link Archer C6
+TP-Link Deco X50
+TP-Link Deco XE75
+TP-Link Deco BE65
+TP-Link TL-SG108
+TP-Link TL-SG105
+TP-Link RE705X
+ASUS RT-AX86U Pro
+ASUS RT-AX88U Pro
+ASUS RT-AX58U
+ASUS RT-BE96U
+ASUS ROG Rapture GT-AX6000
+ASUS ROG Rapture GT-AXE16000
+ASUS ZenWiFi XT9
+ASUS ZenWiFi BQ16 Pro
+Netgear Nighthawk RAX50
+Netgear Nighthawk RS700S
+Netgear Orbi RBK863S
+Netgear GS308
+Netgear GS305
+Ubiquiti UniFi Dream Machine Pro
+Ubiquiti UniFi Express
+Ubiquiti UniFi U6 Pro
+Ubiquiti UniFi Cloud Gateway Ultra
+Ubiquiti UniFi Switch Lite 8 PoE
+Google Nest Wifi Pro
+Eero Pro 6E
+Linksys Velop MX4200
+Xiaomi Mi Router AX3000
+Xiaomi Mi Router 4A
+D-Link DIR-X1860
+MikroTik hAP ax3
+MikroTik hEX S
+Fritz!Box 7590 AX
+Fritz!Box 7530 AX
+Huawei WiFi AX3
+Zyxel VMG3625-T50B
+# Oyun konsolları ve VR
+[gaming:console]
+Sony PlayStation 5 Slim
+Sony PlayStation 5
+Sony PlayStation 5 Pro
+Sony PlayStation 5 Digital Edition
+Sony PlayStation Portal
+Sony PlayStation VR2
+[input:mouse]
+Sony DualSense Wireless Controller
+Sony DualSense Edge
+[gaming:console]
+Microsoft Xbox Series X
+Microsoft Xbox Series S
+[input:mouse]
+Microsoft Xbox Wireless Controller
+Microsoft Xbox Elite Wireless Controller Series 2
+[gaming:console]
+Nintendo Switch OLED
+Nintendo Switch
+Nintendo Switch Lite
+Nintendo Switch 2
+Valve Steam Deck OLED
+Valve Steam Deck
+ASUS ROG Ally
+ASUS ROG Ally X
+Lenovo Legion Go
+MSI Claw A1M
+Meta Quest 3
+Meta Quest 3S
+Meta Quest Pro
+Apple Vision Pro
+[input:mouse]
+8BitDo Ultimate Controller
+[gaming:console]
+Logitech G29 Driving Force
+Logitech G923
+Thrustmaster T300 RS GT
+Thrustmaster T248
+Fanatec CSL DD
+Moza R5
+# Tablet, telefon, e-okuyucu
+[mobile:tablet]
+Apple iPad Pro 13 M4
+Apple iPad Pro 11 M4
+Apple iPad Air 13 M2
+Apple iPad Air 11 M2
+Apple iPad 10th generation
+Apple iPad mini 7
+Samsung Galaxy Tab S9 Ultra
+Samsung Galaxy Tab S9
+Samsung Galaxy Tab S9 FE
+Samsung Galaxy Tab S10 Ultra
+Samsung Galaxy Tab A9+
+Xiaomi Pad 6
+Xiaomi Redmi Pad SE
+Lenovo Tab P12
+Lenovo Tab M10 Plus
+Huawei MatePad 11.5
+Huawei MatePad Pro 13.2
+OnePlus Pad
+Microsoft Surface Pro 9
+Amazon Kindle Paperwhite
+Amazon Kindle Scribe
+Amazon Kindle Oasis
+Kobo Clara 2E
+Kobo Libra 2
+Kobo Elipsa 2E
+reMarkable 2
+[input:mouse]
+Wacom Intuos Pro M
+Wacom Intuos S
+Wacom Cintiq 16
+Wacom One 13
+XP-Pen Artist 15.6 Pro
+Huion Kamvas 16
+[mobile:phone]
+Apple iPhone 16 Pro Max
+Apple iPhone 16 Pro
+Apple iPhone 16
+Apple iPhone 15 Pro
+Apple iPhone 15
+Apple iPhone 14
+Apple iPhone 13
+Apple iPhone SE 3rd generation
+Samsung Galaxy S24 Ultra
+Samsung Galaxy S24+
+Samsung Galaxy S24
+Samsung Galaxy S23
+Samsung Galaxy Z Fold6
+Samsung Galaxy Z Flip6
+Samsung Galaxy A55
+Samsung Galaxy A35
+Samsung Galaxy A15
+Google Pixel 9 Pro
+Google Pixel 9
+Google Pixel 8a
+Google Pixel 8 Pro
+Xiaomi 14 Ultra
+Xiaomi 14
+Xiaomi Redmi Note 13 Pro
+Xiaomi Redmi Note 13
+OnePlus 12
+OnePlus Nord 4
+Nothing Phone (2)
+Nothing Phone (2a)
+Huawei P60 Pro
+Oppo Find X7 Ultra
+Realme GT 6
+Apple Watch Series 10
+Apple Watch Ultra 2
+Samsung Galaxy Watch7
+Garmin Forerunner 265
+# Yazıcı ve ofis
+[office:printer]
+HP LaserJet Pro M404dn
+HP LaserJet M110we
+HP LaserJet Pro MFP 4102fdw
+HP Color LaserJet Pro M255dw
+HP OfficeJet Pro 9015e
+HP OfficeJet Pro 9125e
+HP DeskJet 2720e
+HP Smart Tank 7305
+HP ENVY Inspire 7955e
+Brother HL-L2350DW
+Brother HL-L2370DW
+Brother MFC-L2750DW
+Brother HL-L3270CDW
+Brother DCP-L2550DW
+Brother MFC-J5340DW
+Brother QL-800
+Canon PIXMA TS5350
+Canon PIXMA G3570
+Canon PIXMA TS8350
+Canon i-SENSYS LBP223dw
+Canon imageCLASS MF445dw
+Canon CanoScan LiDE 300
+Epson EcoTank ET-2850
+Epson EcoTank ET-4850
+Epson EcoTank L3250
+Epson EcoTank ET-8550
+Epson Expression Home XP-4200
+Epson WorkForce WF-2950
+Epson Perfection V39 II
+Xerox B230
+Xerox C235
+Samsung Xpress M2020W
+Fujitsu ScanSnap iX1600
+Fujitsu ScanSnap iX1400
+Bambu Lab P1S
+Bambu Lab A1 mini
+Bambu Lab X1 Carbon
+Prusa MK4
+Creality Ender 3 V3 SE
+Fellowes Powershred 79Ci
+Fellowes Saturn 3i
+Dymo LabelWriter 550
+# Güç ekipmanı
+[power:power]
+APC Back-UPS Pro BR1500MS2
+APC Back-UPS BX1600MI
+APC Back-UPS BE600M1
+APC Smart-UPS SMT1500IC
+APC SurgeArrest P11VNT3
+CyberPower CP1500PFCLCD
+CyberPower CP1500EPFCLCD
+CyberPower Value 1500E
+Eaton 5E 1100i USB
+Eaton Ellipse PRO 1200
+Eaton 5S 1000i
+Anker 735 Charger
+Anker Prime 100W Charger
+Anker 737 Power Bank
+Anker 727 Charging Station
+[accessory:generic]
+Anker 563 USB-C Docking Station
+[power:power]
+Belkin BoostCharge Pro 3-in-1 Wireless Charging Stand with MagSafe
+[accessory:generic]
+Belkin Connect Pro Thunderbolt 4 Dock
+CalDigit TS4
+CalDigit Element Hub
+Satechi USB-C Multiport Adapter V2
+[power:power]
+Ugreen Nexode 100W
+Ugreen Nexode 65W
+[accessory:generic]
+Ugreen Revodok Pro 210
+[power:power]
+Apple 35W Dual USB-C Port Compact Power Adapter
+Apple MagSafe Charger
+Baseus GaN5 Pro 100W
+Xiaomi Mi Power Strip
+Ttec SmartCharger 4X
+Philips Surge Protector SPN7050
+[accessory:generic]
+Kensington SD5700T Thunderbolt 4 Dock
+Dell Thunderbolt Dock WD22TB4
+Lenovo ThinkPad Universal USB-C Dock

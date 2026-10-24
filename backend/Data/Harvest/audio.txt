@@ -1,0 +1,157 @@
+# Kulaklık, hoparlör ve mikrofon
+[audio:headphone]
+Sony WH-1000XM5
+Sony WH-1000XM4
+Sony WH-CH720N
+Sony WH-CH520
+Sony ULT WEAR WH-ULT900N
+Sony INZONE H9
+Sony INZONE H7
+Sony MDR-7506
+Sony WF-1000XM5
+Bose QuietComfort Ultra Headphones
+Bose QuietComfort 45
+Bose QuietComfort Headphones
+Bose 700 Noise Cancelling Headphones
+Apple AirPods Max
+Apple AirPods Pro 2
+Sennheiser Momentum 4 Wireless
+Sennheiser HD 560S
+Sennheiser HD 600
+Sennheiser HD 650
+Sennheiser HD 660S2
+Sennheiser HD 450BT
+Sennheiser Accentum Wireless
+Audio-Technica ATH-M50x
+Audio-Technica ATH-M50xBT2
+Audio-Technica ATH-M40x
+Audio-Technica ATH-R70x
+Beyerdynamic DT 770 PRO
+Beyerdynamic DT 990 PRO
+Beyerdynamic DT 900 PRO X
+Beyerdynamic MMX 300
+AKG K371
+AKG K702
+Philips Fidelio X2HR
+HiFiMAN Sundara
+Jabra Evolve2 85
+Jabra Evolve2 65
+Jabra Elite 85h
+Logitech G Pro X 2 Lightspeed
+Logitech G Pro X Wireless
+Logitech G733 Lightspeed
+Logitech G435 Lightspeed
+Logitech G335
+Logitech H390
+Logitech Zone Vibe 100
+Razer BlackShark V2 Pro
+Razer BlackShark V2
+Razer BlackShark V2 X
+Razer Kraken V3 X
+Razer Barracuda X
+Razer Barracuda Pro
+SteelSeries Arctis Nova Pro Wireless
+SteelSeries Arctis Nova 7
+SteelSeries Arctis Nova 1
+SteelSeries Arctis 7+
+HyperX Cloud II
+HyperX Cloud III
+HyperX Cloud III Wireless
+HyperX Cloud Alpha
+HyperX Cloud Alpha Wireless
+HyperX Cloud Stinger 2
+Corsair HS80 RGB Wireless
+Corsair HS65 Surround
+Corsair Virtuoso RGB Wireless XT
+Corsair HS55 Stereo
+Astro A50 X
+Astro A40 TR
+Turtle Beach Stealth 600 Gen 2
+Turtle Beach Stealth Pro
+Audeze Maxwell
+JBL Quantum 910 Wireless
+JBL Quantum 100
+JBL Tune 770NC
+JBL Tune 520BT
+Marshall Major IV
+Marshall Monitor II A.N.C.
+# Hoparlörler
+[audio:speaker]
+Logitech Z207
+Logitech Z313
+Logitech Z407
+Logitech Z623
+Logitech Z906
+Logitech G560
+Creative Pebble V3
+Creative Pebble Plus
+Creative T60
+Creative Stage SE
+Creative Katana V2
+Edifier R1280T
+Edifier R1280DB
+Edifier R1700BT
+Edifier R2000DB
+Edifier MR4
+Edifier QR65
+Edifier G2000
+Edifier S3000MKII
+Audioengine A2+
+Audioengine A5+
+Kanto YU2
+Kanto ORA
+PreSonus Eris 3.5
+PreSonus Eris E5 XT
+KRK Rokit 5 G4
+Yamaha HS5
+Yamaha HS7
+Adam Audio T5V
+JBL 104-BT
+JBL 305P MkII
+Razer Nommo V2
+Razer Nommo Pro
+Razer Leviathan V2
+SteelSeries Arena 7
+Bose Companion 2 Series III
+Harman Kardon SoundSticks 4
+Marshall Stanmore III
+Marshall Acton III
+Sonos Era 100
+Sonos Era 300
+Bose SoundLink Flex
+JBL Flip 6
+JBL Charge 5
+# Mikrofon ve ses arayüzü
+[audio:speaker]
+Shure SM7B
+Shure MV7+
+Shure MV7
+Shure MV6
+Shure SM58
+Rode PodMic
+Rode NT-USB+
+Rode NT-USB Mini
+Rode NT1 5th Generation
+Rode PodMic USB
+Blue Yeti
+Blue Yeti Nano
+Blue Yeti X
+Elgato Wave:3
+Elgato Wave:1
+HyperX QuadCast S
+HyperX QuadCast 2
+HyperX SoloCast
+Razer Seiren V3 Pro
+Razer Seiren Mini
+Audio-Technica AT2020USB-X
+Audio-Technica AT2020
+Audio-Technica AT2035
+Fifine K669B
+Fifine AM8
+Samson Q2U
+Focusrite Scarlett Solo 4th Gen
+Focusrite Scarlett 2i2 4th Gen
+Universal Audio Volt 2
+Rode RodeCaster Duo
+GoXLR Mini
+Elgato Wave XLR

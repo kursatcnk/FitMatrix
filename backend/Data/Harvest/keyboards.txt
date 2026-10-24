@@ -1,0 +1,113 @@
+# Klavyeler
+[input:keyboard]
+Logitech MX Keys S
+Logitech MX Keys Mini
+Logitech MX Mechanical
+Logitech MX Mechanical Mini
+Logitech K380
+Logitech K120
+Logitech K270
+Logitech K400 Plus
+Logitech K860
+Logitech Pop Keys
+Logitech Signature K650
+Logitech Wave Keys
+Logitech G915 TKL
+Logitech G915 X
+Logitech G515 TKL
+Logitech G513
+Logitech G413 SE
+Logitech G Pro X TKL
+Logitech G213 Prodigy
+Logitech G715
+Logitech G713
+Razer BlackWidow V4 Pro
+Razer BlackWidow V4 75%
+Razer BlackWidow V3
+Razer Huntsman V3 Pro
+Razer Huntsman V3 Pro TKL
+Razer Huntsman V2
+Razer Huntsman Mini
+Razer DeathStalker V2 Pro
+Razer Ornata V3
+Razer Cynosa V2
+Razer Pro Type Ultra
+Corsair K70 RGB PRO
+Corsair K70 MAX
+Corsair K70 CORE
+Corsair K65 RGB MINI
+Corsair K65 PLUS WIRELESS
+Corsair K100 RGB
+Corsair K55 RGB PRO
+Corsair K60 RGB PRO
+SteelSeries Apex Pro TKL
+SteelSeries Apex Pro Mini
+SteelSeries Apex 7
+SteelSeries Apex 3
+SteelSeries Apex 9 TKL
+HyperX Alloy Origins Core
+HyperX Alloy Origins 65
+HyperX Alloy Origins 60
+HyperX Alloy Rise
+Keychron K2 Pro
+Keychron K2 V2
+Keychron K8 Pro
+Keychron K3 Pro
+Keychron K6 Pro
+Keychron K10 Pro
+Keychron Q1 Max
+Keychron Q1 Pro
+Keychron Q2 Pro
+Keychron Q3 Max
+Keychron Q5 Pro
+Keychron Q6 Max
+Keychron V1 Max
+Keychron V6 Max
+Keychron C3 Pro
+Keychron B6 Pro
+Ducky One 3 TKL
+Ducky One 3 Mini
+Ducky One 3 SF
+Ducky One 2 Mini
+Wooting 60HE
+Wooting 80HE
+Wooting Two HE
+NuPhy Air75 V2
+NuPhy Air60 V2
+NuPhy Halo75 V2
+NuPhy Gem80
+Akko 5075B Plus
+Akko 3068B Plus
+Leopold FC900R
+Leopold FC750R
+Varmilo VA87M
+Cherry KC 1000
+Cherry MX Board 3.0 S
+Cherry Stream Desktop
+Cherry KW 9100 Slim
+Microsoft Ergonomic Keyboard
+Microsoft Surface Keyboard
+Microsoft Bluetooth Keyboard
+Apple Magic Keyboard with Touch ID and Numeric Keypad
+Apple Magic Keyboard
+Glorious GMMK Pro
+Glorious GMMK 2
+ASUS ROG Azoth
+ASUS ROG Strix Scope II 96 Wireless
+ASUS ROG Falchion RX Low Profile
+MSI Vigor GK71 Sonic
+Redragon K552 Kumara
+Redragon K617 Fizz
+Royal Kludge RK61
+Epomaker TH80 Pro
+Lofree Flow
+Kinesis Advantage360
+ZSA Moonlander
+Logitech ERGO K860
+Cooler Master CK352
+Cooler Master SK622
+Asus ROG Strix Flare II Animate
+Roccat Vulcan II Max
+Roccat Vulcan TKL Pro
+Turtle Beach Vulcan II TKL Pro
+Mad Catz S.T.R.I.K.E. 11

@@ -181,7 +181,7 @@ public sealed class CatalogImportService(FitMatrixDbContext dbContext)
         product.UpdatedAt = DateTimeOffset.UtcNow;
     }
 
-    private static void UpsertSource(
+    private void UpsertSource(
         EquipmentProduct product,
         CatalogImportRequest request,
         CatalogImportItemDto item)
@@ -195,7 +195,7 @@ public sealed class CatalogImportService(FitMatrixDbContext dbContext)
 
         if (source is null)
         {
-            product.Sources.Add(new ProductSource
+            source = new ProductSource
             {
                 Id = Guid.NewGuid(),
                 Provider = provider,
@@ -203,7 +203,11 @@ public sealed class CatalogImportService(FitMatrixDbContext dbContext)
                 SourceUrl = sourceUrl,
                 LicenseName = NormalizeOptional(request.LicenseName),
                 LastCheckedAt = DateTimeOffset.UtcNow
-            });
+            };
+            product.Sources.Add(source);
+            // A client-generated key on an already tracked product would otherwise be treated as an
+            // existing row and turned into an UPDATE that affects nothing.
+            dbContext.ProductSources.Add(source);
             return;
         }
 

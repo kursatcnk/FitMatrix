@@ -1,0 +1,581 @@
+# Klavye, mouse, kulaklık, hoparlör, webcam — genişletilmiş liste
+[input:keyboard]
+Logitech K780
+Logitech K580
+Logitech K480
+Logitech K375s
+Logitech K295 Silent
+Logitech MK270
+Logitech MK295
+Logitech MK540 Advanced
+Logitech MK850
+Logitech MX Keys for Mac
+Logitech G915 Lightspeed
+Logitech G815
+Logitech G512 Carbon
+Logitech G413 Carbon
+Logitech G Pro Keyboard
+Logitech G PRO X 60
+Logitech G613
+Logitech G910 Orion Spectrum
+Logitech G213
+Logitech G715 Wireless
+Logitech Casa Pop-Up Desk
+Logitech Keys-To-Go 2
+Razer BlackWidow V4
+Razer BlackWidow V4 X
+Razer BlackWidow V3 Pro
+Razer BlackWidow V3 Mini HyperSpeed
+Razer BlackWidow Lite
+Razer Huntsman V2 TKL
+Razer Huntsman V2 Analog
+Razer Huntsman Elite
+Razer Huntsman Tournament Edition
+Razer Huntsman Mini Analog
+Razer DeathStalker V2
+Razer DeathStalker V2 Pro TKL
+Razer Ornata V2
+Razer Cynosa Lite
+Razer Pro Type
+Corsair K70 RGB TKL
+Corsair K70 PRO MINI WIRELESS
+Corsair K65 PRO MINI
+Corsair K100 AIR WIRELESS
+Corsair K95 RGB PLATINUM XT
+Corsair K57 RGB WIRELESS
+Corsair K55 CORE
+Corsair K63 Wireless
+SteelSeries Apex Pro
+SteelSeries Apex Pro TKL Wireless
+SteelSeries Apex 5
+SteelSeries Apex 7 TKL
+SteelSeries Apex 9 Mini
+SteelSeries Apex 3 TKL
+HyperX Alloy FPS Pro
+HyperX Alloy Elite 2
+HyperX Alloy Core RGB
+HyperX Alloy Origins
+HyperX Alloy Rise 75
+Keychron K1 Pro
+Keychron K4 Pro
+Keychron K5 Pro
+Keychron K7 Pro
+Keychron K11 Pro
+Keychron K12 Pro
+Keychron K14 Pro
+Keychron K15 Pro
+Keychron K17 Pro
+Keychron Q0 Max
+Keychron Q4 Pro
+Keychron Q8 Pro
+Keychron Q10 Max
+Keychron Q11
+Keychron Q12 Max
+Keychron Q13 Pro
+Keychron Q14 Max
+Keychron Q15 Max
+Keychron V2 Max
+Keychron V3 Max
+Keychron V4
+Keychron V5 Max
+Keychron V8
+Keychron V10 Max
+Keychron K2 HE
+Keychron Q1 HE
+Keychron C1 Pro
+Keychron C2 Pro
+Keychron Lemokey L3
+Ducky One 3 Full Size
+Ducky One 3 TKL RGB
+Ducky Shine 7
+Ducky One 2 SF
+Ducky Mecha Mini
+Wooting 60HE+
+Wooting 80HE
+Wooting UwU
+NuPhy Air96 V2
+NuPhy Field75
+NuPhy Kick75
+NuPhy Halo65 V2
+NuPhy Halo96 V2
+Akko 3087 V2
+Akko 3098B
+Akko MOD007B PC
+Akko 5108B Plus
+Leopold FC660M
+Leopold FC980M
+Varmilo VA88M
+Varmilo Minilo
+Cherry MX 2.0S
+Cherry MX 8.0
+Cherry MX 10.0N
+Cherry KC 6000 Slim
+Cherry DW 9100 Slim
+Microsoft Sculpt Ergonomic Keyboard
+Microsoft Surface Ergonomic Keyboard
+Microsoft Designer Compact Keyboard
+Glorious GMMK 3
+Glorious GMMK 2 Compact
+ASUS ROG Strix Scope II
+ASUS ROG Strix Scope RX
+ASUS ROG Claymore II
+ASUS ROG Falchion Ace
+ASUS TUF Gaming K1
+ASUS TUF Gaming K3
+MSI Vigor GK50 Elite
+MSI Forge GK300
+Redragon K556
+Redragon K530 Draconic
+Redragon K630 Dragonborn
+Royal Kludge RK84
+Royal Kludge RK100
+Epomaker EP84
+Epomaker RT100
+Kinesis Freestyle2
+Kinesis Advantage2
+Logitech ERGO K860 for Business
+Mountain Everest Max
+Mountain Everest 60
+Drop CTRL
+Drop ALT
+Das Keyboard 4 Professional
+Das Keyboard MacTigr
+[input:mouse]
+Logitech M240 Silent
+Logitech M325s
+Logitech M330 Silent Plus
+Logitech M510
+Logitech M590 Silent
+Logitech M100
+Logitech MX Anywhere 3
+Logitech MX Master 2S
+Logitech MX Ergo
+Logitech Signature M650 L
+Logitech POP Mouse
+Logitech G102 Lightsync
+Logitech G Pro X Superlight 2 DEX
+Logitech G502 Lightspeed
+Logitech G502 X
+Logitech G403 HERO
+Logitech G402 Hyperion Fury
+Logitech G300s
+Logitech G600
+Logitech G705
+Logitech G303 Shroud Edition
+Logitech G Pro Hero
+Razer DeathAdder V3 HyperSpeed
+Razer DeathAdder V2 Pro
+Razer DeathAdder V2 X HyperSpeed
+Razer DeathAdder V2 Mini
+Razer Viper V2 Pro
+Razer Viper V3 HyperSpeed
+Razer Viper Ultimate
+Razer Viper 8KHz
+Razer Basilisk V2
+Razer Basilisk Ultimate
+Razer Basilisk V3 35K
+Razer Cobra
+Razer Naga Pro
+Razer Naga X
+Razer Naga Left-Handed Edition
+Razer Orochi V2
+Razer Atheris
+Razer Pro Click Mini
+Razer Pro Click V2 Vertical Edition
+Corsair DARKSTAR WIRELESS
+Corsair M75 WIRELESS
+Corsair NIGHTSABRE WIRELESS
+Corsair M65 RGB ELITE
+Corsair Ironclaw RGB Wireless
+Corsair Harpoon RGB PRO
+Corsair Katar Elite Wireless
+Corsair Scimitar Elite Wireless
+SteelSeries Aerox 3 Wireless
+SteelSeries Aerox 9 Wireless
+SteelSeries Rival 3 Wireless
+SteelSeries Rival 600
+SteelSeries Prime+
+SteelSeries Sensei Ten
+HyperX Pulsefire Haste 2 Wireless
+HyperX Pulsefire Haste 2 Mini
+HyperX Pulsefire FPS Pro
+HyperX Pulsefire Raid
+Zowie EC1-C
+Zowie EC3-C
+Zowie FK1-C
+Zowie FK1+-C
+Zowie S1-C
+Zowie ZA12-C
+Zowie EC2-CW
+Zowie U2-DW
+Pulsar X2H
+Pulsar X2V2 Mini
+Pulsar Xlite V2
+Pulsar Xlite V4
+Lamzu Atlantis OG V2
+Lamzu Thorn
+Lamzu Maya X
+Glorious Model O
+Glorious Model O-
+Glorious Model D
+Glorious Model D Wireless
+Glorious Model O Pro Wireless
+Endgame Gear XM1r
+Endgame Gear OP1we
+Ninjutso Sora V2
+G-Wolves HTS Plus 4K
+Vaxee Outset AX
+ASUS ROG Harpe Ace Mini
+ASUS ROG Chakram X
+ASUS ROG Spatha X
+ASUS ROG Strix Impact III
+ASUS TUF Gaming M4 Air
+Roccat Kone Pro Air
+Roccat Kain 120 AIMO
+Roccat Burst Core
+Turtle Beach Burst II Air
+Microsoft Basic Optical Mouse
+Microsoft Sculpt Ergonomic Mouse
+Microsoft Modern Mobile Mouse
+Microsoft Ocean Plastic Mouse
+Apple Magic Mouse 2
+Apple Magic Trackpad 2
+Logitech MX Ergo Plus
+Logitech Lift Left
+Kensington Slimblade Pro
+Kensington Pro Fit Ergo Vertical Wireless Trackball
+Elecom HUGE Trackball
+Elecom DEFT Pro Trackball
+Anker 2.4G Wireless Vertical Ergonomic Optical Mouse
+Cooler Master MM720
+Cooler Master MM711
+Xtrfy M42 Wireless
+Xtrfy M4 Wireless
+MSI Clutch GM31 Lightweight Wireless
+MSI Clutch GM08
+Redragon M908 Impact
+Redragon M601 Centrophorus
+Sharkoon Light2 200
+Fantech Helios XD3
+Attack Shark X3
+VGN Dragonfly F1 Moba
+[audio:headphone]
+Sony WH-1000XM3
+Sony WH-XB910N
+Sony MDR-ZX110
+Sony MDR-7520
+Sony WF-C700N
+Sony LinkBuds S
+Bose QuietComfort 35 II
+Bose QuietComfort Earbuds II
+Bose SoundLink Around-Ear Wireless Headphones II
+Apple AirPods 4
+Apple AirPods 3rd generation
+Apple Beats Studio Pro
+Beats Solo 4
+Beats Fit Pro
+Beats Studio Buds +
+Sennheiser HD 599
+Sennheiser HD 800 S
+Sennheiser HD 280 PRO
+Sennheiser HD 25
+Sennheiser Momentum True Wireless 4
+Sennheiser PC38X
+Sennheiser GSP 600
+Sennheiser GSP 370
+EPOS H6PRO
+EPOS GTW 270 Hybrid
+Audio-Technica ATH-M20x
+Audio-Technica ATH-M30x
+Audio-Technica ATH-M70x
+Audio-Technica ATH-AD700X
+Audio-Technica ATH-M50xSTS
+Beyerdynamic DT 880 PRO
+Beyerdynamic DT 1990 PRO
+Beyerdynamic Amiron 300
+Beyerdynamic MMX 330 PRO
+AKG K240 Studio
+AKG K361
+AKG K712 PRO
+Philips SHP9600
+Philips TAH9505
+HiFiMAN Edition XS
+HiFiMAN Arya Stealth
+HiFiMAN HE400se
+Focal Clear MG
+Focal Bathys
+Jabra Evolve2 55
+Jabra Evolve2 75
+Jabra Evolve2 40
+Jabra Elite 10
+Logitech H540
+Logitech H111
+Logitech Zone Vibe 125
+Logitech Zone Wireless 2
+Logitech G Pro X
+Logitech G432
+Logitech G733 Lightspeed
+Logitech G535 Lightspeed
+Logitech G635
+Logitech G935
+Logitech Astro A30
+Razer BlackShark V2 HyperSpeed
+Razer BlackShark V3 Pro
+Razer Kraken V3
+Razer Kraken V3 Pro
+Razer Kraken Kitty V2
+Razer Kraken X
+Razer Barracuda X Chroma
+Razer Nari Ultimate
+SteelSeries Arctis Nova 5
+SteelSeries Arctis Nova 3
+SteelSeries Arctis Nova Pro
+SteelSeries Arctis 1 Wireless
+SteelSeries Arctis Prime
+HyperX Cloud Alpha S
+HyperX Cloud Flight
+HyperX Cloud Revolver
+HyperX Cloud Core
+HyperX Cloud Mix 2
+HyperX Cloud Orbit S
+Corsair HS80 MAX WIRELESS
+Corsair VIRTUOSO MAX WIRELESS
+Corsair HS70 PRO WIRELESS
+Corsair HS35 v2
+Corsair HS50 PRO Stereo
+Astro A10 Gen 2
+Astro A20 Wireless Gen 2
+Turtle Beach Stealth 700 Gen 2 MAX
+Turtle Beach Recon 70
+Turtle Beach Atlas Air
+Audeze Maxwell for Xbox
+Audeze Mobius
+JBL Quantum 810 Wireless
+JBL Quantum 610 Wireless
+JBL Quantum 400
+JBL Tune 720BT
+JBL Live 770NC
+JBL Tour One M2
+Marshall Major V
+Marshall Monitor III A.N.C.
+Anker Soundcore Space One
+Anker Soundcore Life Q30
+Anker Soundcore Q20i
+Xiaomi Redmi Buds 5 Pro
+Samsung Galaxy Buds3 Pro
+Samsung Galaxy Buds FE
+Nothing Ear (2)
+Nothing Headphone (1)
+Cooler Master MH751
+Cooler Master MH630
+Cougar Immersa Pro
+Plantronics Voyager Focus 2
+Poly Voyager Surround 80 UC
+Fifine H6
+[audio:speaker]
+Logitech Z120
+Logitech Z150
+Logitech Z200
+Logitech Z333
+Logitech Z533
+Logitech Z625
+Logitech Z337
+Logitech G560 Lightsync
+Logitech Dock
+Creative Pebble
+Creative Pebble X
+Creative Pebble Pro
+Creative T100
+Creative Inspire T12
+Creative SBS E2900
+Creative Stage V2
+Creative Stage Air V2
+Creative Sound Blaster GS3
+Creative Sound BlasterX Katana
+Edifier R980T
+Edifier R1100
+Edifier R1855DB
+Edifier R1380DB
+Edifier R2730DB
+Edifier MR4BT
+Edifier M60
+Edifier S1000MKII
+Edifier S2000MKIII
+Edifier S360DB
+Edifier M330
+Edifier G1000
+Edifier QR30
+Edifier MP230
+Audioengine A1
+Audioengine HD3
+Audioengine HD6
+Kanto YU4
+Kanto YU6
+Kanto TUK
+PreSonus Eris 4.5BT
+PreSonus Eris E3.5 BT
+PreSonus Eris Studio 5
+KRK Rokit 7 G4
+KRK GoAux 4
+Yamaha HS8
+Yamaha MSP3A
+Adam Audio T7V
+Adam Audio A4V
+JBL 104
+JBL 306P MkII
+JBL Quantum Duo
+JBL Go 4
+JBL Clip 5
+JBL Flip 5
+JBL Charge 4
+JBL Xtreme 3
+JBL PartyBox Encore
+Mackie CR3-X
+Mackie CR4-X
+Mackie CR5-XBT
+M-Audio BX4
+M-Audio BX8 D3
+Pioneer DJ DM-40D
+IK Multimedia iLoud Micro Monitor
+Razer Nommo Chroma
+Razer Leviathan V2 X
+SteelSeries Arena 3
+SteelSeries Arena 9
+Harman Kardon Aura Studio 4
+Harman Kardon Onyx Studio 8
+Bose SoundLink Revolve+ II
+Bose SoundLink Micro
+Bose Smart Soundbar 600
+Sonos Roam 2
+Sonos Move 2
+Sonos Ray
+Sonos Beam Gen 2
+Marshall Emberton III
+Marshall Woburn III
+Ultimate Ears BOOM 4
+Ultimate Ears WONDERBOOM 4
+Anker Soundcore Motion 300
+Anker Soundcore 2
+Amazon Echo Dot 5th Gen
+Amazon Echo Studio
+Apple HomePod mini
+Apple HomePod 2nd generation
+Google Nest Audio
+Google Nest Mini
+Xiaomi Mi Portable Bluetooth Speaker 16W
+Shure MV7X
+Shure SM7dB
+Shure MV5
+Shure Beta 58A
+Shure PGA48
+Rode NT-USB
+Rode Procaster
+Rode Wireless GO II
+Rode VideoMic GO II
+Rode NT1-A
+Blue Snowball iCE
+Blue Yeti GX
+Logitech G Yeti GX
+Logitech G Yeti Orb
+Elgato Wave Neo
+HyperX DuoCast
+HyperX QuadCast S White
+Razer Seiren V3 Chroma
+Razer Seiren X
+Audio-Technica AT2005USB
+Audio-Technica ATR2100x-USB
+Audio-Technica AT4040
+Audio-Technica BP40
+Electro-Voice RE20
+Sennheiser Profile USB
+Sennheiser MK 4
+Neumann TLM 102
+AKG Lyra
+AKG P120
+Samson Q9U
+Samson C01U Pro
+Fifine K678
+Fifine T669
+MAONO PD200X
+Behringer C-1U
+Behringer UMC22
+Behringer UMC202HD
+Focusrite Scarlett 4i4 4th Gen
+Focusrite Vocaster One
+Universal Audio Volt 1
+Universal Audio Volt 276
+MOTU M2
+Audient iD4 MKII
+Audient EVO 4
+SSL 2
+SSL 2+
+Steinberg UR22C
+PreSonus AudioBox USB 96
+Elgato Wave XLR
+TC Helicon GoXLR
+Rode RodeCaster Pro II
+Rode Streamer X
+Schiit Magni+
+Schiit Modi+
+FiiO K7
+FiiO K5 Pro ESS
+Topping DX3 Pro+
+iFi Zen DAC 3
+Creative Sound Blaster X5
+Creative Sound Blaster G6
+[imaging:camera]
+Logitech C270
+Logitech C310
+Logitech C505
+Logitech C615
+Logitech C925e
+Logitech Brio 100
+Logitech Brio 505
+Logitech Rally Bar Mini
+Logitech MeetUp
+Microsoft Modern Webcam
+Microsoft LifeCam Studio
+Razer Kiyo
+Elgato Facecam Neo
+AVerMedia PW313
+AVerMedia Live Streamer CAM 513
+Anker PowerConf C300
+Insta360 Link 2C
+OBSBOT Tiny 4K
+OBSBOT Tail Air
+Jabra PanaCast 20
+Dell UltraSharp Webcam WB7022
+Dell Pro Webcam WB5023
+HP 960 4K Streaming Webcam
+HP 620 FHD Webcam
+Lenovo 300 FHD Webcam
+Creative Live! Cam Sync 1080p V2
+Trust Tyro
+Sony a7 IV
+Sony a6700
+Sony ZV-E1
+Sony ZV-1F
+Canon EOS R10
+Canon PowerShot V10
+Canon EOS 250D
+Nikon Z30
+Nikon Z fc
+Panasonic Lumix G100
+Panasonic Lumix S5 II
+Fujifilm X-T5
+Fujifilm X100VI
+GoPro HERO12 Black
+GoPro HERO13 Black
+DJI Osmo Pocket 3
+DJI Osmo Action 4
+Insta360 X4
+Insta360 Ace Pro
+Elgato HD60 S+
+Elgato Game Capture Neo
+Elgato 4K X
+AVerMedia Live Gamer Mini
+AVerMedia Live Gamer Portable 2 Plus
+Razer Ripsaw HD
+Blackmagic ATEM Mini
+Blackmagic ATEM Mini Pro
+Blackmagic Web Presenter HD

@@ -58,7 +58,7 @@ public sealed class CatalogAndProjectControllerTests
     {
         await using var dbContext = CreateContext();
         await dbContext.Database.EnsureCreatedAsync();
-        var controller = new CatalogController(dbContext, new CatalogImportService(dbContext));
+        var controller = new CatalogController(dbContext, new DiscoveryCatalogWriter(dbContext, new CatalogImportService(dbContext)));
 
         var firstResponse = await controller.GetProducts(null, null, 0, 5, CancellationToken.None);
         var secondResponse = await controller.GetProducts(null, null, 5, 5, CancellationToken.None);
@@ -79,7 +79,7 @@ public sealed class CatalogAndProjectControllerTests
         await dbContext.Database.EnsureCreatedAsync();
         var product = await dbContext.EquipmentProducts.FirstAsync();
         var originalCount = await dbContext.EquipmentProducts.CountAsync();
-        var controller = new CatalogController(dbContext, new CatalogImportService(dbContext));
+        var controller = new CatalogController(dbContext, new DiscoveryCatalogWriter(dbContext, new CatalogImportService(dbContext)));
 
         var response = await controller.DeleteProduct(product.Id, CancellationToken.None);
 

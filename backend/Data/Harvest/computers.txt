@@ -1,0 +1,217 @@
+# Bilgisayar kasaları
+[computer:tower]
+Lian Li O11 Dynamic EVO
+Lian Li O11 Dynamic EVO XL
+Lian Li O11 Vision
+Lian Li O11 Air Mini
+Lian Li Lancool 216
+Lian Li Lancool 207
+Lian Li Lancool III
+Lian Li A4-H2O
+Lian Li A3-mATX
+NZXT H5 Flow
+NZXT H6 Flow
+NZXT H7 Flow
+NZXT H9 Flow
+NZXT H9 Elite
+NZXT H1 V2
+NZXT H210
+Fractal Design North
+Fractal Design North XL
+Fractal Design Meshify 2
+Fractal Design Meshify 2 Compact
+Fractal Design Torrent
+Fractal Design Torrent Compact
+Fractal Design Pop Air
+Fractal Design Define 7
+Fractal Design Define 7 Compact
+Fractal Design Terra
+Fractal Design Ridge
+Fractal Design Era 2
+Corsair 4000D AIRFLOW
+Corsair 5000D AIRFLOW
+Corsair 7000D AIRFLOW
+Corsair 3000D AIRFLOW
+Corsair 2500X
+Corsair 6500X
+Corsair iCUE 5000X RGB
+Corsair iCUE 4000X RGB
+Corsair 2000D AIRFLOW
+be quiet! Pure Base 500DX
+be quiet! Pure Base 501 Airflow
+be quiet! Shadow Base 800 DX
+be quiet! Dark Base 701
+be quiet! Light Base 900 DX
+be quiet! Silent Base 802
+Phanteks Eclipse G360A
+Phanteks Eclipse P400A
+Phanteks NV7
+Phanteks NV5
+Phanteks XT Pro Ultra
+Phanteks Enthoo Pro 2
+Cooler Master MasterBox NR200P
+Cooler Master MasterBox Q300L
+Cooler Master MasterBox TD500 Mesh
+Cooler Master HAF 700
+Cooler Master Qube 500 Flatpack
+Thermaltake Core P3 TG Pro
+Thermaltake View 51 TG ARGB
+Thermaltake Tower 500
+Thermaltake Divider 300 TG
+Thermaltake Versa H18
+Montech Air 903 Max
+Montech AIR 100 ARGB
+Montech King 95 Pro
+Montech Sky Two
+ASUS ROG Hyperion GR701
+ASUS TUF Gaming GT502
+ASUS ROG Strix Helios
+ASUS Prime AP201
+ASUS A31 PLUS TG ARGB
+Jonsbo D41 Mesh
+Jonsbo D31 Mesh
+Jonsbo N3
+Jonsbo Z20
+HYTE Y60
+HYTE Y70
+HYTE Y40
+Antec C8
+Antec NX410
+Antec Flux Pro
+DeepCool CH560
+DeepCool CH370
+DeepCool CC560
+DeepCool CH510
+SSUPD Meshroom S
+Fractal Design Mood
+Sliger SV540
+MSI MAG Forge 100R
+MSI MPG Gungnir 110R
+Gigabyte C301 Glass
+# Mini PC ve masaüstü
+[computer:tower]
+Apple Mac mini M4
+Apple Mac mini M2
+Apple Mac Studio M2 Max
+Apple Mac Studio M4 Max
+[display:monitor]
+Apple iMac 24 M4
+Apple iMac 24 M3
+[computer:tower]
+Apple Mac Pro M2 Ultra
+Intel NUC 13 Pro
+ASUS NUC 14 Pro
+Beelink SER7
+Beelink EQ12
+Beelink SER8
+Minisforum UM790 Pro
+Minisforum MS-01
+Minisforum UM890 Pro
+Lenovo ThinkCentre M70q Gen 4
+Lenovo ThinkCentre M90q Gen 4
+Lenovo ThinkCentre Neo 50q
+HP Elite Mini 800 G9
+HP Pro Mini 400 G9
+Dell OptiPlex Micro 7010
+Dell OptiPlex 7020 Micro
+Zotac ZBOX CI665 nano
+GEEKOM A7
+Raspberry Pi 5
+[network:router]
+Synology DS224+
+Synology DS923+
+Synology DS220j
+QNAP TS-264
+# Dizüstü bilgisayarlar
+[computer:laptop]
+Apple MacBook Air 13 M3
+Apple MacBook Air 15 M3
+Apple MacBook Air 13 M4
+Apple MacBook Air 15 M4
+Apple MacBook Pro 14 M4
+Apple MacBook Pro 16 M4
+Apple MacBook Pro 14 M3
+Apple MacBook Pro 16 M3 Pro
+Dell XPS 13 9340
+Dell XPS 14 9440
+Dell XPS 16 9640
+Dell Latitude 7440
+Dell Latitude 5440
+Dell Inspiron 14 5440
+Dell Inspiron 16 5640
+Dell G15 5530
+Alienware m16 R2
+Alienware x16 R2
+HP Spectre x360 14
+HP EliteBook 840 G10
+HP EliteBook 840 G11
+HP ProBook 450 G10
+HP Envy x360 15
+HP Pavilion 15
+HP Victus 16
+HP OMEN 16
+HP OMEN Transcend 14
+Lenovo ThinkPad X1 Carbon Gen 12
+Lenovo ThinkPad X1 Carbon Gen 11
+Lenovo ThinkPad T14 Gen 4
+Lenovo ThinkPad T14s Gen 4
+Lenovo ThinkPad E14 Gen 5
+Lenovo ThinkPad P1 Gen 6
+Lenovo Yoga Slim 7i
+Lenovo Yoga 9i
+Lenovo IdeaPad Slim 5
+Lenovo Legion Pro 5i Gen 8
+Lenovo Legion Pro 7i Gen 9
+Lenovo Legion 5 Gen 9
+Lenovo Legion Slim 5
+Lenovo LOQ 15IRH8
+ASUS ZenBook 14 OLED UX3405
+ASUS ZenBook S 13 OLED
+ASUS ZenBook Duo UX8406
+ASUS Vivobook 15
+ASUS Vivobook S 15 OLED
+ASUS ROG Zephyrus G14 GA403
+ASUS ROG Zephyrus G16 GU605
+ASUS ROG Strix G16 G614
+ASUS ROG Strix SCAR 16
+ASUS ROG Flow Z13
+ASUS TUF Gaming A15 FA507
+ASUS TUF Gaming F15
+ASUS ProArt P16
+Acer Swift Go 14
+Acer Swift 3 SF314
+Acer Aspire 5 A515
+Acer Nitro V 15
+Acer Nitro 5 AN515
+Acer Predator Helios Neo 16
+Acer Predator Helios 16
+MSI Katana 15
+MSI Cyborg 15
+MSI Stealth 16 AI Studio
+MSI Raider GE78 HX
+MSI Prestige 14
+MSI Modern 14
+Razer Blade 14
+Razer Blade 16
+Razer Blade 18
+Microsoft Surface Laptop 7
+Microsoft Surface Laptop 5
+Microsoft Surface Pro 11
+Microsoft Surface Laptop Go 3
+Samsung Galaxy Book4 Pro
+Samsung Galaxy Book4 Pro 360
+Samsung Galaxy Book3 Ultra
+Huawei MateBook X Pro
+Huawei MateBook D 16
+Xiaomi Redmi Book Pro 15
+Gigabyte AORUS 16X
+Gigabyte G5 KF
+Framework Laptop 13
+Framework Laptop 16
+LG gram 16
+LG gram 17
+LG gram 14
+Monster Abra A5
+Monster Tulpar T7
+Casper Excalibur G770
+Casper Nirvana X600

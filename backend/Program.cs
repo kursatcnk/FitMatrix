@@ -38,6 +38,13 @@ builder.Services.AddHttpClient<ProductGuruLookupService>(client =>
     client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.8");
 });
 builder.Services.AddScoped<ProductDiscoveryService>();
+builder.Services.AddScoped<DiscoveryCatalogWriter>();
+builder.Services.AddHttpClient<ManufacturerSitemapReader>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(60);
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) FitMatrix/0.1 catalog-sitemap-reader");
+});
+builder.Services.AddSingleton<CatalogHarvestService>();
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;

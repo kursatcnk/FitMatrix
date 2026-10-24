@@ -1,0 +1,375 @@
+# Bilgisayar, dizüstü, kasa — genişletilmiş liste
+[computer:tower]
+Lian Li O11 Dynamic
+Lian Li O11 Dynamic Mini
+Lian Li O11D Mini V2
+Lian Li O11 Vision Compact
+Lian Li Lancool 205 Mesh
+Lian Li Lancool II Mesh
+Lian Li Lancool 217
+Lian Li SUP 01
+Lian Li DAN Case A3
+Lian Li PC-O11 Dynamic XL
+NZXT H510
+NZXT H510 Flow
+NZXT H5 Elite
+NZXT H7 Elite
+NZXT H6 Flow RGB
+NZXT H9 Flow RGB
+NZXT H7 Flow RGB
+NZXT H210i
+Fractal Design Meshify C
+Fractal Design Meshify 2 XL
+Fractal Design Meshify 2 Compact Lite
+Fractal Design Define R6
+Fractal Design Define 7 XL
+Fractal Design Focus 2
+Fractal Design Pop Mini Air
+Fractal Design Node 304
+Fractal Design Node 804
+Fractal Design Core 1000
+Fractal Design North Charcoal Black TG Dark
+Corsair 4000D
+Corsair 4000X RGB
+Corsair 5000T RGB
+Corsair 7000X RGB
+Corsair 3500X
+Corsair 680X RGB
+Corsair 275R Airflow
+Corsair Carbide 175R RGB
+Corsair 1000D
+Corsair 2500D AIRFLOW
+Corsair iCUE 220T RGB Airflow
+be quiet! Pure Base 500
+be quiet! Pure Base 600
+be quiet! Silent Base 601
+be quiet! Dark Base Pro 901
+be quiet! Shadow Base 800
+be quiet! Light Base 600 LX
+Phanteks Eclipse G500A
+Phanteks Eclipse P300A
+Phanteks Eclipse P500A
+Phanteks NV9
+Phanteks XT View
+Phanteks Evolv X2
+Phanteks Enthoo Evolv Shift 2
+Cooler Master MasterBox NR200
+Cooler Master MasterBox NR600
+Cooler Master MasterBox MB511
+Cooler Master MasterBox 520 Mesh
+Cooler Master MasterCase H500
+Cooler Master HAF 500
+Cooler Master Elite 301
+Cooler Master Ncore 100 MAX
+Cooler Master MasterFrame 700
+Thermaltake Core P5
+Thermaltake Core P6 TG
+Thermaltake Tower 300
+Thermaltake Tower 900
+Thermaltake View 71 TG
+Thermaltake H550 TG ARGB
+Thermaltake Ceres 500 TG ARGB
+Montech Air 903 Base
+Montech Air X ARGB
+Montech King 95
+Montech XR
+Montech Heritage
+ASUS TUF Gaming GT301
+ASUS TUF Gaming GT501
+ASUS ROG Strix Helios II
+ASUS ProArt PA602
+ASUS Prime AP201 MicroATX
+Jonsbo D500
+Jonsbo TK-3
+Jonsbo C6
+Jonsbo N2
+HYTE Y60 Snow White
+HYTE Revolt 3
+Antec DF700 Flux
+Antec P20C
+Antec NX800
+Antec Performance 1 FT
+DeepCool CH780
+DeepCool CH160
+DeepCool CK560
+DeepCool MATREXX 55 MESH
+DeepCool CC360
+Kolink Observatory HF Glass
+Kolink Void X
+Sharkoon TK4 RGB
+Sharkoon RGB Slider
+Zalman Z9 Iceberg
+Zalman i3 Neo
+SilverStone SUGO 14
+SilverStone FARA R1
+SilverStone RM44
+InWin 309
+InWin Dubili
+Cougar MX330-G
+Cougar Duoface Pro RGB
+Aerocool Cylon Mini
+Xigmatek Gaming X 3FX
+GameMax Siege
+MSI MAG Forge 120A AIRFLOW
+MSI MPG Velox 100R
+MSI MAG Vampiric 100R
+MSI MEG Prospect 700R
+Gigabyte AORUS C300 Glass
+Gigabyte C200 Glass
+Apple Mac mini M1
+Apple Mac Studio M1 Max
+Apple Mac Pro 2019
+Microsoft Surface Studio 2+
+Dell XPS Desktop 8960
+Dell OptiPlex 7010 Tower
+Dell OptiPlex 3000 Small Form Factor
+Dell Precision 3660 Tower
+Alienware Aurora R16
+Alienware Aurora R15
+HP OMEN 45L
+HP OMEN 25L
+HP Victus 15L
+HP Pavilion Desktop TP01
+HP Elite Tower 800 G9
+HP Z2 Tower G9
+HP Z2 Mini G9
+Lenovo Legion Tower 5i Gen 8
+Lenovo Legion Tower 7i Gen 8
+Lenovo IdeaCentre Gaming 5i
+Lenovo ThinkCentre M70s Gen 4
+Lenovo ThinkStation P3 Tiny
+Lenovo ThinkStation P360 Tower
+ASUS ROG Strix G16CH
+ASUS ExpertCenter PN64
+ASUS PN53
+MSI Infinite S3
+MSI Cubi 5 12M
+MSI MEG Trident X2
+Corsair ONE i300
+NZXT Player Three
+Zotac ZBOX Magnus One
+Intel NUC 12 Pro
+Intel NUC 11 Pro
+Intel NUC 13 Extreme
+Beelink GTR7
+Beelink SER5 Max
+Beelink Mini S12 Pro
+Beelink EQ13
+Minisforum UM780 XTX
+Minisforum UM690S
+Minisforum MS-A1
+Minisforum AtomMan X7 Ti
+GMKtec NucBox K8
+GMKtec NucBox G3
+ACEMAGIC AM18
+Trigkey Green G4
+Chuwi LarkBox X
+Geekom Mini IT13
+Geekom XT12 Pro
+ASRock DeskMini X300
+ASRock DeskMeet B660
+Raspberry Pi 4 Model B
+Raspberry Pi 400
+Raspberry Pi 500
+Orange Pi 5 Plus
+NVIDIA Jetson Orin Nano Developer Kit
+Synology DS1522+
+Synology DS423+
+Synology DS124
+Synology DS723+
+QNAP TS-464
+QNAP TS-233
+QNAP TS-453E
+Asustor Drivestor 2 Pro AS3302T
+TerraMaster F4-423
+UGREEN NASync DXP4800 Plus
+WD My Cloud EX2 Ultra
+WD My Book Duo
+Samsung T7 Shield
+Samsung T9
+SanDisk Extreme Portable SSD V2
+Crucial X9 Pro
+LaCie Rugged SSD Pro
+Seagate Expansion Desktop
+WD Elements Desktop
+OWC Thunderbay 4
+Sabrent Rocket XTRM 5
+[computer:laptop]
+Apple MacBook Air M1
+Apple MacBook Air 13 M2
+Apple MacBook Air 15 M2
+Apple MacBook Pro 13 M2
+Apple MacBook Pro 14 M1 Pro
+Apple MacBook Pro 16 M1 Max
+Apple MacBook Pro 14 M2 Pro
+Apple MacBook Pro 16 M2 Max
+Apple MacBook Pro 14 M4 Pro
+Apple MacBook Pro 16 M4 Max
+Dell XPS 13 9315
+Dell XPS 13 Plus 9320
+Dell XPS 15 9530
+Dell XPS 17 9730
+Dell Latitude 7340
+Dell Latitude 9440 2-in-1
+Dell Latitude 3540
+Dell Latitude 5550
+Dell Precision 5680
+Dell Precision 3581
+Dell Inspiron 15 3520
+Dell Inspiron 14 Plus 7440
+Dell Inspiron 16 Plus 7630
+Dell Vostro 3520
+Dell G16 7630
+Dell G15 5535
+Alienware m18 R2
+Alienware x14 R2
+Alienware m16 R1
+Dell 14 Plus
+HP Spectre x360 16
+HP Envy 16
+HP Envy x360 14
+HP Envy 17
+HP Pavilion Plus 14
+HP Pavilion Aero 13
+HP Pavilion x360 14
+HP 15s-fq5000
+HP 250 G10
+HP 255 G10
+HP ProBook 440 G10
+HP ProBook 450 G9
+HP EliteBook 860 G10
+HP EliteBook 1040 G10
+HP EliteBook x360 1040 G10
+HP ZBook Firefly 14 G10
+HP ZBook Power G10
+HP ZBook Studio G10
+HP Dragonfly G4
+HP OMEN 17
+HP OMEN Transcend 16
+HP Victus 15
+HP Chromebook x360 14
+Lenovo ThinkPad X1 Yoga Gen 8
+Lenovo ThinkPad X1 Nano Gen 3
+Lenovo ThinkPad X13 Gen 4
+Lenovo ThinkPad T16 Gen 2
+Lenovo ThinkPad T14 Gen 5
+Lenovo ThinkPad E16 Gen 1
+Lenovo ThinkPad L14 Gen 4
+Lenovo ThinkPad P16 Gen 2
+Lenovo ThinkPad P14s Gen 4
+Lenovo ThinkPad Z13 Gen 2
+Lenovo ThinkBook 14 G6
+Lenovo ThinkBook 16 G6
+Lenovo ThinkBook 14s Yoga
+Lenovo Yoga Slim 7 Pro
+Lenovo Yoga Slim 6i
+Lenovo Yoga Pro 9i
+Lenovo Yoga Pro 7
+Lenovo Yoga Book 9i
+Lenovo Yoga 7i 2-in-1
+Lenovo IdeaPad Slim 3
+Lenovo IdeaPad Flex 5
+Lenovo IdeaPad Pro 5
+Lenovo IdeaPad Gaming 3
+Lenovo Legion 7i Gen 9
+Lenovo Legion 9i Gen 9
+Lenovo Legion Slim 7i
+Lenovo LOQ 15APH8
+Lenovo LOQ 16IRH8
+Lenovo Chromebook Duet
+ASUS ZenBook 14 UX3402
+ASUS ZenBook 13 OLED UX325
+ASUS ZenBook Pro 14 Duo OLED
+ASUS ZenBook S 14 UX5406
+ASUS ZenBook Flip 14
+ASUS Vivobook 16
+ASUS Vivobook 14
+ASUS Vivobook Pro 15 OLED
+ASUS Vivobook S 14 OLED
+ASUS Vivobook Go 15
+ASUS ExpertBook B9
+ASUS ExpertBook B1
+ASUS ROG Zephyrus G14 GA402
+ASUS ROG Zephyrus G16 GU603
+ASUS ROG Zephyrus M16
+ASUS ROG Zephyrus Duo 16
+ASUS ROG Strix G15 G513
+ASUS ROG Strix G18
+ASUS ROG Strix SCAR 18
+ASUS ROG Flow X13
+ASUS ROG Flow X16
+ASUS TUF Gaming A16
+ASUS TUF Gaming F16
+ASUS TUF Gaming A17
+ASUS TUF Dash F15
+ASUS ProArt Studiobook 16 OLED
+ASUS Chromebook Flip CX5
+Acer Swift X 14
+Acer Swift Edge 16
+Acer Swift 5
+Acer Swift 14 AI
+Acer Aspire 7
+Acer Aspire 3
+Acer Aspire Vero
+Acer Nitro 16
+Acer Nitro 17
+Acer Predator Helios 18
+Acer Predator Triton 17 X
+Acer Predator Helios Neo 18
+Acer TravelMate P2
+Acer Chromebook Plus 515
+Acer Chromebook Spin 714
+MSI Titan 18 HX
+MSI Vector 16 HX
+MSI Pulse 17
+MSI Sword 16 HX
+MSI Crosshair 16 HX
+MSI Thin GF63
+MSI Bravo 15
+MSI Prestige 16 AI Evo
+MSI Summit E14 Flip
+MSI Creator Z17 HX Studio
+MSI Stealth 14 Studio
+MSI Katana 17
+Razer Blade 15
+Razer Blade 14 2024
+Razer Blade 16 2024
+Microsoft Surface Laptop 6
+Microsoft Surface Laptop Studio 2
+Microsoft Surface Pro 10
+Microsoft Surface Go 4
+Microsoft Surface Laptop Go 2
+Samsung Galaxy Book4 Edge
+Samsung Galaxy Book4 Ultra
+Samsung Galaxy Book4 360
+Samsung Galaxy Book3 Pro 360
+Samsung Galaxy Book2 Pro
+Samsung Galaxy Chromebook 2
+Huawei MateBook 14
+Huawei MateBook X Pro 2024
+Huawei MateBook 16s
+Huawei MateBook D 14
+Honor MagicBook 14
+Honor MagicBook Pro 16
+Xiaomi Book Pro 14
+Xiaomi Redmi Book 15
+Gigabyte AORUS 17X
+Gigabyte AORUS 15
+Gigabyte AERO 16 OLED
+Gigabyte G6X
+LG gram 15
+LG gram Style 14
+LG gram Pro 16
+LG gram 2-in-1 16
+Dynabook Portege X40-K
+Dynabook Tecra A40-K
+Fujitsu Lifebook U9413
+Panasonic Toughbook 55
+Framework Laptop 13 AMD Ryzen 7040
+Chuwi HeroBook Pro
+Monster Abra A7
+Monster Tulpar T5
+Monster Huma H5
+Casper Excalibur G911
+Casper Nirvana X500
+Casper Excalibur G870

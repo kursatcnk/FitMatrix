@@ -1,0 +1,114 @@
+# Mouse ve mousepad
+[input:mouse]
+Logitech MX Master 3S
+Logitech MX Master 3
+Logitech MX Anywhere 3S
+Logitech MX Vertical
+Logitech MX Ergo S
+Logitech Lift Vertical
+Logitech M720 Triathlon
+Logitech M650 Signature
+Logitech M705 Marathon
+Logitech M185
+Logitech M90
+Logitech Pebble Mouse 2 M350s
+Logitech G Pro X Superlight 2
+Logitech G Pro X Superlight
+Logitech G Pro Wireless
+Logitech G502 X Plus
+Logitech G502 X Lightspeed
+Logitech G502 HERO
+Logitech G305 Lightspeed
+Logitech G203 Lightsync
+Logitech G703 Lightspeed
+Logitech G903 Lightspeed
+Logitech G604 Lightspeed
+Logitech G309 Lightspeed
+Razer DeathAdder V3 Pro
+Razer DeathAdder V3
+Razer DeathAdder V2
+Razer DeathAdder Essential
+Razer Viper V3 Pro
+Razer Viper V2 Pro
+Razer Viper Mini
+Razer Basilisk V3 Pro
+Razer Basilisk V3
+Razer Basilisk V3 X HyperSpeed
+Razer Cobra Pro
+Razer Orochi V2
+Razer Naga V2 Pro
+Razer Pro Click
+Corsair M75 AIR Wireless
+Corsair Dark Core RGB PRO
+Corsair Harpoon RGB Wireless
+Corsair Katar Pro
+Corsair Sabre RGB PRO
+Corsair Scimitar RGB Elite
+Corsair M65 RGB ULTRA
+SteelSeries Aerox 3
+SteelSeries Aerox 5 Wireless
+SteelSeries Rival 3
+SteelSeries Rival 5
+SteelSeries Prime Wireless
+SteelSeries Prime Mini
+SteelSeries Rival 650
+HyperX Pulsefire Haste 2
+HyperX Pulsefire Haste
+HyperX Pulsefire Dart
+HyperX Pulsefire Surge
+Zowie EC2-C
+Zowie EC2-CW
+Zowie FK2-C
+Zowie S2-C
+Zowie ZA13-C
+Zowie U2
+Pulsar X2V2
+Pulsar X2 Mini
+Pulsar Xlite V3
+Lamzu Atlantis Mini
+Lamzu Maya
+Glorious Model O 2
+Glorious Model O Wireless
+Glorious Model D 2
+Glorious Model I 2
+Finalmouse UltralightX
+Endgame Gear XM2we
+Endgame Gear OP1 8k
+Vaxee XE
+ASUS ROG Harpe Ace Aim Lab Edition
+ASUS ROG Keris Wireless AimPoint
+ASUS ROG Gladius III
+ASUS TUF Gaming M3 Gen II
+Roccat Kone XP Air
+Roccat Burst Pro Air
+Turtle Beach Kone II Air
+Microsoft Bluetooth Ergonomic Mouse
+Microsoft Arc Mouse
+Microsoft Surface Mobile Mouse
+Apple Magic Mouse
+Apple Magic Trackpad
+Logitech Ergo M575
+Kensington Expert Mouse Wireless Trackball
+Kensington Orbit Trackball with Scroll Ring
+Anker Vertical Ergonomic Optical Mouse
+Cooler Master MM712
+Cooler Master MM731
+Xtrfy M8 Wireless
+MSI Clutch GM41 Lightweight Wireless
+Redragon M711 Cobra
+[accessory:mat]
+Logitech G640
+Logitech G840
+Logitech G240
+Logitech Desk Mat Studio Series
+Razer Gigantus V2 XXL
+Razer Strider XXL
+Razer Goliathus Extended Chroma
+SteelSeries QcK Heavy XXL
+SteelSeries QcK Prism Cloth XL
+Corsair MM700 RGB Extended
+Corsair MM350 PRO Extended XL
+Glorious XXL Extended Mouse Pad
+Artisan Hayate Otsu
+HyperX Fury S Pro XL
+Zowie G-SR II
