@@ -48,4 +48,18 @@ jobs:
     needs: [backend, frontend]
     steps:
       - uses: actions/checkout@v4
-      - run: docker compose build
+      - run: docker compose up --build --detach
+      - name: Smoke test the running stack
+        run: |
+          for attempt in $(seq 1 60); do
+            if curl -fsS http://localhost:8080/api/system/health > health.json; then break; fi
+            sleep 5
+          done
+          cat health.json
+          jq -e '.database == "connected" and .productCount >= 1000' health.json
+          curl -fsS http://localhost:8080/ | grep -q "<div id=\"root\">"
+          curl -fsS "http://localhost:8080/api/catalog/products?limit=5" | jq -e 'length == 5'
+      - if: failure()
+        run: docker compose logs --no-color
+      - if: always()
+        run: docker compose down --volumes
