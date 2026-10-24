@@ -92,3 +92,28 @@ describe('standing posture', () => {
     expect(report.checks.find((entry) => entry.id === 'desk-height')?.message).toContain('alçalt')
   })
 })
+
+describe('viewing arc', () => {
+  const arcOf = (items: PlacedEquipment[]) => analyzeErgonomics(items, desk, 175).checks.find((entry) => entry.id === 'viewing-arc')!
+
+  it('keeps a single centred monitor well inside the comfortable arc', () => {
+    const check = arcOf([item('monitor', 'monitor-27', 0, -20)])
+    expect(check.status).toBe('good')
+    expect(parseFloat(check.value!)).toBeLessThan(45)
+  })
+
+  it('flags three flat monitors in a row', () => {
+    const check = arcOf([
+      item('left', 'monitor-27', -62, -20),
+      item('centre', 'monitor-27', 0, -20),
+      item('right', 'monitor-27', 62, -20),
+    ])
+    expect(check.status).toBe('warning')
+  })
+
+  it('narrows the arc when side screens are angled inwards', () => {
+    const flat = parseFloat(arcOf([item('l', 'monitor-27', -62, -20), item('r', 'monitor-27', 62, -20)]).value!)
+    const angled = parseFloat(arcOf([item('l', 'monitor-27', -62, -20, { rotation: 25 }), item('r', 'monitor-27', 62, -20, { rotation: -25 })]).value!)
+    expect(angled).toBeLessThan(flat)
+  })
+})

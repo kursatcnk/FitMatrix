@@ -4,7 +4,7 @@ import type { DeskDimensions, EquipmentDefinition, PlacedEquipment } from '../ty
 export type ErgonomicStatus = 'good' | 'warning' | 'missing'
 
 export interface ErgonomicCheck {
-  id: 'desk-height' | 'screen-height' | 'viewing-distance' | 'screen-centering' | 'keyboard-reach'
+  id: 'desk-height' | 'screen-height' | 'viewing-distance' | 'screen-centering' | 'viewing-arc' | 'keyboard-reach'
   title: string
   status: ErgonomicStatus
   value?: string
@@ -98,6 +98,27 @@ function checkViewingDistance(primary: ResolvedItem | undefined, desk: DeskDimen
   return { ...base, value, status: 'good', message: 'Ekran yaklaşık bir kol boyu uzaklıkta.' }
 }
 
+// Horizontal angle the screens span as seen from the eyes. Up to ~70° is covered by eye movement and a
+// little head turn; a wider arc keeps the neck rotated toward the side screens.
+function checkViewingArc(monitors: ResolvedItem[], eyeZ: number): ErgonomicCheck {
+  const base = { id: 'viewing-arc' as const, title: 'Yatay görüş açısı' }
+  if (!monitors.length) return { ...base, status: 'missing', message: 'Değerlendirme için sahneye bir monitör ekle.' }
+  const angles = monitors.flatMap(({ item, definition }) => {
+    const halfWidth = (item.mountMode === 'vesa' && item.screenOrientation === 'portrait' ? definition.height : definition.width) / 2
+    const radians = (item.rotation * Math.PI) / 180
+    return [-1, 1].map((side) => {
+      const x = item.position.x + side * halfWidth * Math.cos(radians)
+      const z = item.position.z + side * halfWidth * Math.sin(radians)
+      return Math.atan2(x, eyeZ - z) * 180 / Math.PI
+    })
+  })
+  const arc = Math.max(...angles) - Math.min(...angles)
+  const value = `${round(arc)}°`
+  if (arc > 100) return { ...base, value, status: 'warning', message: 'Ekranlar çok geniş bir yay çiziyor; yan ekranları içe döndür ya da biraz uzaklaştır.' }
+  if (arc > 70) return { ...base, value, status: 'good', message: 'Yan ekranlar için hafif baş dönüşü gerekiyor; sık kullanılanı ortaya al.' }
+  return { ...base, value, status: 'good', message: 'Ekranlar göz hareketiyle taranabilen açının içinde.' }
+}
+
 function checkScreenCentering(monitors: ResolvedItem[]): ErgonomicCheck {
   const base = { id: 'screen-centering' as const, title: 'Ekran ortalama' }
   if (!monitors.length) return { ...base, status: 'missing', message: 'Değerlendirme için sahneye bir monitör ekle.' }
@@ -141,6 +162,7 @@ export function analyzeErgonomics(
     checkScreenHeight(monitors[0], desk, eyeHeight),
     checkViewingDistance(monitors[0], desk, eyeHeight),
     checkScreenCentering(monitors),
+    checkViewingArc(monitors, eyePoint(desk, height, posture).z),
     checkKeyboardReach(keyboard, desk),
   ]
   const applicable = checks.filter((check) => check.status !== 'missing')
