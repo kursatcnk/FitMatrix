@@ -1,7 +1,7 @@
 {
-  "version": "3e31960c494fccec",
-  "exportedAt": "2026-10-24T15:30:26.186899+00:00",
-  "productCount": 1367,
+  "version": "517b9facf2e12dc3",
+  "exportedAt": "2026-10-24T16:28:56.391589+00:00",
+  "productCount": 1402,
   "products": [
     {
       "brandSlug": "aoc",
@@ -7722,33 +7722,6 @@
           "url": "https://www.asus.com/us/laptops/for-gaming/tuf-gaming/asus-tuf-gaming-a15-2022/techspec/",
           "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
           "lastCheckedAt": "2026-10-23T21:45:44.4909248+00:00"
-        }
-      ]
-    },
-    {
-      "brandSlug": "asus",
-      "brand": "ASUS",
-      "category": "computer",
-      "displayName": "ASUS TUF Gaming A15 (2022)",
-      "modelName": "TUF Gaming A15 (2022)",
-      "manufacturerPartNumber": "2022 ASUS TUF Gaming A15",
-      "gtin": null,
-      "widthCm": 35.90,
-      "heightCm": 2.49,
-      "depthCm": 25.60,
-      "footprintWidthCm": 35.90,
-      "footprintDepthCm": 25.60,
-      "weightKg": null,
-      "editorModel": "laptop",
-      "displayColor": "#596368",
-      "isVerified": true,
-      "dataQuality": "source-verified",
-      "sources": [
-        {
-          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
-          "url": "https://www.asus.com/us/laptops/for-gaming/tuf-gaming/2022-asus-tuf-gaming-a15/techspec/",
-          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
-          "lastCheckedAt": "2026-10-24T08:28:51.9884571+00:00"
         }
       ]
     },
@@ -18559,6 +18532,1086 @@
       ]
     },
     {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "imaging",
+      "displayName": "Elgato Cam Link 4K",
+      "modelName": "Cam Link 4K",
+      "manufacturerPartNumber": "Cam Link 4K",
+      "gtin": null,
+      "widthCm": 8.10,
+      "heightCm": 1.20,
+      "depthCm": 3.10,
+      "footprintWidthCm": 8.10,
+      "footprintDepthCm": 3.10,
+      "weightKg": null,
+      "editorModel": "camera",
+      "displayColor": "#3b4248",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/cam-link-4k",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:13:42.3380802+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "imaging",
+      "displayName": "Elgato Cam Link Pro",
+      "modelName": "Cam Link Pro",
+      "manufacturerPartNumber": "Cam Link Pro",
+      "gtin": null,
+      "widthCm": 19.20,
+      "heightCm": 5.10,
+      "depthCm": 14.80,
+      "footprintWidthCm": 19.20,
+      "footprintDepthCm": 14.80,
+      "weightKg": null,
+      "editorModel": "camera",
+      "displayColor": "#3b4248",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/cam-link-pro",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:18:09.8354278+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "imaging",
+      "displayName": "Elgato Facecam Neo",
+      "modelName": "Facecam Neo",
+      "manufacturerPartNumber": "Facecam Neo",
+      "gtin": null,
+      "widthCm": 8.80,
+      "heightCm": 3.20,
+      "depthCm": 4.00,
+      "footprintWidthCm": 8.80,
+      "footprintDepthCm": 4.00,
+      "weightKg": null,
+      "editorModel": "camera",
+      "displayColor": "#3b4248",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/facecam-neo",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:13:17.7409517+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "imaging",
+      "displayName": "Elgato Game Capture 4K Pro",
+      "modelName": "Game Capture 4K Pro",
+      "manufacturerPartNumber": "Game Capture 4K Pro",
+      "gtin": null,
+      "widthCm": 12.17,
+      "heightCm": 1.91,
+      "depthCm": 5.59,
+      "footprintWidthCm": 12.17,
+      "footprintDepthCm": 5.59,
+      "weightKg": null,
+      "editorModel": "camera",
+      "displayColor": "#3b4248",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/game-capture-4k-pro",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:17:26.2185705+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "imaging",
+      "displayName": "Elgato Game Capture 4K S",
+      "modelName": "Game Capture 4K S",
+      "manufacturerPartNumber": "Game Capture 4K S",
+      "gtin": null,
+      "widthCm": 11.20,
+      "heightCm": 1.80,
+      "depthCm": 7.20,
+      "footprintWidthCm": 11.20,
+      "footprintDepthCm": 7.20,
+      "weightKg": null,
+      "editorModel": "camera",
+      "displayColor": "#3b4248",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/game-capture-4k-s",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:16:33.9514723+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "imaging",
+      "displayName": "Elgato Game Capture 4K X",
+      "modelName": "Game Capture 4K X",
+      "manufacturerPartNumber": "Game Capture 4K X",
+      "gtin": null,
+      "widthCm": 11.20,
+      "heightCm": 1.80,
+      "depthCm": 7.20,
+      "footprintWidthCm": 11.20,
+      "footprintDepthCm": 7.20,
+      "weightKg": null,
+      "editorModel": "camera",
+      "displayColor": "#3b4248",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/game-capture-4k-x",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:16:08.6161267+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "imaging",
+      "displayName": "Elgato Game Capture Neo",
+      "modelName": "Game Capture Neo",
+      "manufacturerPartNumber": "Game Capture Neo",
+      "gtin": null,
+      "widthCm": 12.30,
+      "heightCm": 2.00,
+      "depthCm": 6.50,
+      "footprintWidthCm": 12.30,
+      "footprintDepthCm": 6.50,
+      "weightKg": null,
+      "editorModel": "camera",
+      "displayColor": "#3b4248",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/game-capture-neo-black",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:02:53.2842679+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "lighting",
+      "displayName": "Elgato Key Light",
+      "modelName": "Key Light",
+      "manufacturerPartNumber": "Key Light",
+      "gtin": null,
+      "widthCm": 34.98,
+      "heightCm": 3.00,
+      "depthCm": 24.99,
+      "footprintWidthCm": 34.98,
+      "footprintDepthCm": 24.99,
+      "weightKg": null,
+      "editorModel": "lamp",
+      "displayColor": "#b5a57d",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/key-light",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:13:51.2414795+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "lighting",
+      "displayName": "Elgato Key Light Air MK.2",
+      "modelName": "Key Light Air MK.2",
+      "manufacturerPartNumber": "Key Light Air MK.2",
+      "gtin": null,
+      "widthCm": 31.90,
+      "heightCm": 20.70,
+      "depthCm": 3.30,
+      "footprintWidthCm": 31.90,
+      "footprintDepthCm": 3.30,
+      "weightKg": null,
+      "editorModel": "lamp",
+      "displayColor": "#b5a57d",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/key-light-air",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:03:13.3944553+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "lighting",
+      "displayName": "Elgato Key Light Air MK.2 (Light Only)",
+      "modelName": "Key Light Air MK.2 (Light Only)",
+      "manufacturerPartNumber": "Key Light Air MK.2 (Light Only)",
+      "gtin": null,
+      "widthCm": 31.90,
+      "heightCm": 20.70,
+      "depthCm": 3.30,
+      "footprintWidthCm": 31.90,
+      "footprintDepthCm": 3.30,
+      "weightKg": null,
+      "editorModel": "lamp",
+      "displayColor": "#b5a57d",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/key-light-air-light-only",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:03:03.7567638+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "lighting",
+      "displayName": "Elgato Key Light Mini",
+      "modelName": "Key Light Mini",
+      "manufacturerPartNumber": "Key Light Mini",
+      "gtin": null,
+      "widthCm": 14.70,
+      "heightCm": 1.70,
+      "depthCm": 10.00,
+      "footprintWidthCm": 14.70,
+      "footprintDepthCm": 10.00,
+      "weightKg": null,
+      "editorModel": "lamp",
+      "displayColor": "#b5a57d",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/key-light-mini",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:17:07.9486478+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "lighting",
+      "displayName": "Elgato Key Light Neo",
+      "modelName": "Key Light Neo",
+      "manufacturerPartNumber": "Key Light Neo",
+      "gtin": null,
+      "widthCm": 14.99,
+      "heightCm": 3.78,
+      "depthCm": 14.99,
+      "footprintWidthCm": 14.99,
+      "footprintDepthCm": 14.99,
+      "weightKg": null,
+      "editorModel": "lamp",
+      "displayColor": "#b5a57d",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/key-light-neo",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:12:51.5994811+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "accessory",
+      "displayName": "Elgato Prompter",
+      "modelName": "Prompter",
+      "manufacturerPartNumber": "Prompter",
+      "gtin": null,
+      "widthCm": 28.20,
+      "heightCm": 21.90,
+      "depthCm": 22.40,
+      "footprintWidthCm": 28.20,
+      "footprintDepthCm": 22.40,
+      "weightKg": null,
+      "editorModel": "stand",
+      "displayColor": "#675f52",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/prompter",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:13:00.297515+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "accessory",
+      "displayName": "Elgato Prompter XL",
+      "modelName": "Prompter XL",
+      "manufacturerPartNumber": "Prompter XL",
+      "gtin": null,
+      "widthCm": 49.30,
+      "heightCm": 29.50,
+      "depthCm": 39.60,
+      "footprintWidthCm": 49.30,
+      "footprintDepthCm": 39.60,
+      "weightKg": null,
+      "editorModel": "stand",
+      "displayColor": "#675f52",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/prompter-xl",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:16:59.191495+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "lighting",
+      "displayName": "Elgato Ring Light",
+      "modelName": "Ring Light",
+      "manufacturerPartNumber": "Ring Light",
+      "gtin": null,
+      "widthCm": 20.50,
+      "heightCm": 74.00,
+      "depthCm": 20.50,
+      "footprintWidthCm": 20.50,
+      "footprintDepthCm": 20.50,
+      "weightKg": null,
+      "editorModel": "lamp",
+      "displayColor": "#b5a57d",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/ring-light",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:18:48.5231955+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck",
+      "modelName": "Stream Deck",
+      "manufacturerPartNumber": "Stream Deck",
+      "gtin": null,
+      "widthCm": 11.80,
+      "heightCm": 2.50,
+      "depthCm": 8.40,
+      "footprintWidthCm": 11.80,
+      "footprintDepthCm": 8.40,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-pink-petal",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:07:05.3785518+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck \u002B XL",
+      "modelName": "Stream Deck \u002B XL",
+      "manufacturerPartNumber": "Stream Deck \u002B XL",
+      "gtin": null,
+      "widthCm": 20.50,
+      "heightCm": 14.70,
+      "depthCm": 17.50,
+      "footprintWidthCm": 20.50,
+      "footprintDepthCm": 17.50,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-plus-xl",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:16:25.7671384+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Mini",
+      "modelName": "Stream Deck Mini",
+      "manufacturerPartNumber": "Stream Deck Mini",
+      "gtin": null,
+      "widthCm": 8.40,
+      "heightCm": 5.80,
+      "depthCm": 6.00,
+      "footprintWidthCm": 8.40,
+      "footprintDepthCm": 6.00,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-mini",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:05:50.7791649+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Mini: Discord Edition",
+      "modelName": "Stream Deck Mini: Discord Edition",
+      "manufacturerPartNumber": "Stream Deck Mini: Discord Edition",
+      "gtin": null,
+      "widthCm": 8.40,
+      "heightCm": 5.80,
+      "depthCm": 6.00,
+      "footprintWidthCm": 8.40,
+      "footprintDepthCm": 6.00,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-mini-discord",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:12:34.4493263+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Module (15 Classic Keys)",
+      "modelName": "Stream Deck Module (15 Classic Keys)",
+      "manufacturerPartNumber": "Stream Deck Module (15 Classic Keys)",
+      "gtin": null,
+      "widthCm": 10.70,
+      "heightCm": 2.00,
+      "depthCm": 7.00,
+      "footprintWidthCm": 10.70,
+      "footprintDepthCm": 7.00,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-module-15-keys",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:07:58.8534762+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Module (15 Keys, Scissor Keys)",
+      "modelName": "Stream Deck Module (15 Keys, Scissor Keys)",
+      "manufacturerPartNumber": "Stream Deck Module (15 Keys, Scissor Keys)",
+      "gtin": null,
+      "widthCm": 10.80,
+      "heightCm": 2.00,
+      "depthCm": 7.20,
+      "footprintWidthCm": 10.80,
+      "footprintDepthCm": 7.20,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-module-15-scissor-keys",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:07:50.5547014+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Module (32 Keys)",
+      "modelName": "Stream Deck Module (32 Keys)",
+      "manufacturerPartNumber": "Stream Deck Module (32 Keys)",
+      "gtin": null,
+      "widthCm": 16.90,
+      "heightCm": 2.50,
+      "depthCm": 10.30,
+      "footprintWidthCm": 16.90,
+      "footprintDepthCm": 10.30,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-module-32-keys",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:07:41.7001593+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Module (6 Keys)",
+      "modelName": "Stream Deck Module (6 Keys)",
+      "manufacturerPartNumber": "Stream Deck Module (6 Keys)",
+      "gtin": null,
+      "widthCm": 7.10,
+      "heightCm": 1.90,
+      "depthCm": 5.10,
+      "footprintWidthCm": 7.10,
+      "footprintDepthCm": 5.10,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-module-6-keys",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:07:33.0160436+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Neo",
+      "modelName": "Stream Deck Neo",
+      "manufacturerPartNumber": "Stream Deck Neo",
+      "gtin": null,
+      "widthCm": 10.70,
+      "heightCm": 2.60,
+      "depthCm": 7.80,
+      "footprintWidthCm": 10.70,
+      "footprintDepthCm": 7.80,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-neo-black",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:12:42.98898+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Pedal",
+      "modelName": "Stream Deck Pedal",
+      "manufacturerPartNumber": "Stream Deck Pedal",
+      "gtin": null,
+      "widthCm": 24.40,
+      "heightCm": 4.90,
+      "depthCm": 17.50,
+      "footprintWidthCm": 24.40,
+      "footprintDepthCm": 17.50,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-pedal",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:05:32.944461+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Scissor Keys",
+      "modelName": "Stream Deck Scissor Keys",
+      "manufacturerPartNumber": "Stream Deck Scissor Keys",
+      "gtin": null,
+      "widthCm": 11.80,
+      "heightCm": 2.50,
+      "depthCm": 8.40,
+      "footprintWidthCm": 11.80,
+      "footprintDepthCm": 8.40,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-scissor-keys",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:07:14.4898448+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck Studio",
+      "modelName": "Stream Deck Studio",
+      "manufacturerPartNumber": "Stream Deck Studio",
+      "gtin": null,
+      "widthCm": 44.70,
+      "heightCm": 4.40,
+      "depthCm": 8.00,
+      "footprintWidthCm": 44.70,
+      "footprintDepthCm": 8.00,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-studio",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:14:08.1359844+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck XL",
+      "modelName": "Stream Deck XL",
+      "manufacturerPartNumber": "Stream Deck XL",
+      "gtin": null,
+      "widthCm": 18.20,
+      "heightCm": 3.40,
+      "depthCm": 11.20,
+      "footprintWidthCm": 18.20,
+      "footprintDepthCm": 11.20,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-xl",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:05:41.715814+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "input",
+      "displayName": "Elgato Stream Deck\u002B White",
+      "modelName": "Stream Deck\u002B White",
+      "manufacturerPartNumber": "Stream Deck\u002B White",
+      "gtin": null,
+      "widthCm": 14.00,
+      "heightCm": 11.00,
+      "depthCm": 13.80,
+      "footprintWidthCm": 14.00,
+      "footprintDepthCm": 13.80,
+      "weightKg": null,
+      "editorModel": "keyboard",
+      "displayColor": "#3d4448",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/stream-deck-plus-white",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:07:23.9872206+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave DX",
+      "modelName": "Wave DX",
+      "manufacturerPartNumber": "Wave DX",
+      "gtin": null,
+      "widthCm": 14.60,
+      "heightCm": 5.30,
+      "depthCm": 5.30,
+      "footprintWidthCm": 14.60,
+      "footprintDepthCm": 5.30,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-dx-dynamic-microphone-forest-green",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:09:36.3634812+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave Go",
+      "modelName": "Wave Go",
+      "manufacturerPartNumber": "Wave Go",
+      "gtin": null,
+      "widthCm": 2.90,
+      "heightCm": 1.20,
+      "depthCm": 2.00,
+      "footprintWidthCm": 2.90,
+      "footprintDepthCm": 2.00,
+      "weightKg": 7.000,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-go-sky-blue",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:08:28.0332861+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave Go Transmitter",
+      "modelName": "Wave Go Transmitter",
+      "manufacturerPartNumber": "Wave Go Transmitter",
+      "gtin": null,
+      "widthCm": 2.79,
+      "heightCm": 1.27,
+      "depthCm": 2.03,
+      "footprintWidthCm": 2.79,
+      "footprintDepthCm": 2.03,
+      "weightKg": 7.000,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-go-transmitter",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:08:07.2035626+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave Neo",
+      "modelName": "Wave Neo",
+      "manufacturerPartNumber": "Wave Neo",
+      "gtin": null,
+      "widthCm": 28.20,
+      "heightCm": 9.20,
+      "depthCm": 9.20,
+      "footprintWidthCm": 28.20,
+      "footprintDepthCm": 9.20,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-neo",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:14:35.4305665+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave Panels Starter Set",
+      "modelName": "Wave Panels Starter Set",
+      "manufacturerPartNumber": "Wave Panels Starter Set",
+      "gtin": null,
+      "widthCm": 49.00,
+      "heightCm": 3.80,
+      "depthCm": 42.40,
+      "footprintWidthCm": 49.00,
+      "footprintDepthCm": 42.40,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-panels-starter-set-white",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:14:16.5438939+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave Pop Filter",
+      "modelName": "Wave Pop Filter",
+      "manufacturerPartNumber": "Wave Pop Filter",
+      "gtin": null,
+      "widthCm": 10.40,
+      "heightCm": 5.50,
+      "depthCm": 6.70,
+      "footprintWidthCm": 10.40,
+      "footprintDepthCm": 6.70,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-pop-filter",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:28:38.9887158+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave Shock Mount",
+      "modelName": "Wave Shock Mount",
+      "manufacturerPartNumber": "Wave Shock Mount",
+      "gtin": null,
+      "widthCm": 13.50,
+      "heightCm": 3.20,
+      "depthCm": 11.50,
+      "footprintWidthCm": 13.50,
+      "footprintDepthCm": 11.50,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-shock-mount",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:09:28.0279308+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave XLR MK.2",
+      "modelName": "Wave XLR MK.2",
+      "manufacturerPartNumber": "Wave XLR MK.2",
+      "gtin": null,
+      "widthCm": 11.80,
+      "heightCm": 7.30,
+      "depthCm": 9.30,
+      "footprintWidthCm": 11.80,
+      "footprintDepthCm": 9.30,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-xlr",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:09:45.2146265+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave XLR Pro",
+      "modelName": "Wave XLR Pro",
+      "manufacturerPartNumber": "Wave XLR Pro",
+      "gtin": null,
+      "widthCm": 18.50,
+      "heightCm": 3.70,
+      "depthCm": 9.70,
+      "footprintWidthCm": 18.50,
+      "footprintDepthCm": 9.70,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-xlr-pro",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:08:39.1141329+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave:3",
+      "modelName": "Wave:3",
+      "manufacturerPartNumber": "Wave:3",
+      "gtin": null,
+      "widthCm": 15.30,
+      "heightCm": 4.00,
+      "depthCm": 6.60,
+      "footprintWidthCm": 15.30,
+      "footprintDepthCm": 6.60,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-3-call-of-duty",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:05:24.4446074+00:00"
+        }
+      ]
+    },
+    {
+      "brandSlug": "elgato",
+      "brand": "Elgato",
+      "category": "audio",
+      "displayName": "Elgato Wave:3 MK.2",
+      "modelName": "Wave:3 MK.2",
+      "manufacturerPartNumber": "Wave:3 MK.2",
+      "gtin": null,
+      "widthCm": 16.70,
+      "heightCm": 4.60,
+      "depthCm": 8.50,
+      "footprintWidthCm": 16.70,
+      "footprintDepthCm": 8.50,
+      "weightKg": null,
+      "editorModel": "speaker",
+      "displayColor": "#343b40",
+      "isVerified": true,
+      "dataQuality": "source-verified",
+      "sources": [
+        {
+          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
+          "url": "https://www.elgato.com/us/en/p/wave-3",
+          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
+          "lastCheckedAt": "2026-10-24T16:03:42.1894413+00:00"
+        }
+      ]
+    },
+    {
       "brandSlug": "example-hardware",
       "brand": "Example Hardware",
       "category": "display",
@@ -24827,33 +25880,6 @@
       "brand": "Keychron",
       "category": "input",
       "displayName": "Keychron Q1 Max",
-      "modelName": "Q1",
-      "manufacturerPartNumber": "Q1",
-      "gtin": null,
-      "widthCm": 32.75,
-      "heightCm": 2.07,
-      "depthCm": 14.50,
-      "footprintWidthCm": 32.75,
-      "footprintDepthCm": 14.50,
-      "weightKg": 1.724,
-      "editorModel": "keyboard",
-      "displayColor": "#23272B",
-      "isVerified": true,
-      "dataQuality": "source-verified",
-      "sources": [
-        {
-          "provider": "A\u00E7\u0131k teknik \u00FCr\u00FCn katalo\u011Fu",
-          "url": "https://betterbuybase.com/keychron-q1-max",
-          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
-          "lastCheckedAt": "2026-10-22T05:44:13.2635161+00:00"
-        }
-      ]
-    },
-    {
-      "brandSlug": "keychron",
-      "brand": "Keychron",
-      "category": "input",
-      "displayName": "Keychron Q1 Max",
       "modelName": "Q1 Max",
       "manufacturerPartNumber": "Q1 Max",
       "gtin": null,
@@ -29903,33 +30929,6 @@
       "brand": "Logitech",
       "category": "input",
       "displayName": "Logitech MX Master 3S",
-      "modelName": "3S",
-      "manufacturerPartNumber": "3S",
-      "gtin": null,
-      "widthCm": 8.43,
-      "heightCm": 5.10,
-      "depthCm": 12.49,
-      "footprintWidthCm": 8.43,
-      "footprintDepthCm": 12.49,
-      "weightKg": 0.141,
-      "editorModel": "mouse",
-      "displayColor": "#35393D",
-      "isVerified": true,
-      "dataQuality": "source-verified",
-      "sources": [
-        {
-          "provider": "A\u00E7\u0131k teknik \u00FCr\u00FCn katalo\u011Fu",
-          "url": "https://mousemetric.com/mice/logitech-mx-master-3s",
-          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
-          "lastCheckedAt": "2026-10-22T05:44:39.6699687+00:00"
-        }
-      ]
-    },
-    {
-      "brandSlug": "logitech",
-      "brand": "Logitech",
-      "category": "input",
-      "displayName": "Logitech MX Master 3S",
       "modelName": "MX Master 3S",
       "manufacturerPartNumber": "MX Master 3S",
       "gtin": null,
@@ -34682,33 +35681,6 @@
       "brand": "NZXT",
       "category": "computer",
       "displayName": "NZXT H5 Flow",
-      "modelName": "H5",
-      "manufacturerPartNumber": "H5",
-      "gtin": null,
-      "widthCm": 46.50,
-      "heightCm": 22.50,
-      "depthCm": 43.00,
-      "footprintWidthCm": 46.50,
-      "footprintDepthCm": 43.00,
-      "weightKg": null,
-      "editorModel": "tower",
-      "displayColor": "#30383a",
-      "isVerified": true,
-      "dataQuality": "source-verified",
-      "sources": [
-        {
-          "provider": "Resm\u00EE \u00FCretici web katalo\u011Fu",
-          "url": "https://nzxt.com/en-intl/products/h5-flow",
-          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
-          "lastCheckedAt": "2026-10-23T13:09:41.7770592+00:00"
-        }
-      ]
-    },
-    {
-      "brandSlug": "nzxt",
-      "brand": "NZXT",
-      "category": "computer",
-      "displayName": "NZXT H5 Flow",
       "modelName": "H5 Flow",
       "manufacturerPartNumber": "H5 Flow",
       "gtin": null,
@@ -35544,33 +36516,6 @@
           "url": "https://www.razer.com/gaming-mice/razer-viper-v3-hyperspeed/RZ01-04910100-R3U1",
           "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
           "lastCheckedAt": "2026-10-23T21:18:51.9097003+00:00"
-        }
-      ]
-    },
-    {
-      "brandSlug": "razer",
-      "brand": "razer",
-      "category": "input",
-      "displayName": "Razer Viper V3 Pro",
-      "modelName": "V3",
-      "manufacturerPartNumber": "V3",
-      "gtin": null,
-      "widthCm": 6.39,
-      "heightCm": 3.99,
-      "depthCm": 12.71,
-      "footprintWidthCm": 6.39,
-      "footprintDepthCm": 12.71,
-      "weightKg": 54.500,
-      "editorModel": "mouse",
-      "displayColor": "#3d4448",
-      "isVerified": true,
-      "dataQuality": "source-verified",
-      "sources": [
-        {
-          "provider": "A\u00E7\u0131k teknik \u00FCr\u00FCn katalo\u011Fu",
-          "url": "https://mousespecs.org/razer-viper-v3-pro/",
-          "license": "Kaynak sayfas\u0131 \u00FCr\u00FCn verisi",
-          "lastCheckedAt": "2026-10-23T12:59:30.8149339+00:00"
         }
       ]
     },
