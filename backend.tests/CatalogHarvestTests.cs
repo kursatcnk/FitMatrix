@@ -184,6 +184,23 @@ public sealed class CatalogHarvestTests
     }
 
     [Fact]
+    public async Task Writer_UpdatesTheSameNamedProductInsteadOfCreatingATwin()
+    {
+        await using var dbContext = CreateContext();
+        await dbContext.Database.EnsureCreatedAsync();
+        var writer = new DiscoveryCatalogWriter(dbContext, new CatalogImportService(dbContext));
+        var request = CatalogHarvestPlanner.Plan(Response(Candidate()), true).Request!;
+        await writer.WriteAsync(request, CancellationToken.None);
+
+        // Another source names the same monitor with a shorter part number.
+        var second = await writer.WriteAsync(request with { ManufacturerPartNumber = "Q27", ModelName = "Q27", WidthCm = 61.5m, FootprintWidthCm = 61.5m }, CancellationToken.None);
+
+        Assert.False(second.Created);
+        Assert.Equal(1, await dbContext.EquipmentProducts.CountAsync(product => product.DisplayName == "AOC Q27G3XMN"));
+        Assert.Equal(61.5m, second.Product!.WidthCm);
+    }
+
+    [Fact]
     public async Task Writer_DeduplicatesProductsWithoutGtinOrMpn()
     {
         await using var dbContext = CreateContext();

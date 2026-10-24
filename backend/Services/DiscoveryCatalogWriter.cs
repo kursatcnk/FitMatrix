@@ -27,6 +27,20 @@ public sealed class DiscoveryCatalogWriter(FitMatrixDbContext dbContext, Catalog
             ? normalizedGtin is null ? request.ModelName.Trim() : null
             : request.ManufacturerPartNumber.Trim();
         var brandName = request.Brand.Trim();
+
+        // Sources disagree on part numbers ("3S" vs "MX Master 3S"); the same brand and product name is the
+        // same product, so reuse its identity and update it instead of creating a twin.
+        var productName = request.ProductName.Trim();
+        var sameName = await dbContext.EquipmentProducts
+            .AsNoTracking()
+            .Where(item => item.Brand.Name == brandName && item.DisplayName == productName)
+            .Select(item => new { item.Gtin, item.ManufacturerPartNumber })
+            .FirstOrDefaultAsync(cancellationToken);
+        if (sameName is not null && (sameName.Gtin is not null || sameName.ManufacturerPartNumber is not null))
+        {
+            normalizedGtin = sameName.Gtin;
+            normalizedMpn = sameName.ManufacturerPartNumber;
+        }
         var (width, height, depth) = ProductTaxonomy.OrientFlatDevice(request.EditorModel.Trim(), request.WidthCm, request.HeightCm, request.DepthCm);
         var reoriented = width != request.WidthCm || depth != request.DepthCm;
         var footprintWidth = reoriented ? width : request.FootprintWidthCm;
@@ -42,7 +56,7 @@ public sealed class DiscoveryCatalogWriter(FitMatrixDbContext dbContext, Catalog
                 request.ProductName.Trim(),
                 request.ModelName.Trim(),
                 normalizedMpn,
-                request.Gtin,
+                sameName?.Gtin ?? request.Gtin,
                 width,
                 height,
                 depth,
@@ -53,7 +67,7 @@ public sealed class DiscoveryCatalogWriter(FitMatrixDbContext dbContext, Catalog
                 request.DisplayColor.Trim(),
                 null,
                 request.SourceUrl.Trim(),
-                request.Gtin ?? normalizedMpn,
+                sameName?.Gtin ?? request.Gtin ?? normalizedMpn,
                 isVerified,
                 null)]);
 
