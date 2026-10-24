@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { equipmentCatalog, resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import { findAvailablePlacement } from '../editor/placement'
-import { clampUserHeight, DEFAULT_USER_HEIGHT } from '../editor/ergonomics'
+import { clampUserHeight, DEFAULT_USER_HEIGHT, type Posture } from '../editor/ergonomics'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment, SavedProject } from '../types/editor'
 
 export type CameraMode = 'perspective' | 'top' | 'eye'
@@ -25,6 +25,7 @@ interface EditorState {
   cameraMode: CameraMode
   cameraRevision: number
   userHeight: number
+  posture: Posture
   transformMode: TransformMode
   historyPast: EditorSnapshot[]
   historyFuture: EditorSnapshot[]
@@ -41,6 +42,7 @@ interface EditorState {
   setCameraMode: (mode: CameraMode) => void
   resetCamera: () => void
   setUserHeight: (height: number) => void
+  setPosture: (posture: Posture) => void
   setTransformMode: (mode: TransformMode) => void
   toggleSnap: () => void
   beginHistoryBatch: () => void
@@ -52,6 +54,15 @@ interface EditorState {
 }
 
 const USER_HEIGHT_KEY = 'fitmatrix.userHeightCm'
+const POSTURE_KEY = 'fitmatrix.posture'
+
+function readStoredPosture(): Posture {
+  try {
+    return localStorage.getItem(POSTURE_KEY) === 'standing' ? 'standing' : 'sitting'
+  } catch {
+    return 'sitting'
+  }
+}
 
 function readStoredUserHeight() {
   try {
@@ -97,6 +108,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   cameraMode: 'perspective',
   cameraRevision: 0,
   userHeight: readStoredUserHeight(),
+  posture: readStoredPosture(),
   transformMode: 'translate',
   historyPast: [],
   historyFuture: [],
@@ -188,6 +200,14 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   setCatalog: (catalog) => set({ catalog }),
   setCameraMode: (cameraMode) => set({ cameraMode }),
   resetCamera: () => set((state) => ({ cameraMode: 'perspective', cameraRevision: state.cameraRevision + 1 })),
+  setPosture: (posture) => {
+    try {
+      localStorage.setItem(POSTURE_KEY, posture)
+    } catch {
+      // Storage can be unavailable in private windows; the value still applies for this session.
+    }
+    set({ posture })
+  },
   setUserHeight: (height) => {
     const userHeight = clampUserHeight(height)
     try {

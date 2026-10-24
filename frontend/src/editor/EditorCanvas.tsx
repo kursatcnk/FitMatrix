@@ -472,8 +472,9 @@ function CameraRig() {
   const cameraRevision = useEditorStore((state) => state.cameraRevision)
   const desk = useEditorStore((state) => state.desk)
   const userHeight = useEditorStore((state) => state.userHeight)
+  const posture = useEditorStore((state) => state.posture)
   const { camera } = useThree()
-  const eye = eyePoint(desk, userHeight)
+  const eye = eyePoint(desk, userHeight, posture)
   // In the eye-level view the orbit pivots around a point on the back half of the desk, slightly below
   // eye height, so the first frame is what the seated user sees and small drags look around from there.
   const target: [number, number, number] = cameraMode === 'eye'

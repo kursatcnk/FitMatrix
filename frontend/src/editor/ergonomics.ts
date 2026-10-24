@@ -22,9 +22,14 @@ export const MIN_USER_HEIGHT = 140
 export const MAX_USER_HEIGHT = 210
 export const DEFAULT_USER_HEIGHT = 175
 
+export type Posture = 'sitting' | 'standing'
+
 // Anthropometric ratios for a seated user whose chair is set so the elbows meet the desk surface.
 const ELBOW_HEIGHT_RATIO = .4
 const EYE_ABOVE_ELBOW_RATIO = .31
+// Standing: the desk meets the standing elbow and the eyes sit at a fixed share of body height.
+const STANDING_ELBOW_RATIO = .63
+const STANDING_EYE_RATIO = .935
 // The user's eyes sit roughly this far in front of the desk's front edge.
 const EYE_OFFSET_FROM_EDGE = 15
 
@@ -33,10 +38,18 @@ const round = (value: number) => Math.round(value * 10) / 10
 export const clampUserHeight = (height: number) =>
   Number.isFinite(height) ? Math.min(MAX_USER_HEIGHT, Math.max(MIN_USER_HEIGHT, height)) : DEFAULT_USER_HEIGHT
 
-// Where a seated user's eyes are: above the desk by the elbow-to-eye distance, in front of the front edge.
-export function eyePoint(desk: DeskDimensions, userHeight: number) {
-  return { height: desk.height + clampUserHeight(userHeight) * EYE_ABOVE_ELBOW_RATIO, z: desk.depth / 2 + EYE_OFFSET_FROM_EDGE }
+// Where the user's eyes are, in front of the desk. Seated, the chair is set so the elbows meet the desk,
+// which puts the eyes a fixed distance above it; standing, eye height depends on body height alone.
+export function eyePoint(desk: DeskDimensions, userHeight: number, posture: Posture = 'sitting') {
+  const height = clampUserHeight(userHeight)
+  return {
+    height: posture === 'standing' ? height * STANDING_EYE_RATIO : desk.height + height * EYE_ABOVE_ELBOW_RATIO,
+    z: desk.depth / 2 + EYE_OFFSET_FROM_EDGE,
+  }
 }
+
+export const idealDeskHeight = (userHeight: number, posture: Posture = 'sitting') =>
+  clampUserHeight(userHeight) * (posture === 'standing' ? STANDING_ELBOW_RATIO : ELBOW_HEIGHT_RATIO)
 
 interface ResolvedItem {
   item: PlacedEquipment
@@ -47,13 +60,15 @@ function screenHeight({ item, definition }: ResolvedItem) {
   return item.mountMode === 'vesa' && item.screenOrientation === 'portrait' ? definition.width : definition.height
 }
 
-function checkDeskHeight(desk: DeskDimensions, userHeight: number): ErgonomicCheck {
-  const ideal = userHeight * ELBOW_HEIGHT_RATIO
+function checkDeskHeight(desk: DeskDimensions, userHeight: number, posture: Posture): ErgonomicCheck {
+  const ideal = idealDeskHeight(userHeight, posture)
   const difference = desk.height - ideal
   const base = { id: 'desk-height' as const, title: 'Masa yüksekliği', value: `${round(desk.height)} / ideal ${round(ideal)} cm` }
   if (Math.abs(difference) <= 4) return { ...base, status: 'good', message: 'Dirsekler masa hizasında kalır; omuzlar rahat.' }
   return difference > 0
-    ? { ...base, status: 'warning', message: `Masa ${round(difference)} cm yüksek. Sandalyeyi yükseltip ayak desteği kullan.` }
+    ? { ...base, status: 'warning', message: posture === 'standing'
+      ? `Masa ${round(difference)} cm yüksek. Ayakta çalışırken masayı alçalt.`
+      : `Masa ${round(difference)} cm yüksek. Sandalyeyi yükseltip ayak desteği kullan.` }
     : { ...base, status: 'warning', message: `Masa ${round(-difference)} cm alçak. Bileklerin aşağı bükülmemesi için masayı yükselt.` }
 }
 
@@ -109,9 +124,10 @@ export function analyzeErgonomics(
   desk: DeskDimensions,
   userHeight: number,
   catalog?: EquipmentDefinition[],
+  posture: Posture = 'sitting',
 ): ErgonomicReport {
   const height = clampUserHeight(userHeight)
-  const eyeHeight = eyePoint(desk, height).height
+  const eyeHeight = eyePoint(desk, height, posture).height
   const resolved = items.flatMap((item) => {
     const definition = resolveEquipmentDefinition(item, catalog)
     return definition ? [{ item, definition }] : []
@@ -121,7 +137,7 @@ export function analyzeErgonomics(
   const keyboard = resolved.filter(({ definition }) => definition.model === 'keyboard').sort(byDistanceToCenter)[0]
 
   const checks = [
-    checkDeskHeight(desk, height),
+    checkDeskHeight(desk, height, posture),
     checkScreenHeight(monitors[0], desk, eyeHeight),
     checkViewingDistance(monitors[0], desk, eyeHeight),
     checkScreenCentering(monitors),

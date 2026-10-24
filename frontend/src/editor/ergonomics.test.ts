@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analyzeErgonomics, clampUserHeight } from './ergonomics'
+import { analyzeErgonomics, clampUserHeight, eyePoint } from './ergonomics'
 import type { DeskDimensions, PlacedEquipment } from '../types/editor'
 
 const desk: DeskDimensions = { width: 160, depth: 80, height: 70 }
@@ -68,5 +68,27 @@ describe('analyzeErgonomics', () => {
     expect(clampUserHeight(90)).toBe(140)
     expect(clampUserHeight(260)).toBe(210)
     expect(clampUserHeight(Number.NaN)).toBe(175)
+  })
+})
+
+describe('standing posture', () => {
+  it('expects a desk at standing elbow height', () => {
+    const sitting = analyzeErgonomics([], { ...desk, height: 110 }, 175)
+    const standing = analyzeErgonomics([], { ...desk, height: 110 }, 175, undefined, 'standing')
+
+    expect(sitting.checks.find((entry) => entry.id === 'desk-height')?.status).toBe('warning')
+    expect(standing.checks.find((entry) => entry.id === 'desk-height')?.status).toBe('good')
+  })
+
+  it('puts the eyes at a fixed share of body height regardless of the desk', () => {
+    expect(eyePoint({ ...desk, height: 70 }, 180, 'standing').height).toBeCloseTo(168.3)
+    expect(eyePoint({ ...desk, height: 110 }, 180, 'standing').height).toBeCloseTo(168.3)
+    expect(eyePoint({ ...desk, height: 70 }, 180).height).toBeCloseTo(125.8)
+  })
+
+  it('asks to lower an over-height standing desk instead of raising the chair', () => {
+    const report = analyzeErgonomics([], { ...desk, height: 125 }, 175, undefined, 'standing')
+
+    expect(report.checks.find((entry) => entry.id === 'desk-height')?.message).toContain('alçalt')
   })
 })
