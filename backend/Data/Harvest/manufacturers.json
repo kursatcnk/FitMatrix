@@ -67,8 +67,8 @@
     "name": "elgato",
     "brand": "Elgato",
     "sitemaps": ["https://www.elgato.com/us-sitemap-products-1.xml"],
-    "include": "^https://www\\.elgato\\.com/us/en/p/(stream-deck|key-light|ring-light|light-strip|wave|facecam|cam-link|game-capture|hd60|4k|green-screen|prompter|neo)[a-z0-9-]*$",
-    "exclude": "cable|adapter|case|cover|skin|keycap|faceplate|sticker|replacement|nuka|bundle|kit",
+    "include": "^https://www\\.elgato\\.com/us/en/p/(stream-deck|key-light|ring-light|light-strip|wave|facecam|cam-link|game-capture|hd60|4k|green-screen|prompter)[a-z0-9-]*$",
+    "exclude": "cable|adapter|case|cover|skin|keycap|faceplate|sticker|replacement|nuka|bundle|kit|edition|call-of-duty|lavender|forest|petal|glacier|cyberpunk|limited",
     "dedupeStrip": "-(black|white|grey|gray|pink|blue|green|purple|red|yellow|frost|lilac|light-only)$",
     "render": true,
     "hints": [
