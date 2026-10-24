@@ -4,7 +4,7 @@ import { EditorCanvas } from './editor/EditorCanvas'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
 import { analyzeErgonomics } from './editor/ergonomics'
-import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog } from './data/catalogFilter'
+import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog, listBrands } from './data/catalogFilter'
 import { buildPartsList, partsListToCsv } from './data/partsList'
 import { createShareHash, readShareHash } from './data/shareLink'
 import { HarvestPanel } from './editor/HarvestPanel'
@@ -241,6 +241,7 @@ function App() {
   const [projects, setProjects] = useState<ProjectSummary[]>([])
   const [projectsError, setProjectsError] = useState<string | null>(null)
   const [activeCategory, setActiveCategory] = useState<EquipmentCategory | 'all'>('all')
+  const [activeBrand, setActiveBrand] = useState('')
   const [catalogSearch, setCatalogSearch] = useState('')
   const [catalogLimit, setCatalogLimit] = useState(CATALOG_PAGE_SIZE)
   const [catalogMessage, setCatalogMessage] = useState<string | null>(null)
@@ -630,7 +631,8 @@ function App() {
     }
   }
 
-  const filteredCatalog = filterCatalog(catalog, activeCategory, catalogSearch)
+  const filteredCatalog = filterCatalog(catalog, activeCategory, catalogSearch, activeBrand)
+  const brands = listBrands(catalog)
   const categoryCounts = countByCategory(catalog)
   const visibleCatalog = filteredCatalog.slice(0, catalogLimit)
 
@@ -871,6 +873,15 @@ function App() {
             />
             {catalogSearch && <button type="button" aria-label="Katalog aramasını temizle" onClick={() => setCatalogSearch('')}><X size={13} /></button>}
           </label>
+          {brands.length > 1 && (
+            <label className="brand-filter">
+              <span>Marka</span>
+              <select value={activeBrand} onChange={(event) => { setActiveBrand(event.target.value); setCatalogLimit(CATALOG_PAGE_SIZE) }}>
+                <option value="">Bütün markalar ({brands.length})</option>
+                {brands.map((brand) => <option key={brand.key} value={brand.key}>{brand.label} ({brand.count})</option>)}
+              </select>
+            </label>
+          )}
           {catalogMessage && <p className="catalog-message" role="status">{catalogMessage}</p>}
 
           <div className="catalog-list">

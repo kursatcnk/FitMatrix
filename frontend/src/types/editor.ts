@@ -42,6 +42,7 @@ export interface EquipmentDefinition {
   id: string
   databaseId?: string
   name: string
+  brand?: string
   category: EquipmentCategory
   width: number
   height: number

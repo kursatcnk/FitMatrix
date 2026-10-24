@@ -78,6 +78,7 @@ export function mapProduct(product: ApiCatalogProduct): EquipmentDefinition | nu
     id: bundledDefinition?.id ?? `database-${product.id}`,
     databaseId: product.id,
     name: product.displayName,
+    brand: product.brand,
     category: product.categorySlug,
     width: product.widthCm,
     height: product.heightCm,
