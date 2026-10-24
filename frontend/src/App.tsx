@@ -367,11 +367,27 @@ function App() {
       } else if ((event.key === 'Delete' || event.key === 'Backspace') && selectedId) {
         event.preventDefault()
         deleteItem(selectedId)
+      } else if (!event.ctrlKey && !event.metaKey && !event.altKey) {
+        // Single-key view and tool shortcuts, matching the bottom toolbar.
+        const shortcuts: Record<string, () => void> = {
+          '1': () => setCameraMode('perspective'),
+          '2': () => setCameraMode('top'),
+          '3': () => setCameraMode('eye'),
+          '0': resetCamera,
+          t: () => setTransformMode('translate'),
+          r: () => setTransformMode('rotate'),
+          g: toggleSnap,
+        }
+        const action = shortcuts[event.key.toLowerCase()]
+        if (action) {
+          event.preventDefault()
+          action()
+        }
       }
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [deleteItem, redo, selectItem, selectedId, showHarvest, showProductFinder, showProjects, undo])
+  }, [deleteItem, redo, resetCamera, selectItem, selectedId, setCameraMode, setTransformMode, showHarvest, showProductFinder, showProjects, toggleSnap, undo])
 
   const saveProject = async () => {
     setIsSaving(true)
@@ -898,7 +914,7 @@ function App() {
             <span className="toolbar-divider" />
             <button onClick={() => setCameraMode('perspective')} className={cameraMode === 'perspective' ? 'active' : ''}>Perspektif</button>
             <button onClick={() => setCameraMode('top')} className={cameraMode === 'top' ? 'active' : ''}>Üstten görünüm</button>
-            <button onClick={() => setCameraMode('eye')} className={cameraMode === 'eye' ? 'active' : ''} title="Kullanıcı boyuna göre oturan kişinin göz hizasından bakar">Göz hizası</button>
+            <button onClick={() => setCameraMode('eye')} className={cameraMode === 'eye' ? 'active' : ''} title="Kullanıcı boyuna göre göz hizasından bakar (3)">Göz hizası</button>
             <button onClick={resetCamera}>Kamerayı sıfırla</button>
             <span className="toolbar-divider" />
             <button onClick={toggleSnap} className={snapEnabled ? 'active' : ''}>Grid {snapEnabled ? 'açık' : 'kapalı'}</button>

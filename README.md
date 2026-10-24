@@ -134,6 +134,8 @@ Editör kısayolları:
 - `Ctrl+Y` veya `Ctrl+Shift+Z`: yinele
 - `Delete` / `Backspace`: seçili ekipmanı kaldır
 - `Esc`: açık paneli kapat; panel yoksa seçimi kaldır
+- `1` / `2` / `3`: perspektif, üstten ve göz hizası görünümü; `0`: kamerayı sıfırla
+- `T` / `R`: taşıma ve döndürme aracı; `G`: ızgaraya yapıştırmayı aç/kapat
 
 ## Backend
 
