@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { countByCategory, filterCatalog, searchTokens } from './catalogFilter'
+import { countByCategory, filterCatalog, listBrands, searchTokens } from './catalogFilter'
 import type { EquipmentDefinition } from '../types/editor'
 
 const product = (id: string, name: string, category: EquipmentDefinition['category']): EquipmentDefinition => ({
@@ -48,5 +48,25 @@ describe('catalog helpers', () => {
 
   it('counts products per category', () => {
     expect(countByCategory(catalog).get('input')).toBe(1)
+  })
+})
+
+describe('brand filter', () => {
+  const branded = [
+    { ...product('a', 'Razer Viper V3 Pro', 'input'), brand: 'Razer' },
+    { ...product('b', 'Razer BlackWidow V4', 'input'), brand: 'razer' },
+    { ...product('c', 'Logitech MX Keys S', 'input'), brand: 'Logitech' },
+  ]
+
+  it('groups brands case-insensitively and counts them', () => {
+    expect(listBrands(branded)).toEqual([
+      { key: 'razer', label: 'Razer', count: 2 },
+      { key: 'logitech', label: 'Logitech', count: 1 },
+    ])
+  })
+
+  it('filters by brand together with the other filters', () => {
+    expect(filterCatalog(branded, 'input', 'viper', 'razer').map((item) => item.id)).toEqual(['a'])
+    expect(filterCatalog(branded, 'all', '', 'logitech')).toHaveLength(1)
   })
 })
