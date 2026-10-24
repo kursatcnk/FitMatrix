@@ -42,6 +42,8 @@ Yerel kullanım için tamamlanan uygulama:
 - Ürün araması için dakikada 20 istek hız sınırı, istemci zaman aşımı, güvenli URL/SSRF kontrolleri ve genel hata yanıtları
 - Veritabanı bağlantısını ve canlı ürün/proje sayılarını denetleyen sağlık endpoint'i
 - Klavye erişimi, belirgin odak stilleri ve azaltılmış hareket tercihi desteği
+- Kataloğu arka planda binlerce ürüne büyüten toplu toplama: Logitech, Razer, SteelSeries ve ASUS ürün haritalarını robots.txt kurallarına uyarak okur; ayrıca 2.000'den fazla gerçek model adını arama hattından geçirir. Yalnızca üç eksen ölçüsü ve kaynağı doğrulanan, ürün türüne göre makul boyuttaki ürünler kaydedilir
+- Katalog panelinde kelime sırasından ve Türkçe karakterden bağımsız arama, kategori başına ürün sayısı ve "Daha fazla göster" ile sayfalı liste
 - Kullanıcı boyuna göre ergonomi kontrolü: masa yüksekliği, ekran üst kenarının göz hizası, görüş mesafesi, ekran ortalama ve klavye mesafesi için canlı puan ve öneriler
 
 ## Dizin yapısı
@@ -145,6 +147,20 @@ Proje endpoint'leri:
 
 ## Katalog büyütme
 
+Kataloğu toplu büyütmek için backend çalışırken:
+
+```powershell
+.\scripts\harvest-catalog.ps1 -Manufacturers                        # üretici ürün haritaları (en yüksek verim)
+.\scripts\harvest-catalog.ps1 -Manufacturers -Sources asus,razer
+.\scripts\harvest-catalog.ps1 -Manufacturers -MaxPagesPerSource 20  # kısa deneme
+.\scripts\harvest-catalog.ps1                                      # model listeleri (saatler sürer)
+.\scripts\harvest-catalog.ps1 -Lists monitors,mice -MaxQueries 20
+.\scripts\harvest-catalog.ps1 -Status
+.\scripts\harvest-catalog.ps1 -Cancel
+```
+
+Üretici kaynakları `backend/Data/Harvest/manufacturers.json`, model listeleri `backend/Data/Harvest/*.txt` dosyalarındadır; `[kategori:model]` satırı altındaki ürünlerin 3D türünü belirler. Ayrıntılar `docs/catalog-strategy.md` içindeki "Üretici ürün haritalarından toplama" ve "Model listeleriyle toplu toplama" bölümlerindedir.
+
 Gerçek ürün verisi yaklaşımı ve kalite kuralları `docs/catalog-strategy.md` dosyasında açıklanmıştır. Örnek içe aktarma gövdesi `docs/samples/catalog-import.example.json` dosyasındadır. Katalog altyapısı GTIN veya marka + MPN ile tekilleştirme yapar; fiziksel ölçüler, kategoriye özel teknik özellikler ve her kaydın sağlayıcı/lisans kaynağı birlikte tutulur.
 
 Varsayılan çevrimiçi arama hesap, API anahtarı veya abonelik istemez. `AOC Q27G3XMN 27 inch monitor`, `Logitech MX Master 3S mouse`, `Keychron Q1 Max keyboard` gibi marka + model veya Amazon gibi bir mağazadan ürün bağlantısı girildiğinde sistem şu sırayı izler:
@@ -184,7 +200,7 @@ npm test -- --run
 npm run build
 ```
 
-Mevcut otomatik kapsam 15 backend ve 21 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
+Mevcut otomatik kapsam 75 backend ve 27 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
 
 ## Tamamlanma sınırı
 
