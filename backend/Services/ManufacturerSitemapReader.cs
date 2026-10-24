@@ -19,7 +19,8 @@ public sealed record ManufacturerSource(
     int? DedupePathSegments = null,
     bool Render = false,
     bool MergeColourVariants = false,
-    string? TypeFromUrl = null)
+    string? TypeFromUrl = null,
+    string? DedupeStrip = null)
 {
     // IKEA titles mix orders ("MICKE desk, white, 105x50 cm" and "VADHOLMA brown, stained ash, drawer unit").
     // The product type is taken from the URL instead; the series name is the leading upper-case words and
@@ -57,6 +58,9 @@ public sealed record ManufacturerSource(
     // Colour/SKU variants share the leading path segments (/gaming-mice/razer-viper-v3-pro/RZ01-...).
     public string DedupeKey(Uri uri)
     {
+        // Colour variants that differ only by a URL suffix ("wave-3-black", "wave-3-white") are read once.
+        if (DedupeStrip is not null)
+            return $"{uri.Host}{Regex.Replace(uri.AbsolutePath, DedupeStrip, string.Empty, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100))}";
         if (DedupePathSegments is not > 0) return uri.AbsoluteUri;
         var segments = uri.AbsolutePath.Split('/', StringSplitOptions.RemoveEmptyEntries).Take(DedupePathSegments.Value);
         return $"{uri.Host}/{string.Join('/', segments)}";
