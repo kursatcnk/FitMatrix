@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { ContactShadows, Edges, Grid, OrbitControls, RoundedBox, TransformControls } from '@react-three/drei'
-import { Quaternion, Vector3, type Group } from 'three'
+import { Quaternion, Vector3, type Group, type PerspectiveCamera } from 'three'
 import { resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import { useEditorStore } from '../store/editorStore'
+import { eyePoint } from './ergonomics'
 import { getPlacementFootprint, getPlacementStatus } from './placement'
 import type { EquipmentDefinition, PlacedEquipment } from '../types/editor'
 
@@ -470,16 +471,30 @@ function CameraRig() {
   const cameraMode = useEditorStore((state) => state.cameraMode)
   const cameraRevision = useEditorStore((state) => state.cameraRevision)
   const desk = useEditorStore((state) => state.desk)
+  const userHeight = useEditorStore((state) => state.userHeight)
   const { camera } = useThree()
+  const eye = eyePoint(desk, userHeight)
+  // In the eye-level view the orbit pivots around a point on the back half of the desk, slightly below
+  // eye height, so the first frame is what the seated user sees and small drags look around from there.
+  const target: [number, number, number] = cameraMode === 'eye'
+    ? [0, eye.height - 14, -desk.depth / 4]
+    : [0, desk.height + 22, 0]
 
   useEffect(() => {
+    const perspective = camera as PerspectiveCamera
+    perspective.fov = cameraMode === 'eye' ? 62 : 42
     if (cameraMode === 'top') camera.position.set(0, 310, 0.01)
+    else if (cameraMode === 'eye') camera.position.set(0, eye.height, eye.z)
     else camera.position.set(170, 165, 180)
-    camera.lookAt(0, desk.height + 24, 0)
-    camera.updateProjectionMatrix()
-  }, [camera, cameraMode, cameraRevision, desk.height])
+    camera.lookAt(...target)
+    perspective.updateProjectionMatrix()
+    // target is derived from the same inputs listed here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [camera, cameraMode, cameraRevision, desk.height, desk.depth, eye.height, eye.z])
 
-  return <OrbitControls makeDefault target={[0, desk.height + 22, 0]} minDistance={80} maxDistance={440} maxPolarAngle={Math.PI / 2.02} />
+  return cameraMode === 'eye'
+    ? <OrbitControls makeDefault target={target} minDistance={20} maxDistance={140} maxPolarAngle={Math.PI / 1.6} />
+    : <OrbitControls makeDefault target={target} minDistance={80} maxDistance={440} maxPolarAngle={Math.PI / 2.02} />
 }
 
 function Scene() {

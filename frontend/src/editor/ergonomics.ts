@@ -33,6 +33,11 @@ const round = (value: number) => Math.round(value * 10) / 10
 export const clampUserHeight = (height: number) =>
   Number.isFinite(height) ? Math.min(MAX_USER_HEIGHT, Math.max(MIN_USER_HEIGHT, height)) : DEFAULT_USER_HEIGHT
 
+// Where a seated user's eyes are: above the desk by the elbow-to-eye distance, in front of the front edge.
+export function eyePoint(desk: DeskDimensions, userHeight: number) {
+  return { height: desk.height + clampUserHeight(userHeight) * EYE_ABOVE_ELBOW_RATIO, z: desk.depth / 2 + EYE_OFFSET_FROM_EDGE }
+}
+
 interface ResolvedItem {
   item: PlacedEquipment
   definition: EquipmentDefinition
@@ -66,7 +71,7 @@ function checkScreenHeight(primary: ResolvedItem | undefined, desk: DeskDimensio
 function checkViewingDistance(primary: ResolvedItem | undefined, desk: DeskDimensions, eyeHeight: number): ErgonomicCheck {
   const base = { id: 'viewing-distance' as const, title: 'Görüş mesafesi' }
   if (!primary) return { ...base, status: 'missing', message: 'Değerlendirme için sahneye bir monitör ekle.' }
-  const eyeZ = desk.depth / 2 + EYE_OFFSET_FROM_EDGE
+  const eyeZ = eyePoint(desk, DEFAULT_USER_HEIGHT).z
   const screenCenter = desk.height + (primary.item.elevation ?? 0) + screenHeight(primary) / 2
   const distance = Math.hypot(eyeZ - primary.item.position.z, eyeHeight - screenCenter)
   // Wide panels need more distance to keep the edges within a comfortable field of view.
@@ -106,7 +111,7 @@ export function analyzeErgonomics(
   catalog?: EquipmentDefinition[],
 ): ErgonomicReport {
   const height = clampUserHeight(userHeight)
-  const eyeHeight = desk.height + height * EYE_ABOVE_ELBOW_RATIO
+  const eyeHeight = eyePoint(desk, height).height
   const resolved = items.flatMap((item) => {
     const definition = resolveEquipmentDefinition(item, catalog)
     return definition ? [{ item, definition }] : []
