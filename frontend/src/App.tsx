@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { Box, Check, Copy, Database, Download, FolderOpen, Link2, ListChecks, LoaderCircle, Plus, Redo2, RotateCcw, Ruler, Save, Search, Trash2, Undo2, Upload, Wifi, X } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Box, Check, Copy, Database, DatabaseZap, Download, FolderOpen, Link2, ListChecks, LoaderCircle, Plus, Redo2, RotateCcw, Ruler, Save, Search, Trash2, Undo2, Upload, Wifi, X } from 'lucide-react'
 import { EditorCanvas } from './editor/EditorCanvas'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
@@ -7,6 +7,7 @@ import { analyzeErgonomics } from './editor/ergonomics'
 import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog } from './data/catalogFilter'
 import { buildPartsList, partsListToCsv } from './data/partsList'
 import { createShareHash, readShareHash } from './data/shareLink'
+import { HarvestPanel } from './editor/HarvestPanel'
 import { deleteCatalogProduct, getCatalog, getCatalogProductDetail, importDiscoveredProduct, type ApiCatalogProductDetail, type DiscoveryCatalogInput } from './services/catalogApi'
 import { deleteProject, duplicateProject, getProject, listProjects, saveProjectToApi, type ProjectSummary } from './services/projectApi'
 import { discoverProduct, type ExternalProductCandidate, type ProductDiscoveryResponse } from './services/productDiscoveryApi'
@@ -236,6 +237,7 @@ function App() {
   const [isSaving, setIsSaving] = useState(false)
   const [showProjects, setShowProjects] = useState(false)
   const [showProductFinder, setShowProductFinder] = useState(false)
+  const [showHarvest, setShowHarvest] = useState(false)
   const [projects, setProjects] = useState<ProjectSummary[]>([])
   const [projectsError, setProjectsError] = useState<string | null>(null)
   const [activeCategory, setActiveCategory] = useState<EquipmentCategory | 'all'>('all')
@@ -347,7 +349,8 @@ function App() {
       const target = event.target as HTMLElement | null
       const editingText = target?.matches('input, textarea, select, [contenteditable="true"]')
       if (event.key === 'Escape') {
-        if (showProductFinder) setShowProductFinder(false)
+        if (showHarvest) setShowHarvest(false)
+        else if (showProductFinder) setShowProductFinder(false)
         else if (showProjects) setShowProjects(false)
         else selectItem(null)
         return
@@ -368,7 +371,7 @@ function App() {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [deleteItem, redo, selectItem, selectedId, showProductFinder, showProjects, undo])
+  }, [deleteItem, redo, selectItem, selectedId, showHarvest, showProductFinder, showProjects, undo])
 
   const saveProject = async () => {
     setIsSaving(true)
@@ -515,6 +518,17 @@ function App() {
     anchor.click()
     URL.revokeObjectURL(href)
   }
+
+  // After a harvest the catalog grows on the server; local-only definitions (backups, shares) are kept.
+  const refreshCatalog = useCallback(async () => {
+    const apiCatalog = await getCatalog().catch(() => null)
+    if (!apiCatalog) return
+    const current = useEditorStore.getState().catalog
+    setCatalog([
+      ...apiCatalog,
+      ...current.filter((definition) => !definition.databaseId && !apiCatalog.some((item) => item.id === definition.id)),
+    ])
+  }, [setCatalog])
 
   const copyShareLink = async () => {
     const definitionIds = new Set(items.map((item) => item.definitionId))
@@ -806,7 +820,10 @@ function App() {
         <aside className="sidebar library-panel">
           <div className="panel-heading">
             <div><span>Katalog</span><h2>Ekipmanlar</h2></div>
-            <span className="count-badge">{catalog.length}</span>
+            <span className="catalog-heading-actions">
+              <span className="count-badge">{catalog.length}</span>
+              <button className="icon-action small" aria-label="Katalog toplama" title="Üretici haritalarından katalog topla" onClick={() => setShowHarvest(true)}><DatabaseZap size={14} /></button>
+            </span>
           </div>
 
           <div className="category-tabs" aria-label="Ekipman kategorileri">
@@ -1057,6 +1074,7 @@ function App() {
         </div>
       )}
 
+      {showHarvest && <HarvestPanel onClose={() => setShowHarvest(false)} onCatalogChanged={refreshCatalog} />}
       {showProductFinder && (
         <div className="project-overlay" role="dialog" aria-modal="true" aria-label="Ürün bilgisi bul ve masaya yerleştir">
           <button className="overlay-backdrop" aria-label="Ürün bulucuyu kapat" onClick={() => setShowProductFinder(false)} />
