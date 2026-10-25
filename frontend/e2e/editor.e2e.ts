@@ -61,6 +61,18 @@ test('turning the room on adds the room checks to the ergonomics list', async ({
   await expect(page.locator('.ergonomics-check.warning', { hasText: 'Sandalye alanı' })).toBeVisible()
 })
 
+test('switches the interface to English and remembers the choice', async ({ page }) => {
+  await openEditor(page)
+
+  await page.getByRole('group', { name: 'Arayüz dili' }).getByRole('button', { name: 'EN' }).click()
+  await expect(page.getByRole('button', { name: 'New layout' })).toBeVisible()
+  await expect(page.getByText('Ergonomics check')).toBeVisible()
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+
+  await page.reload()
+  await expect(page.getByRole('button', { name: 'Save', exact: true })).toBeVisible()
+})
+
 test('downloads the 3D view as a PNG', async ({ page }) => {
   await openEditor(page)
 

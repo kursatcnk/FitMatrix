@@ -1,5 +1,6 @@
 import { equipmentCatalog } from '../data/equipmentCatalog'
 import { isDemo, loadDemoProducts } from './demoMode'
+import { t } from '../i18n'
 import type { EquipmentCategory, EquipmentDefinition, EquipmentModel } from '../types/editor'
 
 export interface ApiCatalogProduct {
@@ -121,10 +122,10 @@ export async function importDiscoveredProduct(input: DiscoveryCatalogInput): Pro
   })
   if (!response.ok) {
     const problem = await response.json().catch(() => null) as { message?: string } | null
-    throw new Error(problem?.message ?? `Ürün kataloğa alınamadı: ${response.status}`)
+    throw new Error(problem?.message ?? t('Ürün kataloğa alınamadı: {status}', { status: response.status }))
   }
   const definition = mapProduct(await response.json() as ApiCatalogProduct)
-  if (!definition) throw new Error('Ürün kaydedildi ancak 3D model türü desteklenmiyor.')
+  if (!definition) throw new Error(t('Ürün kaydedildi ancak 3D model türü desteklenmiyor.'))
   return definition
 }
 
@@ -135,7 +136,7 @@ export async function getCatalog(): Promise<EquipmentDefinition[]> {
   const products: ApiCatalogProduct[] = []
   for (let offset = 0; ; offset += pageSize) {
     const response = await fetch(`/api/catalog/products?offset=${offset}&limit=${pageSize}`)
-    if (!response.ok) throw new Error(`Katalog alınamadı: ${response.status}`)
+    if (!response.ok) throw new Error(t('Katalog alınamadı: {status}', { status: response.status }))
     const page = await response.json() as ApiCatalogProduct[]
     products.push(...page)
     if (page.length < pageSize) break
@@ -146,7 +147,7 @@ export async function getCatalog(): Promise<EquipmentDefinition[]> {
 export async function getCatalogProductDetail(id: string): Promise<ApiCatalogProductDetail> {
   if (isDemo) {
     const product = (await loadDemoProducts()).find((item) => item.id === id)
-    if (!product) throw new Error('Ürün demo kataloğunda yok.')
+    if (!product) throw new Error(t('Ürün demo kataloğunda yok.'))
     const { sourceUrl, sourceProvider, ...rest } = product
     return {
       product: rest,
@@ -156,11 +157,11 @@ export async function getCatalogProductDetail(id: string): Promise<ApiCatalogPro
     }
   }
   const response = await fetch(`/api/catalog/products/${id}`)
-  if (!response.ok) throw new Error(`Ürün ayrıntıları alınamadı: ${response.status}`)
+  if (!response.ok) throw new Error(t('Ürün ayrıntıları alınamadı: {status}', { status: response.status }))
   return response.json()
 }
 
 export async function deleteCatalogProduct(id: string): Promise<void> {
   const response = await fetch(`/api/catalog/products/${id}`, { method: 'DELETE' })
-  if (!response.ok) throw new Error(`Ürün katalogdan kaldırılamadı: ${response.status}`)
+  if (!response.ok) throw new Error(t('Ürün katalogdan kaldırılamadı: {status}', { status: response.status }))
 }

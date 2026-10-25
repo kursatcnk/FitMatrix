@@ -3,6 +3,7 @@ import { equipmentCatalog, resolveEquipmentDefinition } from '../data/equipmentC
 import { findAvailablePlacement } from '../editor/placement'
 import { clampUserHeight, DEFAULT_USER_HEIGHT, type Posture } from '../editor/ergonomics'
 import { clampRoom, DEFAULT_ROOM, type RoomSettings } from '../editor/room'
+import { applyLanguage, getLanguage, t, type Language } from '../i18n'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment, SavedProject } from '../types/editor'
 
 export type CameraMode = 'perspective' | 'top' | 'eye'
@@ -28,6 +29,7 @@ interface EditorState {
   userHeight: number
   posture: Posture
   room: RoomSettings
+  language: Language
   transformMode: TransformMode
   historyPast: EditorSnapshot[]
   historyFuture: EditorSnapshot[]
@@ -46,6 +48,7 @@ interface EditorState {
   setUserHeight: (height: number) => void
   setPosture: (posture: Posture) => void
   setRoom: (patch: Partial<RoomSettings>) => void
+  setLanguage: (language: Language) => void
   setTransformMode: (mode: TransformMode) => void
   toggleSnap: () => void
   beginHistoryBatch: () => void
@@ -103,7 +106,7 @@ const appendHistory = (history: EditorSnapshot[], entry: EditorSnapshot) =>
 export const useEditorStore = create<EditorState>((set, get) => ({
   projectId: null,
   catalog: equipmentCatalog,
-  projectName: 'Ana masa düzenim',
+  projectName: t('Ana masa düzenim'),
   desk: defaultDesk,
   items: createInitialItems(),
   selectedId: null,
@@ -113,6 +116,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   userHeight: readStoredUserHeight(),
   posture: readStoredPosture(),
   room: DEFAULT_ROOM,
+  language: getLanguage(),
   transformMode: 'translate',
   historyPast: [],
   historyFuture: [],
@@ -223,6 +227,10 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   },
   // The room belongs to the project: it is saved with the draft, backups, share links and SQL projects.
   setRoom: (patch) => set((state) => ({ room: clampRoom({ ...state.room, ...patch }) })),
+  setLanguage: (language) => {
+    applyLanguage(language)
+    set({ language })
+  },
   setTransformMode: (transformMode) => set({ transformMode }),
   toggleSnap: () => set((state) => ({ snapEnabled: !state.snapEnabled })),
 
@@ -262,7 +270,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   }),
 
   resetProject: () => set((state) => ({
-    projectName: 'Yeni masa düzeni',
+    projectName: t('Yeni masa düzeni'),
     projectId: null,
     desk: defaultDesk,
     items: createInitialItems(),

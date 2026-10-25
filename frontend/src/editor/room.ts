@@ -1,5 +1,6 @@
 import type { DeskDimensions } from '../types/editor'
 import type { ErgonomicCheck, Posture } from './ergonomics'
+import { t } from '../i18n'
 
 // The room around the desk. The desk stays centred left to right with its back edge `wallGap`
 // away from the back wall, so the scene origin (the desk centre) does not move.
@@ -46,17 +47,17 @@ export function analyzeRoom(desk: DeskDimensions, room: RoomSettings, posture: P
   const bounds = roomBounds(desk, room)
   const sideSpace = (room.width - desk.width) / 2
   const fits: ErgonomicCheck = sideSpace < 0
-    ? { id: 'room-fit', title: 'Odaya sığma', status: 'warning', value: `${round(-sideSpace * 2)} cm taşıyor`, message: 'Masa oda genişliğinden uzun; daha kısa bir masa seç ya da yan duvara dik yerleştir.' }
-    : { id: 'room-fit', title: 'Odaya sığma', status: 'good', value: `yanlarda ${round(sideSpace)} cm`, message: 'Masa duvarlar arasına sığıyor.' }
+    ? { id: 'room-fit', title: t('Odaya sığma'), status: 'warning', value: t('{cm} cm taşıyor', { cm: round(-sideSpace * 2) }), message: t('Masa oda genişliğinden uzun; daha kısa bir masa seç ya da yan duvara dik yerleştir.') }
+    : { id: 'room-fit', title: t('Odaya sığma'), status: 'good', value: t('yanlarda {cm} cm', { cm: round(sideSpace) }), message: t('Masa duvarlar arasına sığıyor.') }
 
   const chairSpace = bounds.frontWallZ - desk.depth / 2
   const needed = CHAIR_SPACE[posture]
-  const base = { id: 'chair-space' as const, title: posture === 'standing' ? 'Arkada durma alanı' : 'Sandalye alanı', value: `${round(chairSpace)} / ${needed} cm` }
+  const base = { id: 'chair-space' as const, title: posture === 'standing' ? t('Arkada durma alanı') : t('Sandalye alanı'), value: `${round(chairSpace)} / ${needed} cm` }
   const space: ErgonomicCheck = chairSpace >= needed
-    ? { ...base, status: 'good', message: posture === 'standing' ? 'Masanın önünde rahat durup geri çekilebilirsin.' : 'Sandalyeyi rahatça geri itip kalkabilirsin.' }
+    ? { ...base, status: 'good', message: posture === 'standing' ? t('Masanın önünde rahat durup geri çekilebilirsin.') : t('Sandalyeyi rahatça geri itip kalkabilirsin.') }
     : chairSpace >= TIGHT_CHAIR_SPACE[posture]
-      ? { ...base, status: 'warning', message: `Alan dar; ${round(needed - chairSpace)} cm daha boşluk kalkarken sandalyenin duvara çarpmasını önler.` }
-      : { ...base, status: 'warning', message: 'Masanın önünde oturup kalkmaya yetecek yer yok; masayı duvara yaklaştır ya da odanın daha geniş tarafına al.' }
+      ? { ...base, status: 'warning', message: t('Alan dar; {cm} cm daha boşluk kalkarken sandalyenin duvara çarpmasını önler.', { cm: round(needed - chairSpace) }) }
+      : { ...base, status: 'warning', message: t('Masanın önünde oturup kalkmaya yetecek yer yok; masayı duvara yaklaştır ya da odanın daha geniş tarafına al.') }
 
   return [fits, space]
 }

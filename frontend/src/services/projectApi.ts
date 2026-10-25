@@ -1,6 +1,7 @@
 import { resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment } from '../types/editor'
 import type { RoomSettings } from '../editor/room'
+import { t } from '../i18n'
 
 interface SaveProjectInput {
   projectId: string | null
@@ -62,7 +63,7 @@ export async function saveProjectToApi(input: SaveProjectInput): Promise<Project
     room: input.room.enabled ? { widthCm: input.room.width, depthCm: input.room.depth, wallGapCm: input.room.wallGap } : null,
     items: input.items.map((item) => {
       const definition = resolveEquipmentDefinition(item, input.catalog)
-      if (!definition) throw new Error(`Ekipman tanımı bulunamadı: ${item.definitionId}`)
+      if (!definition) throw new Error(t('Ekipman tanımı bulunamadı: {id}', { id: item.definitionId }))
       return {
         equipmentProductId: definition.databaseId ?? null,
         name: definition.name,
@@ -91,25 +92,25 @@ export async function saveProjectToApi(input: SaveProjectInput): Promise<Project
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
-  if (!response.ok) throw new Error(`API kaydı başarısız: ${response.status}`)
+  if (!response.ok) throw new Error(t('API kaydı başarısız: {status}', { status: response.status }))
   return response.json()
 }
 
 export async function listProjects(): Promise<ProjectSummary[]> {
   const response = await fetch('/api/projects')
-  if (!response.ok) throw new Error(`Projeler alınamadı: ${response.status}`)
+  if (!response.ok) throw new Error(t('Projeler alınamadı: {status}', { status: response.status }))
   return response.json()
 }
 
 export async function getProject(id: string): Promise<ApiProject> {
   const response = await fetch(`/api/projects/${id}`)
-  if (!response.ok) throw new Error(`Proje alınamadı: ${response.status}`)
+  if (!response.ok) throw new Error(t('Proje alınamadı: {status}', { status: response.status }))
   return response.json()
 }
 
 export async function duplicateProject(id: string): Promise<ApiProject> {
   const response = await fetch(`/api/projects/${id}/duplicate`, { method: 'POST' })
-  if (!response.ok) throw new Error(`Proje çoğaltılamadı: ${response.status}`)
+  if (!response.ok) throw new Error(t('Proje çoğaltılamadı: {status}', { status: response.status }))
   return response.json()
 }
 

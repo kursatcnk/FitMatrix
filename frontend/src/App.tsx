@@ -14,9 +14,11 @@ import { deleteCatalogProduct, getCatalog, getCatalogProductDetail, importDiscov
 import { deleteProject, duplicateProject, getProject, listProjects, saveProjectToApi, type ProjectSummary } from './services/projectApi'
 import { discoverProduct, type ExternalProductCandidate, type ProductDiscoveryResponse } from './services/productDiscoveryApi'
 import { isDemo, REPOSITORY_URL } from './services/demoMode'
+import { getLocale, t } from './i18n'
 import { useEditorStore } from './store/editorStore'
 import type { EquipmentCategory, EquipmentDefinition, EquipmentModel, PlacedEquipment, SavedProject } from './types/editor'
 
+// Turkish source labels; shown through t() so a language switch applies immediately.
 const categoryLabels: Record<EquipmentCategory, string> = {
   display: 'Ekran',
   computer: 'Bilgisayar',
@@ -46,7 +48,7 @@ function downloadBlob(blob: Blob, fileName: string) {
 }
 
 const formatMeasure = (value: number | null, maximumFractionDigits = 2) =>
-  value === null ? '—' : value.toLocaleString('tr-TR', { maximumFractionDigits })
+  value === null ? '—' : value.toLocaleString(getLocale(), { maximumFractionDigits })
 
 interface DisplaySpecification {
   group: string
@@ -62,7 +64,7 @@ function SpecificationList({ specifications }: { specifications: DisplaySpecific
     result.set(item.group, group)
     return result
   }, new Map<string, DisplaySpecification[]>()))
-  if (groups.length === 0) return <p className="spec-empty">Bu kaynakta ek teknik özellik yayımlanmamış.</p>
+  if (groups.length === 0) return <p className="spec-empty">{t('Bu kaynakta ek teknik özellik yayımlanmamış.')}</p>
 
   return (
     <div className="spec-groups">
@@ -198,7 +200,7 @@ function NumberField({
 }) {
   return (
     <label className="number-field">
-      <span>{label}</span>
+      <span>{t(label)}</span>
       <div>
         <input
           type="number"
@@ -242,6 +244,8 @@ function App() {
     setPosture,
     room,
     setRoom,
+    language,
+    setLanguage,
     setTransformMode,
     toggleSnap,
     undo,
@@ -431,13 +435,13 @@ function App() {
     } catch {
       setSaveTarget('local')
     } finally {
-      setSavedAt(new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }))
+      setSavedAt(new Date().toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit' }))
       setIsSaving(false)
     }
   }
 
   const startNewProject = () => {
-    if (items.length > 0 && !window.confirm('Mevcut yerleşimi temizleyip yeni bir proje başlatılsın mı?')) {
+    if (items.length > 0 && !window.confirm(t('Mevcut yerleşimi temizleyip yeni bir proje başlatılsın mı?'))) {
       return
     }
     localStorage.removeItem('fitmatrix-project')
@@ -449,13 +453,13 @@ function App() {
     setShowProjects(true)
     setProjectsError(null)
     if (isDemo) {
-      setProjectsError('Canlı demoda sunucu kaydı yok. Açık düzeni yedek dosyası olarak indirip daha sonra buradan açabilirsin.')
+      setProjectsError(t('Canlı demoda sunucu kaydı yok. Açık düzeni yedek dosyası olarak indirip daha sonra buradan açabilirsin.'))
       return
     }
     try {
       setProjects(await listProjects())
     } catch {
-      setProjectsError('API çalışmıyor veya proje listesine ulaşılamadı.')
+      setProjectsError(t('API çalışmıyor veya proje listesine ulaşılamadı.'))
     }
   }
 
@@ -515,7 +519,7 @@ function App() {
       setShowProjects(false)
       setSaveTarget('sql')
     } catch {
-      setProjectsError('Proje yüklenemedi.')
+      setProjectsError(t('Proje yüklenemedi.'))
     }
   }
 
@@ -525,19 +529,19 @@ function App() {
       await duplicateProject(id)
       setProjects(await listProjects())
     } catch {
-      setProjectsError('Proje çoğaltılamadı.')
+      setProjectsError(t('Proje çoğaltılamadı.'))
     }
   }
 
   const deleteDatabaseProject = async (id: string, name: string) => {
-    if (!window.confirm(`“${name}” kalıcı olarak silinsin mi?`)) return
+    if (!window.confirm(t('“{name}” kalıcı olarak silinsin mi?', { name }))) return
     setProjectsError(null)
     try {
       await deleteProject(id)
       if (projectId === id) setProjectId(null)
       setProjects((current) => current.filter((project) => project.id !== id))
     } catch {
-      setProjectsError('Proje silinemedi.')
+      setProjectsError(t('Proje silinemedi.'))
     }
   }
 
@@ -596,8 +600,8 @@ function App() {
     details.forEach((result, index) => {
       if (result.status === 'fulfilled' && result.value.sources[0]) sources[databaseIds[index]] = result.value.sources[0].sourceUrl
     })
-    const rows = buildPartsList(items, catalog, desk, (category) => categoryLabels[category], sources)
-    downloadBlob(new Blob([partsListToCsv(rows)], { type: 'text/csv;charset=utf-8' }), `${projectFileName(projectName)}-malzeme-listesi.csv`)
+    const rows = buildPartsList(items, catalog, desk, (category) => t(categoryLabels[category]), sources)
+    downloadBlob(new Blob([partsListToCsv(rows)], { type: 'text/csv;charset=utf-8' }), `${projectFileName(projectName)}-${t('malzeme-listesi')}.csv`)
   }
 
   const exportSnapshot = async () => {
@@ -606,22 +610,22 @@ function App() {
     selectItem(null)
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
     const blob = await captureScene()
-    if (blob) downloadBlob(blob, `${projectFileName(projectName)}-gorunum.png`)
+    if (blob) downloadBlob(blob, `${projectFileName(projectName)}-${t('gorunum')}.png`)
   }
 
   const importProjectBackup = async (file: File) => {
     setProjectsError(null)
     try {
-      if (file.size > 5_000_000) throw new Error('Yedek dosyası 5 MB sınırını aşıyor.')
+      if (file.size > 5_000_000) throw new Error(t('Yedek dosyası 5 MB sınırını aşıyor.'))
       const backup = JSON.parse(await file.text()) as Partial<ProjectBackup>
       if (backup.format !== 'fitmatrix-project' || backup.version !== 1 || typeof backup.projectName !== 'string' ||
           !backup.desk || !Array.isArray(backup.items) || !Array.isArray(backup.catalog))
-        throw new Error('Bu dosya geçerli bir FitMatrix proje yedeği değil.')
+        throw new Error(t('Bu dosya geçerli bir FitMatrix proje yedeği değil.'))
       if (backup.items.length > 200 || backup.catalog.length > 200)
-        throw new Error('Yedek desteklenen ürün sayısını aşıyor.')
+        throw new Error(t('Yedek desteklenen ürün sayısını aşıyor.'))
       const validNumber = (value: unknown, min: number, max: number) => typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max
       if (!validNumber(backup.desk.width, 40, 500) || !validNumber(backup.desk.depth, 30, 300) || !validNumber(backup.desk.height, 30, 150))
-        throw new Error('Yedekteki masa ölçüleri desteklenen aralıkta değil.')
+        throw new Error(t('Yedekteki masa ölçüleri desteklenen aralıkta değil.'))
       const validDefinitions = backup.catalog.filter((definition) =>
         definition && typeof definition.id === 'string' && typeof definition.name === 'string' &&
         isEquipmentCategory(definition.category) && isEquipmentModel(definition.model) &&
@@ -630,28 +634,28 @@ function App() {
         validNumber(definition.footprintDepth, .1, definition.depth) && /^#[0-9a-f]{6}$/i.test(definition.color),
       )
       if (validDefinitions.length !== backup.catalog.length)
-        throw new Error('Yedekte geçersiz bir ürün tanımı var.')
+        throw new Error(t('Yedekte geçersiz bir ürün tanımı var.'))
       const knownIds = new Set([...catalog, ...validDefinitions].map((definition) => definition.id))
       const validItems = backup.items.every((item) => item && typeof item.instanceId === 'string' && knownIds.has(item.definitionId) &&
         validNumber(item.position?.x, -5000, 5000) && validNumber(item.position?.z, -5000, 5000) && validNumber(item.rotation, -36000, 36000) &&
         validNumber(item.elevation ?? 0, 0, 300) && validNumber(item.tilt ?? 0, -45, 45) &&
         (item.mountMode === undefined || item.mountMode === 'surface' || item.mountMode === 'vesa') &&
         (item.screenOrientation === undefined || item.screenOrientation === 'landscape' || item.screenOrientation === 'portrait'))
-      if (!validItems) throw new Error('Yedekte geçersiz veya eksik bir yerleşim kaydı var.')
+      if (!validItems) throw new Error(t('Yedekte geçersiz veya eksik bir yerleşim kaydı var.'))
       setCatalog([...catalog.filter((definition) => !validDefinitions.some((incoming) => incoming.id === definition.id)), ...validDefinitions])
       loadProject({
         version: 1,
         projectId: null,
-        projectName: backup.projectName.trim().slice(0, 160) || 'İçe aktarılan proje',
+        projectName: backup.projectName.trim().slice(0, 160) || t('İçe aktarılan proje'),
         desk: backup.desk,
         items: backup.items,
         room: backup.room && typeof backup.room === 'object' ? backup.room : undefined,
       })
       setShowProjects(false)
       setSaveTarget('local')
-      setSavedAt(new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }))
+      setSavedAt(new Date().toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit' }))
     } catch (error) {
-      setProjectsError(error instanceof Error ? error.message : 'Proje yedeği açılamadı.')
+      setProjectsError(error instanceof Error ? error.message : t('Proje yedeği açılamadı.'))
     } finally {
       if (backupInputRef.current) backupInputRef.current.value = ''
     }
@@ -723,7 +727,7 @@ function App() {
       }
     } catch (error) {
       setDiscovery(null)
-      setDiscoveryError(error instanceof Error ? error.message : 'Ürün bilgileri bulunamadı.')
+      setDiscoveryError(error instanceof Error ? error.message : t('Ürün bilgileri bulunamadı.'))
     } finally {
       setIsDiscovering(false)
     }
@@ -759,18 +763,18 @@ function App() {
       return
     }
     if (addEquipment(definition.id)) setShowProductFinder(false)
-    else setDiscoveryError(`“${definition.name}” mevcut ${desk.width} × ${desk.depth} cm masa düzenine çakışmadan sığmıyor.`)
+    else setDiscoveryError(t('“{name}” mevcut {width} × {depth} cm masa düzenine çakışmadan sığmıyor.', { name: t(definition.name), width: desk.width, depth: desk.depth }))
   }
 
   const activateCatalogItem = (definition: EquipmentDefinition) => {
     if (definition.model === 'desk') {
       updateDesk({ width: definition.width, depth: definition.depth, height: definition.height })
-      setCatalogMessage(`Masa ölçüleri “${definition.name}” ürününe göre güncellendi.`)
+      setCatalogMessage(t('Masa ölçüleri “{name}” ürününe göre güncellendi.', { name: t(definition.name) }))
       return
     }
     setCatalogMessage(addEquipment(definition.id)
       ? null
-      : `“${definition.name}” için çakışmasız boş alan bulunamadı.`)
+      : t('“{name}” için çakışmasız boş alan bulunamadı.', { name: t(definition.name) }))
   }
 
   const loadProductSpecifications = async (databaseId: string) => {
@@ -780,14 +784,14 @@ function App() {
       const detail = await getCatalogProductDetail(databaseId)
       setProductDetails((current) => ({ ...current, [databaseId]: detail }))
     } catch (error) {
-      setDiscoveryError(error instanceof Error ? error.message : 'Ürün özellikleri alınamadı.')
+      setDiscoveryError(error instanceof Error ? error.message : t('Ürün özellikleri alınamadı.'))
     } finally {
       setLoadingDetailId(null)
     }
   }
 
   const removeCatalogProduct = async (databaseId: string, name: string) => {
-    if (!window.confirm(`“${name}” yerel ürün kataloğundan kaldırılsın mı? Kayıtlı projelerdeki yerleşimler korunur.`)) return
+    if (!window.confirm(t('“{name}” yerel ürün kataloğundan kaldırılsın mı? Kayıtlı projelerdeki yerleşimler korunur.', { name }))) return
     setDiscoveryError(null)
     try {
       await deleteCatalogProduct(databaseId)
@@ -799,7 +803,7 @@ function App() {
         return next
       })
     } catch (error) {
-      setDiscoveryError(error instanceof Error ? error.message : 'Ürün katalogdan kaldırılamadı.')
+      setDiscoveryError(error instanceof Error ? error.message : t('Ürün katalogdan kaldırılamadı.'))
     }
   }
 
@@ -817,9 +821,9 @@ function App() {
         setShowProductFinder(false)
       }
       else if (addEquipment(definition.id)) setShowProductFinder(false)
-      else setExternalImportError(`Ürün kataloğa kaydedildi ancak mevcut ${desk.width} × ${desk.depth} cm masa düzenine çakışmadan sığmıyor.`)
+      else setExternalImportError(t('Ürün kataloğa kaydedildi ancak mevcut {width} × {depth} cm masa düzenine çakışmadan sığmıyor.', { width: desk.width, depth: desk.depth }))
     } catch (error) {
-      setExternalImportError(error instanceof Error ? error.message : 'Ürün kataloğa alınamadı.')
+      setExternalImportError(error instanceof Error ? error.message : t('Ürün kataloğa alınamadı.'))
     } finally {
       setIsImportingExternal(false)
     }
@@ -839,47 +843,51 @@ function App() {
         </div>
 
         <div className="project-title">
-          <span>Proje</span>
+          <span>{t('Proje')}</span>
           <input
-            aria-label="Proje adı"
+            aria-label={t('Proje adı')}
             value={projectName}
             onChange={(event) => setProjectName(event.target.value)}
           />
         </div>
 
         <div className="topbar-actions">
-          {savedAt && <span className="save-state"><Check size={14} /> {savedAt} · {saveTarget === 'sql' ? 'SQL' : 'YEREL'}</span>}
-          <button className="icon-action" aria-label="Geri al" title="Geri al (Ctrl+Z)" disabled={historyPast.length === 0} onClick={undo}><Undo2 size={15} /></button>
-          <button className="icon-action" aria-label="İleri al" title="İleri al (Ctrl+Y)" disabled={historyFuture.length === 0} onClick={redo}><Redo2 size={15} /></button>
-          {shareState && <span className={`save-state ${shareState === 'failed' ? 'share-failed' : ''}`} role="status">{shareState === 'copied' ? <><Check size={14} /> Bağlantı kopyalandı</> : 'Bağlantı kopyalanamadı'}</span>}
-          <button className="icon-action" aria-label="Paylaşım bağlantısını kopyala" title="Düzeni bağlantı olarak paylaş" onClick={() => void copyShareLink()}><Link2 size={15} /></button>
-          {isDemo && <a className="demo-chip" href={REPOSITORY_URL} target="_blank" rel="noreferrer" title="Sunucu gerektiren internet araması ve SQL kaydı bu demoda kapalı">Canlı demo · kaynak kodu</a>}
-          {!isDemo && <button className="button ghost" onClick={() => setShowProductFinder(true)}><Search size={15} /> Ürün bul</button>}
-          <button className="button ghost" onClick={openProjectLibrary}><FolderOpen size={15} /> Projeler</button>
-          <button className="button ghost" onClick={startNewProject}><Plus size={16} /> Yeni düzen</button>
-          <button className="button primary" onClick={saveProject} disabled={isSaving}><Save size={16} /> {isSaving ? 'Kaydediliyor' : 'Kaydet'}</button>
+          {savedAt && <span className="save-state"><Check size={14} /> {savedAt} · {saveTarget === 'sql' ? 'SQL' : t('YEREL')}</span>}
+          <div className="segmented-control compact language-switch" role="group" aria-label={t('Arayüz dili')}>
+            <button className={language === 'tr' ? 'active' : ''} onClick={() => setLanguage('tr')}>TR</button>
+            <button className={language === 'en' ? 'active' : ''} onClick={() => setLanguage('en')}>EN</button>
+          </div>
+          <button className="icon-action" aria-label={t('Geri al')} title={t('Geri al (Ctrl+Z)')} disabled={historyPast.length === 0} onClick={undo}><Undo2 size={15} /></button>
+          <button className="icon-action" aria-label={t('İleri al')} title={t('İleri al (Ctrl+Y)')} disabled={historyFuture.length === 0} onClick={redo}><Redo2 size={15} /></button>
+          {shareState && <span className={`save-state ${shareState === 'failed' ? 'share-failed' : ''}`} role="status">{shareState === 'copied' ? <><Check size={14} /> {t('Bağlantı kopyalandı')}</> : t('Bağlantı kopyalanamadı')}</span>}
+          <button className="icon-action" aria-label={t('Paylaşım bağlantısını kopyala')} title={t('Düzeni bağlantı olarak paylaş')} onClick={() => void copyShareLink()}><Link2 size={15} /></button>
+          {isDemo && <a className="demo-chip" href={REPOSITORY_URL} target="_blank" rel="noreferrer" title={t('Sunucu gerektiren internet araması ve SQL kaydı bu demoda kapalı')}>{t('Canlı demo · kaynak kodu')}</a>}
+          {!isDemo && <button className="button ghost" onClick={() => setShowProductFinder(true)}><Search size={15} /> {t('Ürün bul')}</button>}
+          <button className="button ghost" onClick={openProjectLibrary}><FolderOpen size={15} /> {t('Projeler')}</button>
+          <button className="button ghost" onClick={startNewProject}><Plus size={16} /> {t('Yeni düzen')}</button>
+          <button className="button primary" onClick={saveProject} disabled={isSaving}><Save size={16} /> {isSaving ? t('Kaydediliyor') : t('Kaydet')}</button>
         </div>
       </header>
 
       <div className="editor-layout">
         <aside className="sidebar library-panel">
           <div className="panel-heading">
-            <div><span>Katalog</span><h2>Ekipmanlar</h2></div>
+            <div><span>{t('Katalog')}</span><h2>{t('Ekipmanlar')}</h2></div>
             <span className="catalog-heading-actions">
               <span className="count-badge">{catalog.length}</span>
-              {!isDemo && <button className="icon-action small" aria-label="Katalog toplama" title="Üretici haritalarından katalog topla" onClick={() => setShowHarvest(true)}><DatabaseZap size={14} /></button>}
+              {!isDemo && <button className="icon-action small" aria-label={t('Katalog toplama')} title={t('Üretici haritalarından katalog topla')} onClick={() => setShowHarvest(true)}><DatabaseZap size={14} /></button>}
             </span>
           </div>
 
-          <div className="category-tabs" aria-label="Ekipman kategorileri">
-            <button className={activeCategory === 'all' ? 'active' : ''} onClick={() => { setActiveCategory('all'); setCatalogLimit(CATALOG_PAGE_SIZE) }}>Tümü</button>
+          <div className="category-tabs" aria-label={t('Ekipman kategorileri')}>
+            <button className={activeCategory === 'all' ? 'active' : ''} onClick={() => { setActiveCategory('all'); setCatalogLimit(CATALOG_PAGE_SIZE) }}>{t('Tümü')}</button>
             {Object.entries(categoryLabels).map(([key, label]) => (
               <button
                 key={key}
                 className={activeCategory === key ? 'active' : ''}
                 onClick={() => { setActiveCategory(key as EquipmentCategory); setCatalogLimit(CATALOG_PAGE_SIZE) }}
               >
-                {label}<small>{categoryCounts.get(key as EquipmentCategory) ?? 0}</small>
+                {t(label)}<small>{categoryCounts.get(key as EquipmentCategory) ?? 0}</small>
               </button>
             ))}
           </div>
@@ -887,8 +895,8 @@ function App() {
           <label className="catalog-search">
             <Search size={14} />
             <input
-              aria-label="Katalogda ara"
-              placeholder={isDemo ? 'Katalogda ara' : 'Katalogda veya internette ara'}
+              aria-label={t('Katalogda ara')}
+              placeholder={isDemo ? t('Katalogda ara') : t('Katalogda veya internette ara')}
               value={catalogSearch}
               onChange={(event) => { setCatalogSearch(event.target.value); setCatalogLimit(CATALOG_PAGE_SIZE) }}
               onKeyDown={(event) => {
@@ -898,13 +906,13 @@ function App() {
                 }
               }}
             />
-            {catalogSearch && <button type="button" aria-label="Katalog aramasını temizle" onClick={() => setCatalogSearch('')}><X size={13} /></button>}
+            {catalogSearch && <button type="button" aria-label={t('Katalog aramasını temizle')} onClick={() => setCatalogSearch('')}><X size={13} /></button>}
           </label>
           {brands.length > 1 && (
             <label className="brand-filter">
-              <span>Marka</span>
+              <span>{t('Marka')}</span>
               <select value={activeBrand} onChange={(event) => { setActiveBrand(event.target.value); setCatalogLimit(CATALOG_PAGE_SIZE) }}>
-                <option value="">Bütün markalar ({brands.length})</option>
+                <option value="">{t('Bütün markalar ({count})', { count: brands.length })}</option>
                 {brands.map((brand) => <option key={brand.key} value={brand.key}>{brand.label} ({brand.count})</option>)}
               </select>
             </label>
@@ -918,52 +926,52 @@ function App() {
                   <Box size={19} strokeWidth={1.6} />
                 </span>
                 <span className="catalog-copy">
-                  <strong>{item.name}</strong>
+                  <strong>{t(item.name)}</strong>
                   <small>{item.width} × {item.depth} × {item.height} cm</small>
                 </span>
                 {item.model === 'desk' ? <Ruler size={16} /> : <Plus size={16} />}
               </button>
             ))}
-            {filteredCatalog.length === 0 && <p className="catalog-empty">Yerel katalogda eşleşme yok.</p>}
+            {filteredCatalog.length === 0 && <p className="catalog-empty">{t('Yerel katalogda eşleşme yok.')}</p>}
             {catalogSearch.trim().length >= 2 && !isDemo && (
               <button className="catalog-online-search" type="button" onClick={() => void searchCatalogOnline()} disabled={isDiscovering}>
                 {isDiscovering ? <LoaderCircle className="spin" size={14} /> : <Wifi size={14} />}
-                İnternette tüm ürünlerde ara
+                {t('İnternette tüm ürünlerde ara')}
               </button>
             )}
             {filteredCatalog.length > visibleCatalog.length && (
               <button className="catalog-more" type="button" onClick={() => setCatalogLimit((limit) => limit + CATALOG_PAGE_SIZE)}>
-                Daha fazla göster <small>{visibleCatalog.length} / {filteredCatalog.length}</small>
+                {t('Daha fazla göster')} <small>{visibleCatalog.length} / {filteredCatalog.length}</small>
               </button>
             )}
           </div>
         </aside>
 
-        <section className="workspace" aria-label="3D masa editörü">
+        <section className="workspace" aria-label={t('3D masa editörü')}>
           <div className="workspace-meta">
-            <span><i className="status-dot" /> 3D çalışma alanı</span>
-            <span className={invalidItemCount > 0 ? 'scene-warning' : ''}>{invalidItemCount > 0 ? `${invalidItemCount} geçersiz yerleşim` : 'Yerleşim uygun'} · Gerçek ölçek</span>
+            <span><i className="status-dot" /> {t('3D çalışma alanı')}</span>
+            <span className={invalidItemCount > 0 ? 'scene-warning' : ''}>{invalidItemCount > 0 ? t('{count} geçersiz yerleşim', { count: invalidItemCount }) : t('Yerleşim uygun')} · {t('Gerçek ölçek')}</span>
           </div>
           <EditorCanvas />
-          <div className="canvas-hint">Nesneyi seçerek taşıyabilir veya döndürebilirsin</div>
+          <div className="canvas-hint">{t('Nesneyi seçerek taşıyabilir veya döndürebilirsin')}</div>
           <div className="bottom-toolbar">
-            <button onClick={() => setTransformMode('translate')} className={transformMode === 'translate' ? 'active' : ''}>Taşı</button>
-            <button onClick={() => setTransformMode('rotate')} className={transformMode === 'rotate' ? 'active' : ''}>Döndür</button>
+            <button onClick={() => setTransformMode('translate')} className={transformMode === 'translate' ? 'active' : ''}>{t('Taşı')}</button>
+            <button onClick={() => setTransformMode('rotate')} className={transformMode === 'rotate' ? 'active' : ''}>{t('Döndür')}</button>
             <span className="toolbar-divider" />
-            <button onClick={() => setCameraMode('perspective')} className={cameraMode === 'perspective' ? 'active' : ''}>Perspektif</button>
-            <button onClick={() => setCameraMode('top')} className={cameraMode === 'top' ? 'active' : ''}>Üstten görünüm</button>
-            <button onClick={() => setCameraMode('eye')} className={cameraMode === 'eye' ? 'active' : ''} title="Kullanıcı boyuna göre göz hizasından bakar (3)">Göz hizası</button>
-            <button onClick={resetCamera}>Kamerayı sıfırla</button>
+            <button onClick={() => setCameraMode('perspective')} className={cameraMode === 'perspective' ? 'active' : ''}>{t('Perspektif')}</button>
+            <button onClick={() => setCameraMode('top')} className={cameraMode === 'top' ? 'active' : ''}>{t('Üstten görünüm')}</button>
+            <button onClick={() => setCameraMode('eye')} className={cameraMode === 'eye' ? 'active' : ''} title={t('Kullanıcı boyuna göre göz hizasından bakar (3)')}>{t('Göz hizası')}</button>
+            <button onClick={resetCamera}>{t('Kamerayı sıfırla')}</button>
             <span className="toolbar-divider" />
-            <button onClick={toggleSnap} className={snapEnabled ? 'active' : ''}>Grid {snapEnabled ? 'açık' : 'kapalı'}</button>
-            <button onClick={() => void exportSnapshot()} title="Görünümü PNG olarak indir"><Camera size={14} /> PNG</button>
+            <button onClick={toggleSnap} className={snapEnabled ? 'active' : ''}>{snapEnabled ? t('Grid açık') : t('Grid kapalı')}</button>
+            <button onClick={() => void exportSnapshot()} title={t('Görünümü PNG olarak indir')}><Camera size={14} /> PNG</button>
             <span className="unit-chip">CM</span>
           </div>
         </section>
 
         <aside className="sidebar inspector-panel">
           <div className="panel-heading">
-            <div><span>Düzenleyici</span><h2>{selectedDefinition?.name ?? 'Masa ayarları'}</h2></div>
+            <div><span>{t('Düzenleyici')}</span><h2>{selectedDefinition ? t(selectedDefinition.name) : t('Masa ayarları')}</h2></div>
           </div>
 
           {selectedItem && selectedDefinition ? (
@@ -971,13 +979,13 @@ function App() {
               <div className={`placement-card ${placement?.isValid ? 'valid' : 'invalid'}`}>
                 <span>{placement?.isValid ? <Check size={15} /> : <span className="warning-mark">!</span>}</span>
                 <div>
-                  <strong>{placement?.isValid ? 'Yerleşim uygun' : 'Yerleşim geçersiz'}</strong>
+                  <strong>{placement?.isValid ? t('Yerleşim uygun') : t('Yerleşim geçersiz')}</strong>
                   <small>{placement?.message}</small>
                 </div>
               </div>
 
               <section className="inspector-section">
-                <h3>Konum</h3>
+                <h3>{t('Konum')}</h3>
                 <div className="field-grid">
                   <NumberField label="X" value={selectedItem.position.x} suffix="cm" onChange={(x) => updateItem(selectedItem.instanceId, { position: { ...selectedItem.position, x } })} />
                   <NumberField label="Z" value={selectedItem.position.z} suffix="cm" onChange={(z) => updateItem(selectedItem.instanceId, { position: { ...selectedItem.position, z } })} />
@@ -987,28 +995,28 @@ function App() {
 
               {selectedDefinition.model === 'monitor' && (
                 <section className="inspector-section">
-                  <h3>Monitör montajı</h3>
-                  <span className="control-label">Taşıma biçimi</span>
-                  <div className="segmented-control" role="group" aria-label="Monitör taşıma biçimi">
+                  <h3>{t('Monitör montajı')}</h3>
+                  <span className="control-label">{t('Taşıma biçimi')}</span>
+                  <div className="segmented-control" role="group" aria-label={t('Monitör taşıma biçimi')}>
                     <button
                       className={(selectedItem.mountMode ?? 'surface') === 'surface' ? 'active' : ''}
                       onClick={() => updateItem(selectedItem.instanceId, { mountMode: 'surface', elevation: 0, tilt: 0 })}
-                    >Masa standı</button>
+                    >{t('Masa standı')}</button>
                     <button
                       className={selectedItem.mountMode === 'vesa' ? 'active' : ''}
                       onClick={() => updateItem(selectedItem.instanceId, { mountMode: 'vesa', elevation: Math.max(5, selectedItem.elevation ?? 0) })}
-                    >VESA kolu</button>
+                    >{t('VESA kolu')}</button>
                   </div>
-                  <span className="control-label">Ekran yönü</span>
-                  <div className="segmented-control" role="group" aria-label="Ekran yönü">
+                  <span className="control-label">{t('Ekran yönü')}</span>
+                  <div className="segmented-control" role="group" aria-label={t('Ekran yönü')}>
                     <button
                       className={(selectedItem.screenOrientation ?? 'landscape') === 'landscape' ? 'active' : ''}
                       onClick={() => updateItem(selectedItem.instanceId, { screenOrientation: 'landscape' })}
-                    >Yatay</button>
+                    >{t('Yatay')}</button>
                     <button
                       className={selectedItem.screenOrientation === 'portrait' ? 'active' : ''}
                       onClick={() => updateItem(selectedItem.instanceId, { screenOrientation: 'portrait' })}
-                    >Dikey</button>
+                    >{t('Dikey')}</button>
                   </div>
                   {selectedItem.mountMode === 'vesa' && (
                     <>
@@ -1017,7 +1025,7 @@ function App() {
                         <NumberField label="Öne/arkaya eğim" value={selectedItem.tilt ?? 0} suffix="°" onChange={(tilt) => updateItem(selectedItem.instanceId, { tilt: Math.max(-45, Math.min(45, tilt)) })} />
                       </div>
                       <div className="dimensions-table mount-summary">
-                        <span>VESA merkezi <strong>{Math.round(((selectedItem.elevation ?? 0) + ((selectedItem.screenOrientation === 'portrait' ? selectedDefinition.width : selectedDefinition.height) / 2)) * 10) / 10} cm</strong></span>
+                        <span>{t('VESA merkezi')} <strong>{Math.round(((selectedItem.elevation ?? 0) + ((selectedItem.screenOrientation === 'portrait' ? selectedDefinition.width : selectedDefinition.height) / 2)) * 10) / 10} cm</strong></span>
                       </div>
                     </>
                   )}
@@ -1025,40 +1033,40 @@ function App() {
               )}
 
               <section className="inspector-section">
-                <h3>Fiziksel ölçüler</h3>
+                <h3>{t('Fiziksel ölçüler')}</h3>
                 <div className="field-grid">
                   <NumberField label="Genişlik" value={selectedDefinition.width} suffix="cm" onChange={(value) => updateSelectedDimension('width', value)} />
                   <NumberField label="Derinlik" value={selectedDefinition.depth} suffix="cm" onChange={(value) => updateSelectedDimension('depth', value)} />
                 </div>
                 <NumberField label="Yükseklik" value={selectedDefinition.height} suffix="cm" onChange={(value) => updateSelectedDimension('height', value)} />
-                <div className="dimensions-table"><span>Temas alanı <strong>{Math.round(selectedDefinition.footprintWidth * 10) / 10} × {Math.round(selectedDefinition.footprintDepth * 10) / 10} cm</strong></span></div>
+                <div className="dimensions-table"><span>{t('Temas alanı')} <strong>{Math.round(selectedDefinition.footprintWidth * 10) / 10} × {Math.round(selectedDefinition.footprintDepth * 10) / 10} cm</strong></span></div>
               </section>
 
               <div className="inspector-actions">
-                <button onClick={() => duplicateItem(selectedItem.instanceId)}><Copy size={14} /> Çoğalt</button>
-                <button className="delete-button" onClick={() => deleteItem(selectedItem.instanceId)}><Trash2 size={14} /> Kaldır</button>
+                <button onClick={() => duplicateItem(selectedItem.instanceId)}><Copy size={14} /> {t('Çoğalt')}</button>
+                <button className="delete-button" onClick={() => deleteItem(selectedItem.instanceId)}><Trash2 size={14} /> {t('Kaldır')}</button>
               </div>
             </>
           ) : (
             <>
               <div className="empty-selection">
                 <RotateCcw size={22} strokeWidth={1.5} />
-                <p>Sahnedeki bir ekipmanı seçerek konumunu ve ölçülerini düzenleyebilirsin.</p>
+                <p>{t('Sahnedeki bir ekipmanı seçerek konumunu ve ölçülerini düzenleyebilirsin.')}</p>
               </div>
               <section className="inspector-section">
-                <h3>Masa ölçüleri</h3>
+                <h3>{t('Masa ölçüleri')}</h3>
                 <div className="field-grid">
                   <NumberField label="Genişlik" value={desk.width} suffix="cm" onChange={(width) => updateDesk({ width })} />
                   <NumberField label="Derinlik" value={desk.depth} suffix="cm" onChange={(depth) => updateDesk({ depth })} />
                 </div>
                 <NumberField label="Yükseklik" value={desk.height} suffix="cm" onChange={(height) => updateDesk({ height })} />
               </section>
-              <section className="inspector-section room-section" aria-label="Oda">
+              <section className="inspector-section room-section" aria-label={t('Oda')}>
                 <div className="ergonomics-heading">
-                  <h3>Oda</h3>
-                  <div className="segmented-control compact" role="group" aria-label="Odayı göster">
-                    <button className={room.enabled ? '' : 'active'} onClick={() => setRoom({ enabled: false })}>Kapalı</button>
-                    <button className={room.enabled ? 'active' : ''} onClick={() => setRoom({ enabled: true })}>Açık</button>
+                  <h3>{t('Oda')}</h3>
+                  <div className="segmented-control compact" role="group" aria-label={t('Odayı göster')}>
+                    <button className={room.enabled ? '' : 'active'} onClick={() => setRoom({ enabled: false })}>{t('Kapalı')}</button>
+                    <button className={room.enabled ? 'active' : ''} onClick={() => setRoom({ enabled: true })}>{t('Açık')}</button>
                   </div>
                 </div>
                 {room.enabled && (
@@ -1071,15 +1079,15 @@ function App() {
                   </>
                 )}
               </section>
-              <section className="inspector-section ergonomics-section" aria-label="Ergonomi kontrolü">
+              <section className="inspector-section ergonomics-section" aria-label={t('Ergonomi kontrolü')}>
                 <div className="ergonomics-heading">
-                  <h3>Ergonomi kontrolü</h3>
+                  <h3>{t('Ergonomi kontrolü')}</h3>
                   <span className={`ergonomics-score ${ergonomics.score >= 80 ? 'good' : 'warning'}`}>%{ergonomics.score}</span>
                 </div>
                 <NumberField label="Kullanıcı boyu" value={userHeight} suffix="cm" onChange={setUserHeight} />
-                <div className="segmented-control" role="group" aria-label="Çalışma duruşu">
-                  <button className={posture === 'sitting' ? 'active' : ''} onClick={() => setPosture('sitting')}>Oturarak</button>
-                  <button className={posture === 'standing' ? 'active' : ''} onClick={() => setPosture('standing')}>Ayakta</button>
+                <div className="segmented-control" role="group" aria-label={t('Çalışma duruşu')}>
+                  <button className={posture === 'sitting' ? 'active' : ''} onClick={() => setPosture('sitting')}>{t('Oturarak')}</button>
+                  <button className={posture === 'standing' ? 'active' : ''} onClick={() => setPosture('standing')}>{t('Ayakta')}</button>
                 </div>
                 <ul className="ergonomics-list">
                   {ergonomics.checks.map((check) => (
@@ -1098,23 +1106,23 @@ function App() {
 
           <div className="storage-note">
             <Database size={16} />
-            <span>{isDemo ? 'Canlı demoda düzen bu tarayıcıda saklanır; yedek dosyası veya paylaşım bağlantısıyla taşıyabilirsin.' : projectId ? 'SQL Server kaydı bağlı. Yerel taslak koruması da etkin.' : 'İlk kayıtta SQL Server projesi oluşturulur; yerel taslak da korunur.'}</span>
+            <span>{isDemo ? t('Canlı demoda düzen bu tarayıcıda saklanır; yedek dosyası veya paylaşım bağlantısıyla taşıyabilirsin.') : projectId ? t('SQL Server kaydı bağlı. Yerel taslak koruması da etkin.') : t('İlk kayıtta SQL Server projesi oluşturulur; yerel taslak da korunur.')}</span>
           </div>
         </aside>
       </div>
 
       {showProjects && (
-        <div className="project-overlay" role="dialog" aria-modal="true" aria-label="Projeler">
-          <button className="overlay-backdrop" aria-label="Projeleri kapat" onClick={() => setShowProjects(false)} />
+        <div className="project-overlay" role="dialog" aria-modal="true" aria-label={t('Projeler')}>
+          <button className="overlay-backdrop" aria-label={t('Projeleri kapat')} onClick={() => setShowProjects(false)} />
           <section className="project-drawer">
             <div className="drawer-heading">
-              <div><span>Proje arşivi</span><h2>Kayıtlı projeler</h2></div>
-              <button aria-label="Kapat" onClick={() => setShowProjects(false)}><X size={18} /></button>
+              <div><span>{t('Proje arşivi')}</span><h2>{t('Kayıtlı projeler')}</h2></div>
+              <button aria-label={t('Kapat')} onClick={() => setShowProjects(false)}><X size={18} /></button>
             </div>
             <div className="project-backup-actions">
-              <button onClick={exportProjectBackup}><Download size={15} /> Açık projeyi yedekle</button>
-              <button onClick={() => backupInputRef.current?.click()}><Upload size={15} /> Yedekten aç</button>
-              <button className="span-two" onClick={() => void exportPartsList()}><ListChecks size={15} /> Malzeme listesi (CSV)</button>
+              <button onClick={exportProjectBackup}><Download size={15} /> {t('Açık projeyi yedekle')}</button>
+              <button onClick={() => backupInputRef.current?.click()}><Upload size={15} /> {t('Yedekten aç')}</button>
+              <button className="span-two" onClick={() => void exportPartsList()}><ListChecks size={15} /> {t('Malzeme listesi (CSV)')}</button>
               <input
                 ref={backupInputRef}
                 type="file"
@@ -1126,19 +1134,19 @@ function App() {
               />
             </div>
             {projectsError && <p className="drawer-error">{projectsError}</p>}
-            {!projectsError && projects.length === 0 && <p className="drawer-empty">Henüz kayıtlı proje yok.</p>}
+            {!projectsError && projects.length === 0 && <p className="drawer-empty">{t('Henüz kayıtlı proje yok.')}</p>}
             <div className="project-list">
               {projects.map((project) => (
                 <article className="project-row" key={project.id}>
                   <button className="project-open" onClick={() => loadDatabaseProject(project.id)}>
                     <span className="project-code">{project.id.slice(0, 8).toUpperCase()}</span>
                     <strong>{project.name}</strong>
-                    <small>{project.itemCount} ekipman · {new Date(project.updatedAt).toLocaleString('tr-TR')}</small>
+                    <small>{t('{count} ekipman', { count: project.itemCount })} · {new Date(project.updatedAt).toLocaleString(getLocale())}</small>
                     <FolderOpen size={16} />
                   </button>
                   <div className="project-actions">
-                    <button aria-label={`${project.name} projesini çoğalt`} title="Projeyi çoğalt" onClick={() => duplicateDatabaseProject(project.id)}><Copy size={14} /></button>
-                    <button className="danger" aria-label={`${project.name} projesini sil`} title="Projeyi sil" onClick={() => deleteDatabaseProject(project.id, project.name)}><Trash2 size={14} /></button>
+                    <button aria-label={t('{name} projesini çoğalt', { name: project.name })} title={t('Projeyi çoğalt')} onClick={() => duplicateDatabaseProject(project.id)}><Copy size={14} /></button>
+                    <button className="danger" aria-label={t('{name} projesini sil', { name: project.name })} title={t('Projeyi sil')} onClick={() => deleteDatabaseProject(project.id, project.name)}><Trash2 size={14} /></button>
                   </div>
                 </article>
               ))}
@@ -1149,28 +1157,28 @@ function App() {
 
       {showHarvest && <HarvestPanel onClose={() => setShowHarvest(false)} onCatalogChanged={refreshCatalog} />}
       {showProductFinder && (
-        <div className="project-overlay" role="dialog" aria-modal="true" aria-label="Ürün bilgisi bul ve masaya yerleştir">
-          <button className="overlay-backdrop" aria-label="Ürün bulucuyu kapat" onClick={() => setShowProductFinder(false)} />
+        <div className="project-overlay" role="dialog" aria-modal="true" aria-label={t('Ürün bilgisi bul ve masaya yerleştir')}>
+          <button className="overlay-backdrop" aria-label={t('Ürün bulucuyu kapat')} onClick={() => setShowProductFinder(false)} />
           <section className="project-drawer discovery-drawer">
             <div className="drawer-heading">
-              <div><span>Ürün veritabanı</span><h2>İnternette ürün ve ölçü ara</h2></div>
-              <button aria-label="Kapat" onClick={() => setShowProductFinder(false)}><X size={18} /></button>
+              <div><span>{t('Ürün veritabanı')}</span><h2>{t('İnternette ürün ve ölçü ara')}</h2></div>
+              <button aria-label={t('Kapat')} onClick={() => setShowProductFinder(false)}><X size={18} /></button>
             </div>
 
-            <p className="discovery-intro">“Klavye”, “mouse” veya “monitör” gibi genel bir ürün türü yazabilir; marka, model kodu, GTIN ya da ürün bağlantısıyla doğrudan kesin ürünü tarayabilirsin. Yerel SQL, açık ürün dizinleri, üretici sayfaları ve PDF teknik föyleri birlikte aranır.</p>
+            <p className="discovery-intro">{t('“Klavye”, “mouse” veya “monitör” gibi genel bir ürün türü yazabilir; marka, model kodu, GTIN ya da ürün bağlantısıyla doğrudan kesin ürünü tarayabilirsin. Yerel SQL, açık ürün dizinleri, üretici sayfaları ve PDF teknik föyleri birlikte aranır.')}</p>
 
             <form className="discovery-search" onSubmit={runProductDiscovery}>
               <Search size={18} />
               <input
                 autoFocus
-                aria-label="Ürün adı, model kodu, GTIN veya ürün bağlantısı"
-                placeholder="Örn. klavye, Logitech MX Keys, MSI MAG 274QF veya ürün bağlantısı"
+                aria-label={t('Ürün adı, model kodu, GTIN veya ürün bağlantısı')}
+                placeholder={t('Örn. klavye, Logitech MX Keys, MSI MAG 274QF veya ürün bağlantısı')}
                 value={discoveryQuery}
                 onChange={(event) => setDiscoveryQuery(event.target.value)}
               />
               <button type="submit" disabled={isDiscovering || discoveryQuery.trim().length < 2}>
                 {isDiscovering ? <LoaderCircle className="spin" size={16} /> : <Ruler size={16} />}
-                Ara
+                {t('Ara')}
               </button>
             </form>
 
@@ -1186,8 +1194,8 @@ function App() {
                 {!discovery.externalMatch && discovery.externalMatches.length > 0 && (
                   <section className="web-index-section">
                     <div className="discovery-summary">
-                      <span>Çevrimiçi ürün dizini</span>
-                      <strong>{discovery.externalMatches.length} gerçek model</strong>
+                      <span>{t('Çevrimiçi ürün dizini')}</span>
+                      <strong>{t('{count} gerçek model', { count: discovery.externalMatches.length })}</strong>
                     </div>
                     <div className="web-index-results">
                       {discovery.externalMatches.map((product, index) => (
@@ -1196,22 +1204,22 @@ function App() {
                             <div>
                               <span>{product.brand || product.provider}</span>
                               <h3>{product.productName}</h3>
-                              <small>{[product.modelName, product.gtin].filter(Boolean).join(' · ') || 'Ürün sayfası eşleşmesi'}</small>
+                              <small>{[product.modelName, product.gtin].filter(Boolean).join(' · ') || t('Ürün sayfası eşleşmesi')}</small>
                             </div>
                             <span className={`measurement-trust ${product.measurementStatus}`}>
-                              {product.measurementStatus === 'identity-only' ? 'Model bulundu' : 'Ölçü bulundu'}
+                              {product.measurementStatus === 'identity-only' ? t('Model bulundu') : t('Ölçü bulundu')}
                             </span>
                           </div>
                           <div className="compact-measures">
-                            <span>G {formatMeasure(product.widthCm)}</span>
-                            <span>Y {formatMeasure(product.heightCm)}</span>
-                            <span>D {formatMeasure(product.depthCm)}</span>
+                            <span>{t('G')} {formatMeasure(product.widthCm)}</span>
+                            <span>{t('Y')} {formatMeasure(product.heightCm)}</span>
+                            <span>{t('D')} {formatMeasure(product.depthCm)}</span>
                           </div>
                           <div className="web-index-footer">
                             <small>{product.provider}</small>
                             <button onClick={() => inspectExternalCandidate(product)} disabled={isDiscovering}>
                               {isDiscovering ? <LoaderCircle className="spin" size={14} /> : <Search size={14} />}
-                              Tüm ölçüleri tara
+                              {t('Tüm ölçüleri tara')}
                             </button>
                           </div>
                         </article>
@@ -1222,21 +1230,21 @@ function App() {
 
                 {discovery.externalMatch && (
                   <article className="external-match">
-                    <span className="result-eyebrow">Çevrimiçi eşleşme · {discovery.externalMatch.provider}</span>
+                    <span className="result-eyebrow">{t('Çevrimiçi eşleşme')} · {discovery.externalMatch.provider}</span>
                     <h3>{discovery.externalMatch.productName}</h3>
                     <small>{[discovery.externalMatch.brand, discovery.externalMatch.manufacturerPartNumber, discovery.externalMatch.gtin].filter(Boolean).join(' · ')}</small>
                     <div className="measure-strip">
-                      <span><b>Genişlik</b>{formatMeasure(discovery.externalMatch.widthCm)} cm</span>
-                      <span><b>Yükseklik</b>{formatMeasure(discovery.externalMatch.heightCm)} cm</span>
-                      <span><b>Derinlik</b>{formatMeasure(discovery.externalMatch.depthCm)} cm</span>
-                      <span><b>Ağırlık</b>{formatMeasure(discovery.externalMatch.weightKg, 3)} kg</span>
+                      <span><b>{t('Genişlik')}</b>{formatMeasure(discovery.externalMatch.widthCm)} cm</span>
+                      <span><b>{t('Yükseklik')}</b>{formatMeasure(discovery.externalMatch.heightCm)} cm</span>
+                      <span><b>{t('Derinlik')}</b>{formatMeasure(discovery.externalMatch.depthCm)} cm</span>
+                      <span><b>{t('Ağırlık')}</b>{formatMeasure(discovery.externalMatch.weightKg, 3)} kg</span>
                     </div>
                     {externalPreviewDefinition && externalIsDesk && (
                       <div className="fit-assessment fits">
                         <Check size={18} />
                         <div>
-                          <strong>Proje masası olarak kullanılabilir</strong>
-                          <span>Çalışma alanı {formatMeasure(externalPreviewDefinition.width)} × {formatMeasure(externalPreviewDefinition.depth)} cm, masa yüksekliği {formatMeasure(externalPreviewDefinition.height)} cm olarak ayarlanır.</span>
+                          <strong>{t('Proje masası olarak kullanılabilir')}</strong>
+                          <span>{t('Çalışma alanı {width} × {depth} cm, masa yüksekliği {height} cm olarak ayarlanır.', { width: formatMeasure(externalPreviewDefinition.width), depth: formatMeasure(externalPreviewDefinition.depth), height: formatMeasure(externalPreviewDefinition.height) })}</span>
                         </div>
                       </div>
                     )}
@@ -1245,48 +1253,48 @@ function App() {
                         {externalEmptyDeskFit ? <Check size={18} /> : <X size={18} />}
                         <div>
                           <strong>{!externalEmptyDeskFit
-                            ? `${desk.width} × ${desk.depth} cm masaya sığmıyor`
+                            ? t('{width} × {depth} cm masaya sığmıyor', { width: desk.width, depth: desk.depth })
                             : externalCurrentLayoutFit
-                              ? `${desk.width} × ${desk.depth} cm masaya sığıyor`
-                              : 'Masa ölçüsüne sığıyor, mevcut düzende boş alan yok'}</strong>
+                              ? t('{width} × {depth} cm masaya sığıyor', { width: desk.width, depth: desk.depth })
+                              : t('Masa ölçüsüne sığıyor, mevcut düzende boş alan yok')}</strong>
                           <span>{externalCurrentLayoutFit
-                            ? `Çakışmasız konum bulundu · ${externalCurrentLayoutFit.rotation === 90 ? '90° çevrilmiş' : 'normal yön'} · gerçek kaplama ${formatMeasure(externalDraft?.footprintWidth ?? null)} × ${formatMeasure(externalDraft?.footprintDepth ?? null)} cm`
+                            ? t('Çakışmasız konum bulundu · {direction} · gerçek kaplama {width} × {depth} cm', { direction: externalCurrentLayoutFit.rotation === 90 ? t('90° çevrilmiş') : t('normal yön'), width: formatMeasure(externalDraft?.footprintWidth ?? null), depth: formatMeasure(externalDraft?.footprintDepth ?? null) })
                             : externalEmptyDeskFit
-                              ? 'Mevcut ekipmanlardan birini taşıyarak veya kaldırarak yer açabilirsin.'
-                              : `Ürünün masa üzerindeki kaplaması ${formatMeasure(externalDraft?.footprintWidth ?? null)} × ${formatMeasure(externalDraft?.footprintDepth ?? null)} cm.`}</span>
+                              ? t('Mevcut ekipmanlardan birini taşıyarak veya kaldırarak yer açabilirsin.')
+                              : t('Ürünün masa üzerindeki kaplaması {width} × {depth} cm.', { width: formatMeasure(externalDraft?.footprintWidth ?? null), depth: formatMeasure(externalDraft?.footprintDepth ?? null) })}</span>
                         </div>
                       </div>
                     )}
                     <p>{discovery.externalMatch.measurementNote}</p>
                     <div className={`measurement-trust ${discovery.externalMatch.measurementStatus}`}>
-                      {discovery.externalMatch.measurementStatus === 'official-structured' && 'Resmî kaynak · yüksek güven'}
-                      {discovery.externalMatch.measurementStatus === 'source-structured' && 'Yapılandırılmış kaynak'}
-                      {discovery.externalMatch.measurementStatus === 'provider-order' && 'Doğrulama gerekir'}
-                      {discovery.externalMatch.measurementStatus === 'identity-only' && 'Yalnızca ürün kimliği'}
+                      {discovery.externalMatch.measurementStatus === 'official-structured' && t('Resmî kaynak · yüksek güven')}
+                      {discovery.externalMatch.measurementStatus === 'source-structured' && t('Yapılandırılmış kaynak')}
+                      {discovery.externalMatch.measurementStatus === 'provider-order' && t('Doğrulama gerekir')}
+                      {discovery.externalMatch.measurementStatus === 'identity-only' && t('Yalnızca ürün kimliği')}
                     </div>
-                    <small>{discovery.externalMatch.specifications.length} kaynak alanı · Stand/temas alanı ayrı yayımlanmadıysa otomatik tahmin edilmez.</small>
+                    <small>{t('{count} kaynak alanı · Stand/temas alanı ayrı yayımlanmadıysa otomatik tahmin edilmez.', { count: discovery.externalMatch.specifications.length })}</small>
                     <details className="spec-details">
-                      <summary>Tüm teknik özellikleri göster <span>{discovery.externalMatch.specifications.length}</span></summary>
+                      <summary>{t('Tüm teknik özellikleri göster')} <span>{discovery.externalMatch.specifications.length}</span></summary>
                       <SpecificationList specifications={discovery.externalMatch.specifications} />
                     </details>
                     {discovery.externalMatch.sourceUrl && (
-                      <a className="source-link" href={discovery.externalMatch.sourceUrl} target="_blank" rel="noreferrer">Kaynağı aç</a>
+                      <a className="source-link" href={discovery.externalMatch.sourceUrl} target="_blank" rel="noreferrer">{t('Kaynağı aç')}</a>
                     )}
                     {externalDraft ? (
                       <div className="external-import-panel">
                         <div className="import-panel-heading">
-                          <div><span>3D katalog kaydı</span><strong>{externalIsDesk ? 'Masa ölçülerini doğrula' : 'Masa kaplama alanını doğrula'}</strong></div>
-                          <small>{externalIsDesk ? 'Bu ürün mevcut masanın üstüne eklenmez; projenin çalışma masası ölçülerini değiştirir.' : 'Güvenli sığma hesabı için gövdenin tam genişlik ve derinliği kullanılır. Üreticinin ayrı stand tabanı yayımlanmışsa düzenleyebilirsin.'}</small>
+                          <div><span>{t('3D katalog kaydı')}</span><strong>{externalIsDesk ? t('Masa ölçülerini doğrula') : t('Masa kaplama alanını doğrula')}</strong></div>
+                          <small>{externalIsDesk ? t('Bu ürün mevcut masanın üstüne eklenmez; projenin çalışma masası ölçülerini değiştirir.') : t('Güvenli sığma hesabı için gövdenin tam genişlik ve derinliği kullanılır. Üreticinin ayrı stand tabanı yayımlanmışsa düzenleyebilirsin.')}</small>
                         </div>
                         {autoCatalogStatus !== 'idle' && (
                           <div className={`auto-catalog-status ${autoCatalogStatus}`}>
-                            {autoCatalogStatus === 'saving' && 'Doğrulanmış ürün otomatik kataloğa kaydediliyor…'}
-                            {autoCatalogStatus === 'saved' && 'Doğrulanmış ürün SQL kataloğuna otomatik kaydedildi.'}
-                            {autoCatalogStatus === 'failed' && 'Ürün bulundu; otomatik kayıt tamamlanamadı. Aşağıdaki düğmeyle yeniden deneyebilirsin.'}
+                            {autoCatalogStatus === 'saving' && t('Doğrulanmış ürün otomatik kataloğa kaydediliyor…')}
+                            {autoCatalogStatus === 'saved' && t('Doğrulanmış ürün SQL kataloğuna otomatik kaydedildi.')}
+                            {autoCatalogStatus === 'failed' && t('Ürün bulundu; otomatik kayıt tamamlanamadı. Aşağıdaki düğmeyle yeniden deneyebilirsin.')}
                           </div>
                         )}
                         <label className="select-field">
-                          <span>Kategori</span>
+                          <span>{t('Kategori')}</span>
                           <select
                             value={externalDraft.category}
                             onChange={(event) => {
@@ -1294,7 +1302,7 @@ function App() {
                               setExternalDraft({ ...externalDraft, category, model: defaultModelByCategory[category] })
                             }}
                           >
-                            {Object.entries(categoryLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                            {Object.entries(categoryLabels).map(([value, label]) => <option key={value} value={value}>{t(label)}</option>)}
                           </select>
                         </label>
                         <div className="field-grid">
@@ -1302,24 +1310,24 @@ function App() {
                           <NumberField label="Temas derinliği" value={externalDraft.footprintDepth} suffix="cm" onChange={(footprintDepth) => setExternalDraft({ ...externalDraft, footprintDepth })} />
                         </div>
                         <label className="color-field">
-                          <span>3D yüzey rengi</span>
+                          <span>{t('3D yüzey rengi')}</span>
                           <input type="color" value={externalDraft.color} onChange={(event) => setExternalDraft({ ...externalDraft, color: event.target.value })} />
                         </label>
                         {externalImportError && <p className="drawer-error">{externalImportError}</p>}
                         <button className="import-product-button" onClick={importExternalProduct} disabled={isImportingExternal}>
                           {isImportingExternal ? <LoaderCircle className="spin" size={16} /> : <Plus size={16} />}
-                          {isImportingExternal ? 'Kataloğa alınıyor' : externalIsDesk ? 'Kataloğa al ve masa olarak kullan' : externalCurrentLayoutFit ? 'Kataloğa al ve otomatik yerleştir' : 'Kataloğa kaydet'}
+                          {isImportingExternal ? t('Kataloğa alınıyor') : externalIsDesk ? t('Kataloğa al ve masa olarak kullan') : externalCurrentLayoutFit ? t('Kataloğa al ve otomatik yerleştir') : t('Kataloğa kaydet')}
                         </button>
                       </div>
                     ) : (
-                      <p className="external-import-unavailable">Eksiksiz W/H/D ölçüsü bulunmadan ürün 3D kataloğa eklenmez.</p>
+                      <p className="external-import-unavailable">{t('Eksiksiz W/H/D ölçüsü bulunmadan ürün 3D kataloğa eklenmez.')}</p>
                     )}
                   </article>
                 )}
 
                 <div className="discovery-summary">
-                  <span>Yerel katalog</span>
-                  <strong>{discovery.localMatches.length} eşleşme</strong>
+                  <span>{t('Yerel katalog')}</span>
+                  <strong>{t('{count} eşleşme', { count: discovery.localMatches.length })}</strong>
                 </div>
                 <div className="discovery-results">
                   {discovery.localMatches.map((result) => (
@@ -1330,50 +1338,50 @@ function App() {
                           <h3>{result.displayName}</h3>
                           <small>{result.manufacturerPartNumber ?? result.modelName}{result.gtin ? ` · ${result.gtin}` : ''}</small>
                         </div>
-                        <span className={result.isVerified ? 'quality verified' : 'quality'}>{result.isVerified ? 'Doğrulanmış' : result.dataQuality}</span>
+                        <span className={result.isVerified ? 'quality verified' : 'quality'}>{result.isVerified ? t('Doğrulanmış') : result.dataQuality}</span>
                       </div>
                       <div className="measure-strip">
-                        <span><b>Genişlik</b>{result.widthCm} cm</span>
-                        <span><b>Yükseklik</b>{result.heightCm} cm</span>
-                        <span><b>Derinlik</b>{result.depthCm} cm</span>
-                        <span><b>Ağırlık</b>{result.weightKg ?? '—'} kg</span>
+                        <span><b>{t('Genişlik')}</b>{result.widthCm} cm</span>
+                        <span><b>{t('Yükseklik')}</b>{result.heightCm} cm</span>
+                        <span><b>{t('Derinlik')}</b>{result.depthCm} cm</span>
+                        <span><b>{t('Ağırlık')}</b>{result.weightKg ?? '—'} kg</span>
                       </div>
                       {localFitById.get(result.id) && !localFitById.get(result.id)?.isDesk && (
                         <div className={`fit-assessment ${localFitById.get(result.id)?.emptyDesk && localFitById.get(result.id)?.currentLayout ? 'fits' : 'blocked'}`}>
                           {localFitById.get(result.id)?.emptyDesk ? <Check size={18} /> : <X size={18} />}
                           <div>
                             <strong>{!localFitById.get(result.id)?.emptyDesk
-                              ? `${desk.width} × ${desk.depth} cm masaya sığmıyor`
+                              ? t('{width} × {depth} cm masaya sığmıyor', { width: desk.width, depth: desk.depth })
                               : localFitById.get(result.id)?.currentLayout
-                                ? `${desk.width} × ${desk.depth} cm masaya sığıyor`
-                                : 'Masa ölçüsüne sığıyor, mevcut düzende boş alan yok'}</strong>
+                                ? t('{width} × {depth} cm masaya sığıyor', { width: desk.width, depth: desk.depth })
+                                : t('Masa ölçüsüne sığıyor, mevcut düzende boş alan yok')}</strong>
                             <span>{localFitById.get(result.id)?.currentLayout
-                              ? 'Çakışmasız konum bulundu; “Masaya ekle” otomatik yerleştirir.'
-                              : 'Yer açmak için mevcut ekipmanları taşı veya masa ölçülerini değiştir.'}</span>
+                              ? t('Çakışmasız konum bulundu; “Masaya ekle” otomatik yerleştirir.')
+                              : t('Yer açmak için mevcut ekipmanları taşı veya masa ölçülerini değiştir.')}</span>
                           </div>
                         </div>
                       )}
                       <div className="result-footer">
-                        <span>{localFitById.get(result.id)?.isDesk ? `Çalışma alanı ${result.widthCm} × ${result.depthCm} cm` : `Temas alanı ${result.footprintWidthCm} × ${result.footprintDepthCm} cm`}</span>
+                        <span>{localFitById.get(result.id)?.isDesk ? t('Çalışma alanı {width} × {depth} cm', { width: result.widthCm, depth: result.depthCm }) : t('Temas alanı {width} × {depth} cm', { width: result.footprintWidthCm, depth: result.footprintDepthCm })}</span>
                         <div className="result-actions">
                           <button className="secondary" onClick={() => loadProductSpecifications(result.id)} disabled={loadingDetailId === result.id}>
                             {loadingDetailId === result.id ? <LoaderCircle className="spin" size={14} /> : <Database size={14} />}
-                            Tüm özellikler
+                            {t('Tüm özellikler')}
                           </button>
-                          <button className="secondary danger" aria-label={`${result.displayName} ürününü katalogdan kaldır`} onClick={() => removeCatalogProduct(result.id, result.displayName)}>
+                          <button className="secondary danger" aria-label={t('{name} ürününü katalogdan kaldır', { name: result.displayName })} onClick={() => removeCatalogProduct(result.id, result.displayName)}>
                             <Trash2 size={14} />
                           </button>
-                          <button onClick={() => addDiscoveredProduct(result.id)}><Plus size={14} /> {localFitById.get(result.id)?.isDesk ? 'Masa olarak kullan' : 'Masaya ekle'}</button>
+                          <button onClick={() => addDiscoveredProduct(result.id)}><Plus size={14} /> {localFitById.get(result.id)?.isDesk ? t('Masa olarak kullan') : t('Masaya ekle')}</button>
                         </div>
                       </div>
                       {productDetails[result.id] && (
                         <details className="spec-details local-specs" open>
-                          <summary>Ürün veri sayfası <span>{productDetails[result.id].specifications.length + productDetails[result.id].attributes.length}</span></summary>
+                          <summary>{t('Ürün veri sayfası')} <span>{productDetails[result.id].specifications.length + productDetails[result.id].attributes.length}</span></summary>
                           <SpecificationList specifications={[
                             ...productDetails[result.id].attributes.map((attribute) => ({
-                              group: 'Kategorik özellikler',
+                              group: t('Kategorik özellikler'),
                               name: attribute.name,
-                              value: attribute.numericValue?.toString() ?? attribute.textValue ?? (attribute.booleanValue === null ? '—' : attribute.booleanValue ? 'Evet' : 'Hayır'),
+                              value: attribute.numericValue?.toString() ?? attribute.textValue ?? (attribute.booleanValue === null ? '—' : attribute.booleanValue ? t('Evet') : t('Hayır')),
                               unit: attribute.unit,
                             })),
                             ...productDetails[result.id].specifications,
@@ -1388,7 +1396,7 @@ function App() {
                     </article>
                   ))}
                   {discovery.localMatches.length === 0 && !discovery.externalMatch && discovery.externalMatches.length === 0 && (
-                    <p className="drawer-empty">Bu model için doğrulanabilir fiziksel ölçü yayımlanmış bir kaynak bulunamadı. Marka ve model kodunu kontrol edip yeniden deneyebilirsin; üyelik gerekmez.</p>
+                    <p className="drawer-empty">{t('Bu model için doğrulanabilir fiziksel ölçü yayımlanmış bir kaynak bulunamadı. Marka ve model kodunu kontrol edip yeniden deneyebilirsin; üyelik gerekmez.')}</p>
                   )}
                 </div>
               </>

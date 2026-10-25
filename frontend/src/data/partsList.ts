@@ -1,4 +1,5 @@
 import { resolveEquipmentDefinition } from './equipmentCatalog'
+import { getLocale, t } from '../i18n'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment } from '../types/editor'
 
 export interface PartsListRow {
@@ -30,7 +31,7 @@ export function buildPartsList(
       continue
     }
     rows.set(key, {
-      name: definition.name,
+      name: t(definition.name),
       category: categoryLabel(definition.category),
       quantity: 1,
       widthCm: definition.width,
@@ -41,7 +42,7 @@ export function buildPartsList(
   }
 
   const deskRow: PartsListRow = {
-    name: 'Masa',
+    name: t('Masa'),
     category: categoryLabel('furniture'),
     quantity: 1,
     widthCm: desk.width,
@@ -49,7 +50,7 @@ export function buildPartsList(
     heightCm: desk.height,
     sourceUrl: '',
   }
-  return [deskRow, ...[...rows.values()].sort((first, second) => first.name.localeCompare(second.name, 'tr'))]
+  return [deskRow, ...[...rows.values()].sort((first, second) => first.name.localeCompare(second.name, getLocale()))]
 }
 
 const csvCell = (value: string | number) => {
@@ -59,7 +60,7 @@ const csvCell = (value: string | number) => {
 
 // Semicolon-separated with a BOM so Excel in Turkish (comma decimal) locales opens it in columns as UTF-8.
 export function partsListToCsv(rows: PartsListRow[]) {
-  const header = ['Ürün', 'Kategori', 'Adet', 'Genişlik (cm)', 'Derinlik (cm)', 'Yükseklik (cm)', 'Kaynak']
+  const header = [t('Ürün'), t('Kategori'), t('Adet'), t('Genişlik (cm)'), t('Derinlik (cm)'), t('Yükseklik (cm)'), t('Kaynak')]
   const lines = [header, ...rows.map((row) => [row.name, row.category, row.quantity, row.widthCm, row.depthCm, row.heightCm, row.sourceUrl])]
     .map((cells) => cells.map(csvCell).join(';'))
   return `﻿${lines.join('\r\n')}\r\n`

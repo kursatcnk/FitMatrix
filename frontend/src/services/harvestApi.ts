@@ -1,3 +1,5 @@
+import { t } from '../i18n'
+
 export interface HarvestEntry {
   query: string
   outcome: 'Imported' | 'Updated' | 'AlreadyInCatalog' | 'NoVerifiedMatch' | 'Failed'
@@ -32,10 +34,10 @@ export class HarvestUnavailableError extends Error {}
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(path, init)
-  if (response.status === 404) throw new HarvestUnavailableError('Katalog toplama yalnızca geliştirme ortamında açıktır.')
+  if (response.status === 404) throw new HarvestUnavailableError(t('Katalog toplama yalnızca geliştirme ortamında açıktır.'))
   if (!response.ok) {
     const problem = await response.json().catch(() => null) as { message?: string } | null
-    throw new Error(problem?.message ?? `İstek başarısız: ${response.status}`)
+    throw new Error(problem?.message ?? t('İstek başarısız: {status}', { status: response.status }))
   }
   return response.status === 204 || response.status === 202 && response.headers.get('content-length') === '0'
     ? undefined as T

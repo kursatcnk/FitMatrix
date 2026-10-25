@@ -1,3 +1,5 @@
+import { t } from '../i18n'
+
 export interface ProductDiscoveryResult {
   id: string
   brand: string
@@ -63,11 +65,11 @@ export async function discoverProduct(query: string): Promise<ProductDiscoveryRe
     const response = await fetch(`/api/product-discovery/search?query=${encodeURIComponent(query)}`, { signal: controller.signal })
     if (!response.ok) {
       const problem = await response.json().catch(() => null) as { message?: string } | null
-      throw new Error(problem?.message ?? `Ürün araması başarısız: ${response.status}`)
+      throw new Error(problem?.message ?? t('Ürün araması başarısız: {status}', { status: response.status }))
     }
     return response.json()
   } catch (error) {
-    if (controller.signal.aborted) throw new Error('Ürün araması 120 saniyede tamamlanamadı. Biraz sonra yeniden dene.')
+    if (controller.signal.aborted) throw new Error(t('Ürün araması 120 saniyede tamamlanamadı. Biraz sonra yeniden dene.'))
     throw error
   } finally {
     window.clearTimeout(timeout)

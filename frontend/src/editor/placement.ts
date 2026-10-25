@@ -1,4 +1,5 @@
 import { resolveEquipmentDefinition } from '../data/equipmentCatalog'
+import { t } from '../i18n'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment, Position2D } from '../types/editor'
 
 interface PlacementStatus {
@@ -94,7 +95,7 @@ export function getPlacementStatus(
     (corner) => Math.abs(corner.x) > desk.width / 2 || Math.abs(corner.z) > desk.depth / 2,
   )
 
-  if (outsideDesk) return { isValid: false, message: item.mountMode === 'vesa' ? 'VESA ekran gövdesi masa genişliği veya derinliğini aşıyor.' : 'Ekipmanın temas alanı masa sınırını aşıyor.' }
+  if (outsideDesk) return { isValid: false, message: item.mountMode === 'vesa' ? t('VESA ekran gövdesi masa genişliği veya derinliğini aşıyor.') : t('Ekipmanın temas alanı masa sınırını aşıyor.') }
 
   const collision = allItems.find(
     (candidate) => candidate.instanceId !== item.instanceId && overlaps(item, candidate, catalog),
@@ -102,14 +103,14 @@ export function getPlacementStatus(
 
   if (collision) {
     const other = resolveEquipmentDefinition(collision, catalog)
-    return { isValid: false, message: `${other?.name ?? 'Başka bir ekipman'} ile çakışıyor.` }
+    return { isValid: false, message: other ? t('{name} ile çakışıyor.', { name: t(other.name) }) : t('Başka bir ekipmanla çakışıyor.') }
   }
 
   return {
     isValid: true,
     message: item.mountMode === 'vesa'
-      ? 'VESA ekran yüksekliği, gövde sınırı ve diğer ekipmanlarla açıklık uygun.'
-      : 'Temas alanı masa içinde ve başka bir nesneyle çakışmıyor.',
+      ? t('VESA ekran yüksekliği, gövde sınırı ve diğer ekipmanlarla açıklık uygun.')
+      : t('Temas alanı masa içinde ve başka bir nesneyle çakışmıyor.'),
   }
 }
 

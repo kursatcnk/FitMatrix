@@ -16,6 +16,8 @@ export default defineConfig({
     channel: process.env.CI ? undefined : 'msedge',
     baseURL: `http://localhost:${port}/FitMatrix/`,
     viewport: { width: 1440, height: 900 },
+    // The interface follows the browser language; the tests are written against the Turkish one.
+    locale: 'tr-TR',
     trace: 'retain-on-failure',
   },
   webServer: {

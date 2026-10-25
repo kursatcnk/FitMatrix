@@ -111,7 +111,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
   background: var(--paper-raised);
   transition: background-color .12s ease, color .12s ease;
 }
-.button { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px; font-size: 13px; font-weight: 600; }
+.button { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px; font-size: 13px; font-weight: 600; white-space: nowrap; }
 .button:hover { background: var(--paper-sunk); }
 .button.primary { background: var(--tape); }
 .button.primary:hover { background: var(--tape-deep); }
@@ -321,6 +321,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .segmented-control button.active { color: var(--paper); background: var(--ink); }
 .segmented-control.compact { width: 116px; margin: 0; }
 .segmented-control.compact button { height: 24px; font-size: 11px; }
+.language-switch { width: 72px; margin-right: 6px; }
 .room-section .ergonomics-heading { align-items: center; }
 .mount-summary { padding: 8px 10px; background: var(--paper-sunk); }
 

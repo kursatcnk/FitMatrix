@@ -9,7 +9,7 @@ FitMatrix, masaüstü bilgisayar kurulumlarını gerçek fiziksel ölçülerle 3
 
 ![FitMatrix editörü: katalog, 3D masa sahnesi ve ergonomi kontrolü](docs/images/editor.png)
 
-> **English:** FitMatrix is a 3D desk setup planner that works in real centimetres. Pick monitors, keyboards, mice, laptops, chairs and more from a catalog of 1,400+ products whose dimensions come from manufacturers' own pages, place them on your desk with collision checks, and get an ergonomics score for your height, seated or standing. Look at the desk from your own eye level, see distances to the desk edges, share a layout as a link, export a parts list and save the 3D view as a PNG. Try the [live demo](https://kursatcnk.github.io/FitMatrix/) in your browser, or run the full app with `docker compose up --build` and open http://localhost:8080.
+> **English:** FitMatrix is a 3D desk setup planner that works in real centimetres. Pick monitors, keyboards, mice, laptops, chairs and more from a catalog of 1,400+ products whose dimensions come from manufacturers' own pages, place them on your desk with collision checks, and get an ergonomics score for your height, seated or standing. Look at the desk from your own eye level, see distances to the desk edges, share a layout as a link, export a parts list and save the 3D view as a PNG. The interface is available in English and Turkish. Try the [live demo](https://kursatcnk.github.io/FitMatrix/) in your browser, or run the full app with `docker compose up --build` and open http://localhost:8080.
 
 ## Docker ile çalıştırma
 
@@ -68,6 +68,7 @@ Yerel kullanım için tamamlanan uygulama:
 - Seçili ürünün sol, sağ, arka ve ön masa kenarlarına uzaklığını gösteren ölçü çizgileri
 - Düzeni adet, ölçü ve kaynak bağlantılarıyla malzeme listesi (CSV) olarak dışa aktarma
 - 3D görünümü seçim araçları olmadan PNG olarak indirme
+- Türkçe ve İngilizce arayüz: dil tarayıcıya göre seçilir, üst çubuktaki TR/EN düğmesiyle değiştirilir ve hatırlanır
 - İsteğe bağlı oda: arka ve yan duvarlar, duvara mesafe; masanın odaya sığması ve sandalyeyi geri itecek alan ergonomi kontrolüne eklenir; oda projeyle, yedek dosyasıyla ve paylaşım bağlantısıyla birlikte kaydedilir
 - Düzeni adres içine sıkıştırılmış bağlantı olarak paylaşma; bağlantıyı açan aynı masayı görür, veri sunucuya gitmez
 - Oturarak ve ayakta çalışma için ayrı ergonomi hesabı ve monitörlerin göz noktasından kapladığı yatay açı kontrolü
@@ -239,7 +240,7 @@ npm run e2e
 npm run build
 ```
 
-Mevcut otomatik kapsam 92 backend, 49 frontend birim testi ve 5 Playwright uçtan uca testidir. Uçtan uca testler statik demo derlemesini gerçek tarayıcıda açar: katalog yüklemesi, ürün ekleme, paylaşım bağlantısıyla düzeni yeni sekmede açma, oda kontrolleri ve PNG indirme. Yerelde kurulu Microsoft Edge kullanılır, CI Playwright Chromium kurar.
+Mevcut otomatik kapsam 92 backend, 53 frontend birim testi ve 6 Playwright uçtan uca testidir. Uçtan uca testler statik demo derlemesini gerçek tarayıcıda açar: katalog yüklemesi, ürün ekleme, paylaşım bağlantısıyla düzeni yeni sekmede açma, oda kontrolleri, İngilizceye geçiş ve PNG indirme. Bir birim testi, ekranda gösterilen her Türkçe metnin İngilizce karşılığı olduğunu denetler. Yerelde kurulu Microsoft Edge kullanılır, CI Playwright Chromium kurar.
 
 ## Tamamlanma sınırı
 

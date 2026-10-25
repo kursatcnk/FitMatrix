@@ -1,5 +1,6 @@
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment } from '../types/editor'
 import { clampRoom, type RoomSettings } from '../editor/room'
+import { t } from '../i18n'
 
 export interface SharedPlan {
   projectName: string
@@ -46,7 +47,7 @@ export async function readShareHash(hash: string): Promise<SharedPlan | null> {
       typeof item?.instanceId === 'string' && typeof item.definitionId === 'string' &&
       Number.isFinite(item.position?.x) && Number.isFinite(item.position?.z) && Number.isFinite(item.rotation))
     return {
-      projectName: typeof plan.projectName === 'string' ? plan.projectName.slice(0, 120) : 'Paylaşılan düzen',
+      projectName: typeof plan.projectName === 'string' ? plan.projectName.slice(0, 120) : t('Paylaşılan düzen'),
       desk,
       items,
       catalog: plan.catalog.filter((definition) => typeof definition?.id === 'string' && typeof definition.name === 'string'),
