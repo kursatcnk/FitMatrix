@@ -6,6 +6,7 @@ import { resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import { useEditorStore } from '../store/editorStore'
 import { eyePoint } from './ergonomics'
 import { getEdgeClearances, getPlacementFootprint, getPlacementStatus } from './placement'
+import { registerSceneCapture } from './sceneCapture'
 import type { EquipmentDefinition, PlacedEquipment } from '../types/editor'
 
 function Desk() {
@@ -558,10 +559,27 @@ function Scene() {
   )
 }
 
+// Renders a fresh frame and copies it out in the same task, so the canvas does not need
+// preserveDrawingBuffer (a cost on every frame) for the occasional snapshot.
+function CaptureRegistration() {
+  const { gl, scene, camera } = useThree()
+
+  useEffect(() => {
+    registerSceneCapture(() => {
+      gl.render(scene, camera)
+      return new Promise((resolve) => gl.domElement.toBlob(resolve, 'image/png'))
+    })
+    return () => registerSceneCapture(null)
+  }, [gl, scene, camera])
+
+  return null
+}
+
 export function EditorCanvas() {
   return (
     <Canvas shadows="percentage" dpr={[1, 1.75]} camera={{ position: [170, 145, 170], fov: 42, near: 0.1, far: 1000 }}>
       <Scene />
+      <CaptureRegistration />
     </Canvas>
   )
 }

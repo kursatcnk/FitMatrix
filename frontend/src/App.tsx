@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Box, Check, Copy, Database, DatabaseZap, Download, FolderOpen, Link2, ListChecks, LoaderCircle, Plus, Redo2, RotateCcw, Ruler, Save, Search, Trash2, Undo2, Upload, Wifi, X } from 'lucide-react'
+import { Box, Camera, Check, Copy, Database, DatabaseZap, Download, FolderOpen, Link2, ListChecks, LoaderCircle, Plus, Redo2, RotateCcw, Ruler, Save, Search, Trash2, Undo2, Upload, Wifi, X } from 'lucide-react'
 import { EditorCanvas } from './editor/EditorCanvas'
+import { captureScene } from './editor/sceneCapture'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
 import { analyzeErgonomics } from './editor/ergonomics'
@@ -28,6 +29,18 @@ const categoryLabels: Record<EquipmentCategory, string> = {
   power: 'Güç',
   office: 'Ofis',
   accessory: 'Aksesuar',
+}
+
+const projectFileName = (projectName: string) =>
+  projectName.trim().replace(/[^\p{L}\p{Nd}]+/gu, '-').replace(/^-|-$/g, '') || 'fitmatrix-proje'
+
+function downloadBlob(blob: Blob, fileName: string) {
+  const href = URL.createObjectURL(blob)
+  const anchor = document.createElement('a')
+  anchor.href = href
+  anchor.download = fileName
+  anchor.click()
+  URL.revokeObjectURL(href)
 }
 
 const formatMeasure = (value: number | null, maximumFractionDigits = 2) =>
@@ -527,13 +540,7 @@ function App() {
       items,
       catalog: catalog.filter((definition) => definitionIds.has(definition.id)),
     }
-    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' })
-    const href = URL.createObjectURL(blob)
-    const anchor = document.createElement('a')
-    anchor.href = href
-    anchor.download = `${projectName.trim().replace(/[^\p{L}\p{Nd}]+/gu, '-').replace(/^-|-$/g, '') || 'fitmatrix-proje'}.fitmatrix.json`
-    anchor.click()
-    URL.revokeObjectURL(href)
+    downloadBlob(new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }), `${projectFileName(projectName)}.fitmatrix.json`)
   }
 
   // After a harvest the catalog grows on the server; local-only definitions (backups, shares) are kept.
@@ -576,12 +583,16 @@ function App() {
       if (result.status === 'fulfilled' && result.value.sources[0]) sources[databaseIds[index]] = result.value.sources[0].sourceUrl
     })
     const rows = buildPartsList(items, catalog, desk, (category) => categoryLabels[category], sources)
-    const href = URL.createObjectURL(new Blob([partsListToCsv(rows)], { type: 'text/csv;charset=utf-8' }))
-    const anchor = document.createElement('a')
-    anchor.href = href
-    anchor.download = `${projectName.trim().replace(/[^\p{L}\p{Nd}]+/gu, '-').replace(/^-|-$/g, '') || 'fitmatrix-proje'}-malzeme-listesi.csv`
-    anchor.click()
-    URL.revokeObjectURL(href)
+    downloadBlob(new Blob([partsListToCsv(rows)], { type: 'text/csv;charset=utf-8' }), `${projectFileName(projectName)}-malzeme-listesi.csv`)
+  }
+
+  const exportSnapshot = async () => {
+    // The selection gizmo and outlines would end up in the picture, so the selection is cleared
+    // and the capture waits until that frame has been painted.
+    selectItem(null)
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+    const blob = await captureScene()
+    if (blob) downloadBlob(blob, `${projectFileName(projectName)}-gorunum.png`)
   }
 
   const importProjectBackup = async (file: File) => {
@@ -929,6 +940,7 @@ function App() {
             <button onClick={resetCamera}>Kamerayı sıfırla</button>
             <span className="toolbar-divider" />
             <button onClick={toggleSnap} className={snapEnabled ? 'active' : ''}>Grid {snapEnabled ? 'açık' : 'kapalı'}</button>
+            <button onClick={() => void exportSnapshot()} title="Görünümü PNG olarak indir"><Camera size={14} /> PNG</button>
             <span className="unit-chip">CM</span>
           </div>
         </section>
