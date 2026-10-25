@@ -139,6 +139,14 @@ npm run e2e
 npm run build
 ```
 
+README görselini (`docs/images/editor.png`) arayüz değiştiğinde yenilemek için demo derlemesini önizlemede açıp betiği çalıştır:
+
+```powershell
+npm run build:demo
+npx vite preview --mode demo --port 4173
+node scripts/readme-screenshot.mjs
+```
+
 Editör kısayolları:
 
 - `Ctrl+Z`: geri al
