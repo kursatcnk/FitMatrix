@@ -317,6 +317,9 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .segmented-control button + button { border-left: 1px solid var(--ink); }
 .segmented-control button:hover { background: var(--paper-sunk); }
 .segmented-control button.active { color: var(--paper); background: var(--ink); }
+.segmented-control.compact { width: 116px; margin: 0; }
+.segmented-control.compact button { height: 24px; font-size: 11px; }
+.room-section .ergonomics-heading { align-items: center; }
 .mount-summary { padding: 8px 10px; background: var(--paper-sunk); }
 
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }

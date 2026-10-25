@@ -7,6 +7,7 @@ import { useEditorStore } from '../store/editorStore'
 import { eyePoint } from './ergonomics'
 import { getEdgeClearances, getPlacementFootprint, getPlacementStatus } from './placement'
 import { registerSceneCapture } from './sceneCapture'
+import { roomBounds, WALL_HEIGHT } from './room'
 import type { EquipmentDefinition, PlacedEquipment } from '../types/editor'
 
 function Desk() {
@@ -535,6 +536,50 @@ function SelectionClearances() {
   )
 }
 
+interface WallProps {
+  length: number
+  position: [number, number]
+  rotation: number
+}
+
+// Walls are single-sided planes facing into the room, so a wall between the camera and the desk is
+// culled and the room opens up like a dollhouse from whichever side you orbit to.
+function Wall({ length, position: [x, z], rotation }: WallProps) {
+  return (
+    <group position={[x, 0, z]} rotation={[0, rotation, 0]}>
+      <mesh position={[0, WALL_HEIGHT / 2, 0]} receiveShadow>
+        <planeGeometry args={[length, WALL_HEIGHT]} />
+        <meshStandardMaterial color="#ebe7de" roughness={0.95} />
+      </mesh>
+      <mesh position={[0, 4, 0.3]}>
+        <planeGeometry args={[length, 8]} />
+        <meshStandardMaterial color="#cfc8b9" roughness={0.8} />
+      </mesh>
+    </group>
+  )
+}
+
+function Room() {
+  const desk = useEditorStore((state) => state.desk)
+  const room = useEditorStore((state) => state.room)
+  if (!room.enabled) return null
+  const { backWallZ, frontWallZ, leftWallX, rightWallX } = roomBounds(desk, room)
+  const centerZ = (backWallZ + frontWallZ) / 2
+
+  return (
+    <group>
+      <mesh position={[0, 0.01, centerZ]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[room.width, room.depth]} />
+        <meshStandardMaterial color="#d3cab9" roughness={0.9} />
+      </mesh>
+      <Wall length={room.width} position={[0, backWallZ]} rotation={0} />
+      <Wall length={room.width} position={[0, frontWallZ]} rotation={Math.PI} />
+      <Wall length={room.depth} position={[leftWallX, centerZ]} rotation={Math.PI / 2} />
+      <Wall length={room.depth} position={[rightWallX, centerZ]} rotation={-Math.PI / 2} />
+    </group>
+  )
+}
+
 function Scene() {
   const items = useEditorStore((state) => state.items)
   const selectItem = useEditorStore((state) => state.selectItem)
@@ -546,6 +591,7 @@ function Scene() {
       <ambientLight intensity={1.1} color="#f7f5ef" />
       <directionalLight position={[90, 180, 110]} intensity={2.15} color="#fff9ec" castShadow shadow-mapSize={[2048, 2048]} shadow-camera-far={450} />
       <directionalLight position={[-100, 110, -80]} intensity={0.5} color="#d5dbe4" />
+      <Room />
       <group onPointerMissed={() => selectItem(null)}>
         <Desk />
         <VesaMountHardware />

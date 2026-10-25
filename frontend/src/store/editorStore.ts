@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { equipmentCatalog, resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import { findAvailablePlacement } from '../editor/placement'
 import { clampUserHeight, DEFAULT_USER_HEIGHT, type Posture } from '../editor/ergonomics'
+import { clampRoom, DEFAULT_ROOM, type RoomSettings } from '../editor/room'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment, SavedProject } from '../types/editor'
 
 export type CameraMode = 'perspective' | 'top' | 'eye'
@@ -26,6 +27,7 @@ interface EditorState {
   cameraRevision: number
   userHeight: number
   posture: Posture
+  room: RoomSettings
   transformMode: TransformMode
   historyPast: EditorSnapshot[]
   historyFuture: EditorSnapshot[]
@@ -43,6 +45,7 @@ interface EditorState {
   resetCamera: () => void
   setUserHeight: (height: number) => void
   setPosture: (posture: Posture) => void
+  setRoom: (patch: Partial<RoomSettings>) => void
   setTransformMode: (mode: TransformMode) => void
   toggleSnap: () => void
   beginHistoryBatch: () => void
@@ -55,12 +58,22 @@ interface EditorState {
 
 const USER_HEIGHT_KEY = 'fitmatrix.userHeightCm'
 const POSTURE_KEY = 'fitmatrix.posture'
+const ROOM_KEY = 'fitmatrix.room'
 
 function readStoredPosture(): Posture {
   try {
     return localStorage.getItem(POSTURE_KEY) === 'standing' ? 'standing' : 'sitting'
   } catch {
     return 'sitting'
+  }
+}
+
+function readStoredRoom(): RoomSettings {
+  try {
+    const stored = localStorage.getItem(ROOM_KEY)
+    return stored ? clampRoom(JSON.parse(stored) as Partial<RoomSettings>) : DEFAULT_ROOM
+  } catch {
+    return DEFAULT_ROOM
   }
 }
 
@@ -109,6 +122,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   cameraRevision: 0,
   userHeight: readStoredUserHeight(),
   posture: readStoredPosture(),
+  room: readStoredRoom(),
   transformMode: 'translate',
   historyPast: [],
   historyFuture: [],
@@ -216,6 +230,15 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       // Storage can be unavailable in private windows; the value still applies for this session.
     }
     set({ userHeight })
+  },
+  setRoom: (patch) => {
+    const room = clampRoom({ ...get().room, ...patch })
+    try {
+      localStorage.setItem(ROOM_KEY, JSON.stringify(room))
+    } catch {
+      // Storage can be unavailable in private windows; the value still applies for this session.
+    }
+    set({ room })
   },
   setTransformMode: (transformMode) => set({ transformMode }),
   toggleSnap: () => set((state) => ({ snapEnabled: !state.snapEnabled })),

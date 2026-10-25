@@ -237,6 +237,8 @@ function App() {
     setUserHeight,
     posture,
     setPosture,
+    room,
+    setRoom,
     setTransformMode,
     toggleSnap,
     undo,
@@ -274,7 +276,7 @@ function App() {
   const selectedDefinition = selectedItem ? resolveEquipmentDefinition(selectedItem, catalog) : undefined
   const placement = selectedItem ? getPlacementStatus(selectedItem, items, desk, catalog) : null
   const invalidItemCount = items.filter((item) => !getPlacementStatus(item, items, desk, catalog).isValid).length
-  const ergonomics = analyzeErgonomics(items, desk, userHeight, catalog, posture)
+  const ergonomics = analyzeErgonomics(items, desk, userHeight, catalog, posture, room)
   const externalProduct = discovery?.externalMatch
   const externalIsDesk = externalDraft?.model === 'desk'
   const externalPreviewDefinition: EquipmentDefinition | null = externalProduct && externalDraft && externalProduct.widthCm && externalProduct.heightCm && externalProduct.depthCm
@@ -1036,6 +1038,24 @@ function App() {
                   <NumberField label="Derinlik" value={desk.depth} suffix="cm" onChange={(depth) => updateDesk({ depth })} />
                 </div>
                 <NumberField label="Yükseklik" value={desk.height} suffix="cm" onChange={(height) => updateDesk({ height })} />
+              </section>
+              <section className="inspector-section room-section" aria-label="Oda">
+                <div className="ergonomics-heading">
+                  <h3>Oda</h3>
+                  <div className="segmented-control compact" role="group" aria-label="Odayı göster">
+                    <button className={room.enabled ? '' : 'active'} onClick={() => setRoom({ enabled: false })}>Kapalı</button>
+                    <button className={room.enabled ? 'active' : ''} onClick={() => setRoom({ enabled: true })}>Açık</button>
+                  </div>
+                </div>
+                {room.enabled && (
+                  <>
+                    <div className="field-grid">
+                      <NumberField label="Oda genişliği" value={room.width} suffix="cm" onChange={(width) => setRoom({ width })} />
+                      <NumberField label="Oda derinliği" value={room.depth} suffix="cm" onChange={(depth) => setRoom({ depth })} />
+                    </div>
+                    <NumberField label="Arka duvara mesafe" value={room.wallGap} suffix="cm" onChange={(wallGap) => setRoom({ wallGap })} />
+                  </>
+                )}
               </section>
               <section className="inspector-section ergonomics-section" aria-label="Ergonomi kontrolü">
                 <div className="ergonomics-heading">

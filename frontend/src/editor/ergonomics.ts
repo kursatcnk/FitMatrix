@@ -1,10 +1,11 @@
 import { resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment } from '../types/editor'
+import { analyzeRoom, type RoomSettings } from './room'
 
 export type ErgonomicStatus = 'good' | 'warning' | 'missing'
 
 export interface ErgonomicCheck {
-  id: 'desk-height' | 'screen-height' | 'viewing-distance' | 'screen-centering' | 'viewing-arc' | 'keyboard-reach'
+  id: 'desk-height' | 'screen-height' | 'viewing-distance' | 'screen-centering' | 'viewing-arc' | 'keyboard-reach' | 'room-fit' | 'chair-space'
   title: string
   status: ErgonomicStatus
   value?: string
@@ -146,6 +147,7 @@ export function analyzeErgonomics(
   userHeight: number,
   catalog?: EquipmentDefinition[],
   posture: Posture = 'sitting',
+  room?: RoomSettings,
 ): ErgonomicReport {
   const height = clampUserHeight(userHeight)
   const eyeHeight = eyePoint(desk, height, posture).height
@@ -164,6 +166,7 @@ export function analyzeErgonomics(
     checkScreenCentering(monitors),
     checkViewingArc(monitors, eyePoint(desk, height, posture).z),
     checkKeyboardReach(keyboard, desk),
+    ...(room ? analyzeRoom(desk, room, posture) : []),
   ]
   const applicable = checks.filter((check) => check.status !== 'missing')
   const score = applicable.length ? Math.round((applicable.filter((check) => check.status === 'good').length / applicable.length) * 100) : 0
