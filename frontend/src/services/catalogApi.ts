@@ -1,4 +1,5 @@
 import { equipmentCatalog } from '../data/equipmentCatalog'
+import { isDemo, loadDemoProducts } from './demoMode'
 import type { EquipmentCategory, EquipmentDefinition, EquipmentModel } from '../types/editor'
 
 export interface ApiCatalogProduct {
@@ -128,6 +129,8 @@ export async function importDiscoveredProduct(input: DiscoveryCatalogInput): Pro
 }
 
 export async function getCatalog(): Promise<EquipmentDefinition[]> {
+  // The API serves the bundled starter models from its seed data; the demo adds them itself.
+  if (isDemo) return [...equipmentCatalog, ...(await loadDemoProducts()).map(mapProduct).filter((item): item is EquipmentDefinition => item !== null)]
   const pageSize = 250
   const products: ApiCatalogProduct[] = []
   for (let offset = 0; ; offset += pageSize) {
@@ -141,6 +144,17 @@ export async function getCatalog(): Promise<EquipmentDefinition[]> {
 }
 
 export async function getCatalogProductDetail(id: string): Promise<ApiCatalogProductDetail> {
+  if (isDemo) {
+    const product = (await loadDemoProducts()).find((item) => item.id === id)
+    if (!product) throw new Error('Ürün demo kataloğunda yok.')
+    const { sourceUrl, sourceProvider, ...rest } = product
+    return {
+      product: rest,
+      attributes: [],
+      specifications: [],
+      sources: sourceUrl ? [{ provider: sourceProvider ?? '', sourceUrl, externalId: null, licenseName: null, lastCheckedAt: '' }] : [],
+    }
+  }
   const response = await fetch(`/api/catalog/products/${id}`)
   if (!response.ok) throw new Error(`Ürün ayrıntıları alınamadı: ${response.status}`)
   return response.json()

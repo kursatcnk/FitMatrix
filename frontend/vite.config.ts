@@ -3,7 +3,10 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  // `--mode demo` builds the static GitHub Pages demo: served from /FitMatrix/ and run without the API.
+  base: mode === 'demo' ? '/FitMatrix/' : '/',
+  define: mode === 'demo' ? { 'import.meta.env.VITE_DEMO': JSON.stringify('true') } : {},
   plugins: [react(), tailwindcss()],
   build: {
     rolldownOptions: {
@@ -39,4 +42,4 @@ export default defineConfig({
       '/api': 'http://127.0.0.1:5080',
     },
   },
-})
+}))

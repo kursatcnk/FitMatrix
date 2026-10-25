@@ -102,6 +102,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .topbar-actions { display: flex; align-items: center; gap: 6px; padding: 0 14px; }
 .save-state.share-failed { color: var(--bad); }
 .save-state { display: inline-flex; align-items: center; gap: 5px; margin-right: 8px; color: var(--ok); font-family: var(--mono); font-size: 11px; }
+.demo-chip { display: inline-flex; align-items: center; height: 30px; margin-right: 6px; padding: 0 10px; border: 1px dashed var(--ink); color: var(--ink); background: var(--tape); font-family: var(--mono); font-size: 11px; letter-spacing: .04em; text-decoration: none; text-transform: uppercase; }
+.demo-chip:hover { background: var(--paper-sunk); }
 
 .button, .icon-action {
   border: 1px solid var(--ink);

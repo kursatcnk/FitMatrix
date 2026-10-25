@@ -1,12 +1,15 @@
 # FitMatrix
 
 [![CI](https://github.com/kursatcnk/FitMatrix/actions/workflows/ci.yml/badge.svg)](https://github.com/kursatcnk/FitMatrix/actions/workflows/ci.yml)
+[![Demo](https://github.com/kursatcnk/FitMatrix/actions/workflows/pages.yml/badge.svg)](https://kursatcnk.github.io/FitMatrix/)
 
 FitMatrix, masaüstü bilgisayar kurulumlarını gerçek fiziksel ölçülerle 3D ortamda planlamak için geliştirilen bir web uygulamasıdır.
 
+**[Canlı demoyu tarayıcıda aç →](https://kursatcnk.github.io/FitMatrix/)** Kurulum gerektirmez; 1.400+ ürünlük katalogla düzen kurup paylaşabilirsin. İnternetten ürün arama, katalog toplama ve SQL Server kaydı sunucu gerektirdiği için demoda kapalıdır.
+
 ![FitMatrix editörü: katalog, 3D masa sahnesi ve ergonomi kontrolü](docs/images/editor.png)
 
-> **English:** FitMatrix is a 3D desk setup planner that works in real centimetres. Pick monitors, keyboards, mice, laptops, chairs and more from a catalog of 1,400+ products whose dimensions come from manufacturers' own pages, place them on your desk with collision checks, and get an ergonomics score for your height, seated or standing. Look at the desk from your own eye level, see distances to the desk edges, share a layout as a link, export a parts list and save the 3D view as a PNG. Run it with `docker compose up --build` and open http://localhost:8080.
+> **English:** FitMatrix is a 3D desk setup planner that works in real centimetres. Pick monitors, keyboards, mice, laptops, chairs and more from a catalog of 1,400+ products whose dimensions come from manufacturers' own pages, place them on your desk with collision checks, and get an ergonomics score for your height, seated or standing. Look at the desk from your own eye level, see distances to the desk edges, share a layout as a link, export a parts list and save the 3D view as a PNG. Try the [live demo](https://kursatcnk.github.io/FitMatrix/) in your browser, or run the full app with `docker compose up --build` and open http://localhost:8080.
 
 ## Docker ile çalıştırma
 
@@ -16,7 +19,7 @@ Windows, macOS veya Linux'ta tek komut yeterlidir; SQL Server, API ve editör bi
 docker compose up --build
 ```
 
-Ardından http://localhost:8080 adresini aç. İlk açılışta veritabanı oluşturulur ve depodaki katalog anlık görüntüsü (`backend/Data/Catalog/catalog-snapshot.json`) yüklenir; editör 1.100'den fazla ölçüsü doğrulanmış ürünle başlar. Veritabanı `fitmatrix-sql` Docker biriminde kalıcıdır. Geliştirme parolasını veya portu değiştirmek için `.env.example` dosyasını `.env` olarak kopyalayıp düzenle. Apple Silicon Mac'lerde SQL Server imajı Docker Desktop'ın Rosetta emülasyonuyla çalışır.
+Ardından http://localhost:8080 adresini aç. İlk açılışta veritabanı oluşturulur ve depodaki katalog anlık görüntüsü (`backend/Data/Catalog/catalog-snapshot.json`) yüklenir; editör 1.400'den fazla ölçüsü doğrulanmış ürünle başlar. Veritabanı `fitmatrix-sql` Docker biriminde kalıcıdır. Geliştirme parolasını veya portu değiştirmek için `.env.example` dosyasını `.env` olarak kopyalayıp düzenle. Apple Silicon Mac'lerde SQL Server imajı Docker Desktop'ın Rosetta emülasyonuyla çalışır.
 
 ## Yerel sürüm durumu
 

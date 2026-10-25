@@ -12,6 +12,7 @@ import { HarvestPanel } from './editor/HarvestPanel'
 import { deleteCatalogProduct, getCatalog, getCatalogProductDetail, importDiscoveredProduct, type ApiCatalogProductDetail, type DiscoveryCatalogInput } from './services/catalogApi'
 import { deleteProject, duplicateProject, getProject, listProjects, saveProjectToApi, type ProjectSummary } from './services/projectApi'
 import { discoverProduct, type ExternalProductCandidate, type ProductDiscoveryResponse } from './services/productDiscoveryApi'
+import { isDemo, REPOSITORY_URL } from './services/demoMode'
 import { useEditorStore } from './store/editorStore'
 import type { EquipmentCategory, EquipmentDefinition, EquipmentModel, PlacedEquipment, SavedProject } from './types/editor'
 
@@ -419,6 +420,7 @@ function App() {
     localStorage.setItem('fitmatrix-project', JSON.stringify(localSnapshot))
 
     try {
+      if (isDemo) throw new Error('The static demo has no project API.')
       const result = await saveProjectToApi({ projectId, projectName, desk, items, catalog })
       setProjectId(result.id)
       localStorage.setItem('fitmatrix-project', JSON.stringify({ ...localSnapshot, projectId: result.id }))
@@ -443,6 +445,10 @@ function App() {
   const openProjectLibrary = async () => {
     setShowProjects(true)
     setProjectsError(null)
+    if (isDemo) {
+      setProjectsError('Canlı demoda sunucu kaydı yok. Açık düzeni yedek dosyası olarak indirip daha sonra buradan açabilirsin.')
+      return
+    }
     try {
       setProjects(await listProjects())
     } catch {
@@ -840,7 +846,8 @@ function App() {
           <button className="icon-action" aria-label="İleri al" title="İleri al (Ctrl+Y)" disabled={historyFuture.length === 0} onClick={redo}><Redo2 size={15} /></button>
           {shareState && <span className={`save-state ${shareState === 'failed' ? 'share-failed' : ''}`} role="status">{shareState === 'copied' ? <><Check size={14} /> Bağlantı kopyalandı</> : 'Bağlantı kopyalanamadı'}</span>}
           <button className="icon-action" aria-label="Paylaşım bağlantısını kopyala" title="Düzeni bağlantı olarak paylaş" onClick={() => void copyShareLink()}><Link2 size={15} /></button>
-          <button className="button ghost" onClick={() => setShowProductFinder(true)}><Search size={15} /> Ürün bul</button>
+          {isDemo && <a className="demo-chip" href={REPOSITORY_URL} target="_blank" rel="noreferrer" title="Sunucu gerektiren internet araması ve SQL kaydı bu demoda kapalı">Canlı demo · kaynak kodu</a>}
+          {!isDemo && <button className="button ghost" onClick={() => setShowProductFinder(true)}><Search size={15} /> Ürün bul</button>}
           <button className="button ghost" onClick={openProjectLibrary}><FolderOpen size={15} /> Projeler</button>
           <button className="button ghost" onClick={startNewProject}><Plus size={16} /> Yeni düzen</button>
           <button className="button primary" onClick={saveProject} disabled={isSaving}><Save size={16} /> {isSaving ? 'Kaydediliyor' : 'Kaydet'}</button>
@@ -853,7 +860,7 @@ function App() {
             <div><span>Katalog</span><h2>Ekipmanlar</h2></div>
             <span className="catalog-heading-actions">
               <span className="count-badge">{catalog.length}</span>
-              <button className="icon-action small" aria-label="Katalog toplama" title="Üretici haritalarından katalog topla" onClick={() => setShowHarvest(true)}><DatabaseZap size={14} /></button>
+              {!isDemo && <button className="icon-action small" aria-label="Katalog toplama" title="Üretici haritalarından katalog topla" onClick={() => setShowHarvest(true)}><DatabaseZap size={14} /></button>}
             </span>
           </div>
 
@@ -874,11 +881,11 @@ function App() {
             <Search size={14} />
             <input
               aria-label="Katalogda ara"
-              placeholder="Katalogda veya internette ara"
+              placeholder={isDemo ? 'Katalogda ara' : 'Katalogda veya internette ara'}
               value={catalogSearch}
               onChange={(event) => { setCatalogSearch(event.target.value); setCatalogLimit(CATALOG_PAGE_SIZE) }}
               onKeyDown={(event) => {
-                if (event.key === 'Enter') {
+                if (event.key === 'Enter' && !isDemo) {
                   event.preventDefault()
                   void searchCatalogOnline()
                 }
@@ -911,7 +918,7 @@ function App() {
               </button>
             ))}
             {filteredCatalog.length === 0 && <p className="catalog-empty">Yerel katalogda eşleşme yok.</p>}
-            {catalogSearch.trim().length >= 2 && (
+            {catalogSearch.trim().length >= 2 && !isDemo && (
               <button className="catalog-online-search" type="button" onClick={() => void searchCatalogOnline()} disabled={isDiscovering}>
                 {isDiscovering ? <LoaderCircle className="spin" size={14} /> : <Wifi size={14} />}
                 İnternette tüm ürünlerde ara
@@ -1084,7 +1091,7 @@ function App() {
 
           <div className="storage-note">
             <Database size={16} />
-            <span>{projectId ? 'SQL Server kaydı bağlı. Yerel taslak koruması da etkin.' : 'İlk kayıtta SQL Server projesi oluşturulur; yerel taslak da korunur.'}</span>
+            <span>{isDemo ? 'Canlı demoda düzen bu tarayıcıda saklanır; yedek dosyası veya paylaşım bağlantısıyla taşıyabilirsin.' : projectId ? 'SQL Server kaydı bağlı. Yerel taslak koruması da etkin.' : 'İlk kayıtta SQL Server projesi oluşturulur; yerel taslak da korunur.'}</span>
           </div>
         </aside>
       </div>
