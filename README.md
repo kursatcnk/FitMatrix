@@ -6,7 +6,7 @@ FitMatrix, masaüstü bilgisayar kurulumlarını gerçek fiziksel ölçülerle 3
 
 ![FitMatrix editörü: katalog, 3D masa sahnesi ve ergonomi kontrolü](docs/images/editor.png)
 
-> **English:** FitMatrix is a 3D desk setup planner that works in real centimetres. Pick monitors, keyboards, mice, laptops, chairs and more from a catalog of 1,100+ products whose dimensions come from manufacturers' own pages, place them on your desk with collision checks, and get an ergonomics score for your height, seated or standing. Look at the desk from your own eye level, see distances to the desk edges, share a layout as a link and export a parts list. Run it with `docker compose up --build` and open http://localhost:8080.
+> **English:** FitMatrix is a 3D desk setup planner that works in real centimetres. Pick monitors, keyboards, mice, laptops, chairs and more from a catalog of 1,400+ products whose dimensions come from manufacturers' own pages, place them on your desk with collision checks, and get an ergonomics score for your height, seated or standing. Look at the desk from your own eye level, see distances to the desk edges, share a layout as a link, export a parts list and save the 3D view as a PNG. Run it with `docker compose up --build` and open http://localhost:8080.
 
 ## Docker ile çalıştırma
 
@@ -64,6 +64,7 @@ Yerel kullanım için tamamlanan uygulama:
 - Göz hizası kamerası: kullanıcı boyuna göre oturan kişinin gözünden masaya bakış
 - Seçili ürünün sol, sağ, arka ve ön masa kenarlarına uzaklığını gösteren ölçü çizgileri
 - Düzeni adet, ölçü ve kaynak bağlantılarıyla malzeme listesi (CSV) olarak dışa aktarma
+- 3D görünümü seçim araçları olmadan PNG olarak indirme
 - Düzeni adres içine sıkıştırılmış bağlantı olarak paylaşma; bağlantıyı açan aynı masayı görür, veri sunucuya gitmez
 - Oturarak ve ayakta çalışma için ayrı ergonomi hesabı ve monitörlerin göz noktasından kapladığı yatay açı kontrolü
 - Katalogda marka filtresi ve editör içinden üretici haritası toplama paneli (ilerleme, son sonuçlar, anlık görüntü yazma)
