@@ -38,7 +38,8 @@
 }
 
 * { box-sizing: border-box; }
-html, body, #root { width: 100%; min-width: 1120px; height: 100%; min-height: 700px; margin: 0; }
+html, body, #root { width: 100%; min-width: 320px; height: 100%; margin: 0; }
+@media (min-width: 901px) { html, body, #root { min-width: 1040px; min-height: 700px; } }
 body { overflow: hidden; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
@@ -293,7 +294,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
   background: var(--paper);
   box-shadow: 3px 3px 0 var(--ink);
 }
-.bottom-toolbar button { height: 34px; padding: 0 12px; border: 0; background: transparent; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.bottom-toolbar button { display: inline-flex; align-items: center; gap: 5px; height: 34px; padding: 0 12px; border: 0; background: transparent; font-size: 12px; font-weight: 600; white-space: nowrap; }
 .bottom-toolbar button:hover { background: var(--paper-sunk); }
 .bottom-toolbar button.active { color: var(--paper); background: var(--ink); }
 .toolbar-divider { width: 1px; background: var(--ink); }
@@ -570,6 +571,32 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 
 @media (max-width: 760px) {
   .web-index-results { grid-template-columns: 1fr; }
+}
+
+/* Phones and small tablets: the 3D view on top, one side panel below it, picked with the tabs. */
+.mobile-panel-tabs { display: none; }
+
+@media (max-width: 900px) {
+  .app-shell { height: 100dvh; }
+  .topbar { grid-template-columns: auto minmax(0, 1fr); height: auto; flex-basis: auto; }
+  .brand-block { padding: 0 14px; border-right: 1px solid var(--ink); }
+  .project-title { padding: 0 12px; }
+  .project-title span { display: none; }
+  .topbar-actions { grid-column: 1 / -1; padding: 6px 12px; border-top: 1px solid var(--rule); overflow-x: auto; scrollbar-width: none; }
+  .topbar-actions > * { flex: 0 0 auto; }
+
+  .editor-layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(260px, 46dvh) auto minmax(0, 1fr); }
+  .workspace { grid-row: 1; }
+  .mobile-panel-tabs { display: grid; grid-row: 2; margin: 0; border-width: 1px 0; }
+  .mobile-panel-tabs button { height: 38px; }
+  .sidebar { grid-row: 3; border: 0; padding: 14px 16px; }
+  .editor-layout[data-mobile-panel='catalog'] .inspector-panel,
+  .editor-layout[data-mobile-panel='inspector'] .library-panel { display: none; }
+
+  .workspace-meta span:last-child, .canvas-hint { display: none; }
+  .bottom-toolbar { right: 8px; bottom: 8px; left: 8px; transform: none; overflow-x: auto; scrollbar-width: none; box-shadow: 2px 2px 0 var(--ink); }
+  .bottom-toolbar button { padding-inline: 10px; }
+  .project-drawer { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

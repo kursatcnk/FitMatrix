@@ -260,6 +260,13 @@ function App() {
   const [showProjects, setShowProjects] = useState(false)
   const [showProductFinder, setShowProductFinder] = useState(false)
   const [showHarvest, setShowHarvest] = useState(false)
+  // On narrow screens only one side panel is shown under the 3D view; selecting an item opens the inspector.
+  const [mobilePanel, setMobilePanel] = useState<'catalog' | 'inspector'>('catalog')
+  const [panelSelection, setPanelSelection] = useState(selectedId)
+  if (panelSelection !== selectedId) {
+    setPanelSelection(selectedId)
+    if (selectedId) setMobilePanel('inspector')
+  }
   const [projects, setProjects] = useState<ProjectSummary[]>([])
   const [projectsError, setProjectsError] = useState<string | null>(null)
   const [activeCategory, setActiveCategory] = useState<EquipmentCategory | 'all'>('all')
@@ -869,7 +876,11 @@ function App() {
         </div>
       </header>
 
-      <div className="editor-layout">
+      <div className="editor-layout" data-mobile-panel={mobilePanel}>
+        <div className="mobile-panel-tabs segmented-control" role="tablist" aria-label={t('Panel')}>
+          <button role="tab" aria-selected={mobilePanel === 'catalog'} className={mobilePanel === 'catalog' ? 'active' : ''} onClick={() => setMobilePanel('catalog')}>{t('Katalog')}</button>
+          <button role="tab" aria-selected={mobilePanel === 'inspector'} className={mobilePanel === 'inspector' ? 'active' : ''} onClick={() => setMobilePanel('inspector')}>{t('Düzenleyici')}</button>
+        </div>
         <aside className="sidebar library-panel">
           <div className="panel-heading">
             <div><span>{t('Katalog')}</span><h2>{t('Ekipmanlar')}</h2></div>

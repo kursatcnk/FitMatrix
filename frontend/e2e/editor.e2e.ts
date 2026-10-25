@@ -73,6 +73,25 @@ test('switches the interface to English and remembers the choice', async ({ page
   await expect(page.getByRole('button', { name: 'Save', exact: true })).toBeVisible()
 })
 
+test('fits a phone screen and switches between the catalog and the inspector', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 })
+  await openEditor(page)
+
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375)
+  await expect(page.getByLabel('Katalogda ara')).toBeVisible()
+  await expect(page.getByText('Masa ölçüleri')).toBeHidden()
+
+  await page.getByRole('tab', { name: 'Düzenleyici' }).click()
+  await expect(page.getByText('Masa ölçüleri')).toBeVisible()
+  await expect(page.getByLabel('Katalogda ara')).toBeHidden()
+
+  // Adding a product selects it, which brings the inspector forward on its own.
+  await page.getByRole('tab', { name: 'Katalog' }).click()
+  await page.getByLabel('Katalogda ara').fill('mx master 3s')
+  await page.locator('.catalog-item').first().click()
+  await expect(page.locator('.placement-card')).toBeVisible()
+})
+
 test('downloads the 3D view as a PNG', async ({ page }) => {
   await openEditor(page)
 

@@ -128,6 +128,7 @@ export const en: Record<string, string> = {
 
   // Inspector
   'Düzenleyici': 'Inspector',
+  'Panel': 'Panel',
   'Masa ayarları': 'Desk settings',
   'Yerleşim geçersiz': 'Invalid placement',
   'Konum': 'Position',
