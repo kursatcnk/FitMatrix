@@ -1,3 +1,5 @@
+import type { RoomSettings } from '../editor/room'
+
 export type EquipmentCategory =
   | 'display'
   | 'computer'
@@ -91,4 +93,5 @@ export interface SavedProject {
   projectName: string
   desk: DeskDimensions
   items: PlacedEquipment[]
+  room?: RoomSettings
 }

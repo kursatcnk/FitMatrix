@@ -58,22 +58,12 @@ interface EditorState {
 
 const USER_HEIGHT_KEY = 'fitmatrix.userHeightCm'
 const POSTURE_KEY = 'fitmatrix.posture'
-const ROOM_KEY = 'fitmatrix.room'
 
 function readStoredPosture(): Posture {
   try {
     return localStorage.getItem(POSTURE_KEY) === 'standing' ? 'standing' : 'sitting'
   } catch {
     return 'sitting'
-  }
-}
-
-function readStoredRoom(): RoomSettings {
-  try {
-    const stored = localStorage.getItem(ROOM_KEY)
-    return stored ? clampRoom(JSON.parse(stored) as Partial<RoomSettings>) : DEFAULT_ROOM
-  } catch {
-    return DEFAULT_ROOM
   }
 }
 
@@ -122,7 +112,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   cameraRevision: 0,
   userHeight: readStoredUserHeight(),
   posture: readStoredPosture(),
-  room: readStoredRoom(),
+  room: DEFAULT_ROOM,
   transformMode: 'translate',
   historyPast: [],
   historyFuture: [],
@@ -231,15 +221,8 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     }
     set({ userHeight })
   },
-  setRoom: (patch) => {
-    const room = clampRoom({ ...get().room, ...patch })
-    try {
-      localStorage.setItem(ROOM_KEY, JSON.stringify(room))
-    } catch {
-      // Storage can be unavailable in private windows; the value still applies for this session.
-    }
-    set({ room })
-  },
+  // The room belongs to the project: it is saved with the draft, backups, share links and SQL projects.
+  setRoom: (patch) => set((state) => ({ room: clampRoom({ ...state.room, ...patch }) })),
   setTransformMode: (transformMode) => set({ transformMode }),
   toggleSnap: () => set((state) => ({ snapEnabled: !state.snapEnabled })),
 
@@ -297,6 +280,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       projectId: project.projectId ?? null,
       projectName: project.projectName,
       desk: { ...project.desk },
+      room: clampRoom(project.room ?? DEFAULT_ROOM),
       items: copyItems(project.items),
       selectedId: null,
       historyPast: [],

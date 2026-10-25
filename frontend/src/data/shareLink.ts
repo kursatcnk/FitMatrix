@@ -1,10 +1,13 @@
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment } from '../types/editor'
+import { clampRoom, type RoomSettings } from '../editor/room'
 
 export interface SharedPlan {
   projectName: string
   desk: DeskDimensions
   items: PlacedEquipment[]
   catalog: EquipmentDefinition[]
+  // Links made before rooms existed have none; they open with the walls hidden.
+  room?: RoomSettings
 }
 
 const prefix = '#plan=v1.'
@@ -47,6 +50,7 @@ export async function readShareHash(hash: string): Promise<SharedPlan | null> {
       desk,
       items,
       catalog: plan.catalog.filter((definition) => typeof definition?.id === 'string' && typeof definition.name === 'string'),
+      room: plan.room && typeof plan.room === 'object' ? clampRoom(plan.room) : undefined,
     }
   } catch {
     return null

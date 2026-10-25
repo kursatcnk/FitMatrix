@@ -51,3 +51,14 @@ describe('editor history', () => {
     expect(getPlacementStatus(duplicate, [original, duplicate], useEditorStore.getState().desk, useEditorStore.getState().catalog).isValid).toBe(true)
   })
 })
+
+describe('project room', () => {
+  it('loads the room saved with a project and hides it for projects without one', () => {
+    const room = { enabled: true, width: 280, depth: 260, wallGap: 3 }
+    useEditorStore.getState().loadProject({ ...baseProject, room })
+    expect(useEditorStore.getState().room).toEqual(room)
+
+    useEditorStore.getState().loadProject(baseProject)
+    expect(useEditorStore.getState().room.enabled).toBe(false)
+  })
+})

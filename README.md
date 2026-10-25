@@ -68,7 +68,7 @@ Yerel kullanım için tamamlanan uygulama:
 - Seçili ürünün sol, sağ, arka ve ön masa kenarlarına uzaklığını gösteren ölçü çizgileri
 - Düzeni adet, ölçü ve kaynak bağlantılarıyla malzeme listesi (CSV) olarak dışa aktarma
 - 3D görünümü seçim araçları olmadan PNG olarak indirme
-- İsteğe bağlı oda: arka ve yan duvarlar, duvara mesafe; masanın odaya sığması ve sandalyeyi geri itecek alan ergonomi kontrolüne eklenir
+- İsteğe bağlı oda: arka ve yan duvarlar, duvara mesafe; masanın odaya sığması ve sandalyeyi geri itecek alan ergonomi kontrolüne eklenir; oda projeyle, yedek dosyasıyla ve paylaşım bağlantısıyla birlikte kaydedilir
 - Düzeni adres içine sıkıştırılmış bağlantı olarak paylaşma; bağlantıyı açan aynı masayı görür, veri sunucuya gitmez
 - Oturarak ve ayakta çalışma için ayrı ergonomi hesabı ve monitörlerin göz noktasından kapladığı yatay açı kontrolü
 - Katalogda marka filtresi ve editör içinden üretici haritası toplama paneli (ilerleme, son sonuçlar, anlık görüntü yazma)

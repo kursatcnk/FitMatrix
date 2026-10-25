@@ -19,12 +19,15 @@ public record ProjectItemRequest(
     string ScreenOrientation = "landscape",
     decimal TiltDegrees = 0);
 
+public record ProjectRoomDto(decimal WidthCm, decimal DepthCm, decimal WallGapCm);
+
 public record ProjectUpsertRequest(
     string Name,
     decimal DeskWidthCm,
     decimal DeskDepthCm,
     decimal DeskHeightCm,
-    IReadOnlyList<ProjectItemRequest> Items);
+    IReadOnlyList<ProjectItemRequest> Items,
+    ProjectRoomDto? Room = null);
 
 public record ProjectSummaryDto(Guid Id, string Name, int ItemCount, DateTimeOffset UpdatedAt);
 
@@ -56,4 +59,5 @@ public record ProjectDto(
     decimal DeskHeightCm,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
-    IReadOnlyList<ProjectItemDto> Items);
+    IReadOnlyList<ProjectItemDto> Items,
+    ProjectRoomDto? Room = null);

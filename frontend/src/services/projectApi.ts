@@ -1,11 +1,13 @@
 import { resolveEquipmentDefinition } from '../data/equipmentCatalog'
 import type { DeskDimensions, EquipmentDefinition, PlacedEquipment } from '../types/editor'
+import type { RoomSettings } from '../editor/room'
 
 interface SaveProjectInput {
   projectId: string | null
   projectName: string
   desk: DeskDimensions
   items: PlacedEquipment[]
+  room: RoomSettings
   catalog: EquipmentDefinition[]
 }
 
@@ -48,6 +50,7 @@ export interface ApiProject {
   deskDepthCm: number
   deskHeightCm: number
   items: ApiProjectItem[]
+  room: { widthCm: number; depthCm: number; wallGapCm: number } | null
 }
 
 export async function saveProjectToApi(input: SaveProjectInput): Promise<ProjectResponse> {
@@ -56,6 +59,7 @@ export async function saveProjectToApi(input: SaveProjectInput): Promise<Project
     deskWidthCm: input.desk.width,
     deskDepthCm: input.desk.depth,
     deskHeightCm: input.desk.height,
+    room: input.room.enabled ? { widthCm: input.room.width, depthCm: input.room.depth, wallGapCm: input.room.wallGap } : null,
     items: input.items.map((item) => {
       const definition = resolveEquipmentDefinition(item, input.catalog)
       if (!definition) throw new Error(`Ekipman tanımı bulunamadı: ${item.definitionId}`)

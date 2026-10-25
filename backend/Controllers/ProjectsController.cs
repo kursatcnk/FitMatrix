@@ -50,6 +50,7 @@ public class ProjectsController(FitMatrixDbContext dbContext) : ControllerBase
             UpdatedAt = now,
             Items = CreateItems(request.Items)
         };
+        ApplyRoom(project, request.Room);
         dbContext.DeskProjects.Add(project);
         await dbContext.SaveChangesAsync(cancellationToken);
         return CreatedAtAction(nameof(GetProject), new { id = project.Id }, MapProject(project));
@@ -68,6 +69,7 @@ public class ProjectsController(FitMatrixDbContext dbContext) : ControllerBase
         project.DeskWidthCm = request.DeskWidthCm;
         project.DeskDepthCm = request.DeskDepthCm;
         project.DeskHeightCm = request.DeskHeightCm;
+        ApplyRoom(project, request.Room);
         project.UpdatedAt = DateTimeOffset.UtcNow;
         var previousItems = project.Items.ToList();
         dbContext.DeskProjectItems.RemoveRange(previousItems);
@@ -101,6 +103,9 @@ public class ProjectsController(FitMatrixDbContext dbContext) : ControllerBase
             DeskWidthCm = source.DeskWidthCm,
             DeskDepthCm = source.DeskDepthCm,
             DeskHeightCm = source.DeskHeightCm,
+            RoomWidthCm = source.RoomWidthCm,
+            RoomDepthCm = source.RoomDepthCm,
+            RoomWallGapCm = source.RoomWallGapCm,
             CreatedAt = now,
             UpdatedAt = now,
             Items = source.Items.OrderBy(item => item.SortOrder).Select(item => new DeskProjectItem
@@ -169,6 +174,7 @@ public class ProjectsController(FitMatrixDbContext dbContext) : ControllerBase
         if (string.IsNullOrWhiteSpace(request.Name)) return "Proje adı zorunludur.";
         if (request.Name.Length > 160) return "Proje adı en fazla 160 karakter olabilir.";
         if (request.DeskWidthCm is < 40 or > 500 || request.DeskDepthCm is < 30 or > 300 || request.DeskHeightCm is < 30 or > 150) return "Masa ölçüleri desteklenen aralığın dışında.";
+        if (request.Room is { } room && (room.WidthCm is < 100 or > 1200 || room.DepthCm is < 100 or > 1200 || room.WallGapCm is < 0 or > 300)) return "Oda ölçüleri desteklenen aralığın dışında.";
         if (request.Items.Count > 200) return "Bir projede en fazla 200 ekipman bulunabilir.";
         if (request.Items.Any(x => string.IsNullOrWhiteSpace(x.Name) || x.Name.Length > 220)) return "Ekipman adı zorunludur ve en fazla 220 karakter olabilir.";
         if (request.Items.Any(x => x.WidthCm <= 0 || x.HeightCm <= 0 || x.DepthCm <= 0 || x.WidthCm > 1000 || x.HeightCm > 1000 || x.DepthCm > 1000)) return "Ekipman ölçüleri pozitif ve desteklenen aralıkta olmalıdır.";
@@ -207,5 +213,13 @@ public class ProjectsController(FitMatrixDbContext dbContext) : ControllerBase
             x.ElevationCm,
             x.MountMode,
             x.ScreenOrientation,
-            x.TiltDegrees)).ToList());
+            x.TiltDegrees)).ToList(),
+        project is { RoomWidthCm: { } width, RoomDepthCm: { } depth, RoomWallGapCm: { } gap } ? new ProjectRoomDto(width, depth, gap) : null);
+
+    private static void ApplyRoom(DeskProject project, ProjectRoomDto? room)
+    {
+        project.RoomWidthCm = room?.WidthCm;
+        project.RoomDepthCm = room?.DepthCm;
+        project.RoomWallGapCm = room?.WallGapCm;
+    }
 }

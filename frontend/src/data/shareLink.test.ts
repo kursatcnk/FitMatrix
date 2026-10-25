@@ -32,4 +32,13 @@ describe('share links', () => {
 
     expect(read?.items).toHaveLength(2)
   })
+
+  it('carries the room and keeps its sizes in range', async () => {
+    const withRoom = { ...plan, room: { enabled: true, width: 300, depth: 5000, wallGap: 8 } }
+
+    const read = await readShareHash(await createShareHash(withRoom))
+
+    expect(read?.room).toEqual({ enabled: true, width: 300, depth: 1200, wallGap: 8 })
+    expect((await readShareHash(await createShareHash(plan)))?.room).toBeUndefined()
+  })
 })

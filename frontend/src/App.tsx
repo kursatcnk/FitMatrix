@@ -5,6 +5,7 @@ import { captureScene } from './editor/sceneCapture'
 import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCatalog'
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
 import { analyzeErgonomics } from './editor/ergonomics'
+import type { RoomSettings } from './editor/room'
 import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog, listBrands } from './data/catalogFilter'
 import { buildPartsList, partsListToCsv } from './data/partsList'
 import { createShareHash, readShareHash } from './data/shareLink'
@@ -95,6 +96,7 @@ interface ProjectBackup {
   projectName: string
   desk: { width: number; depth: number; height: number }
   items: PlacedEquipment[]
+  room?: RoomSettings
   catalog: EquipmentDefinition[]
 }
 
@@ -327,7 +329,7 @@ function App() {
       // A shared link replaces the local draft; its definitions cover products this database lacks.
       const shared = await readShareHash(window.location.hash)
       if (shared) {
-        loadProject({ version: 1, projectId: null, projectName: shared.projectName, desk: shared.desk, items: shared.items })
+        loadProject({ version: 1, projectId: null, projectName: shared.projectName, desk: shared.desk, items: shared.items, room: shared.room })
         window.history.replaceState(null, '', window.location.pathname + window.location.search)
       }
       const localDefinitions = shared?.catalog ?? snapshot?.catalog ?? []
@@ -343,7 +345,7 @@ function App() {
     const onHashChange = async () => {
       const shared = await readShareHash(window.location.hash)
       if (!shared) return
-      loadProject({ version: 1, projectId: null, projectName: shared.projectName, desk: shared.desk, items: shared.items })
+      loadProject({ version: 1, projectId: null, projectName: shared.projectName, desk: shared.desk, items: shared.items, room: shared.room })
       const current = useEditorStore.getState().catalog
       setCatalog([...current.filter((definition) => !shared.catalog.some((local) => local.id === definition.id)), ...shared.catalog])
       window.history.replaceState(null, '', window.location.pathname + window.location.search)
@@ -356,10 +358,10 @@ function App() {
     const timer = window.setTimeout(() => {
       const definitionIds = new Set(items.map((item) => item.definitionId))
       const projectCatalog = catalog.filter((definition) => definitionIds.has(definition.id))
-      localStorage.setItem('fitmatrix-project', JSON.stringify({ version: 1, projectId, projectName, desk, items, catalog: projectCatalog }))
+      localStorage.setItem('fitmatrix-project', JSON.stringify({ version: 1, projectId, projectName, desk, items, room, catalog: projectCatalog }))
     }, 500)
     return () => window.clearTimeout(timer)
-  }, [projectId, projectName, desk, items, catalog])
+  }, [projectId, projectName, desk, items, room, catalog])
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -415,13 +417,14 @@ function App() {
       projectName,
       desk,
       items,
+      room,
       catalog: catalog.filter((definition) => definitionIds.has(definition.id)),
     }
     localStorage.setItem('fitmatrix-project', JSON.stringify(localSnapshot))
 
     try {
       if (isDemo) throw new Error('The static demo has no project API.')
-      const result = await saveProjectToApi({ projectId, projectName, desk, items, catalog })
+      const result = await saveProjectToApi({ projectId, projectName, desk, items, room, catalog })
       setProjectId(result.id)
       localStorage.setItem('fitmatrix-project', JSON.stringify({ ...localSnapshot, projectId: result.id }))
       setSaveTarget('sql')
@@ -507,6 +510,7 @@ function App() {
         projectName: project.name,
         desk: { width: project.deskWidthCm, depth: project.deskDepthCm, height: project.deskHeightCm },
         items: placedItems,
+        room: project.room ? { enabled: true, width: project.room.widthCm, depth: project.room.depthCm, wallGap: project.room.wallGapCm } : undefined,
       })
       setShowProjects(false)
       setSaveTarget('sql')
@@ -546,6 +550,7 @@ function App() {
       projectName,
       desk,
       items,
+      room,
       catalog: catalog.filter((definition) => definitionIds.has(definition.id)),
     }
     downloadBlob(new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }), `${projectFileName(projectName)}.fitmatrix.json`)
@@ -568,6 +573,7 @@ function App() {
       projectName,
       desk,
       items,
+      room: room.enabled ? room : undefined,
       catalog: catalog.filter((definition) => definitionIds.has(definition.id)),
     })
     const url = `${window.location.origin}${window.location.pathname}${hash}`
@@ -639,6 +645,7 @@ function App() {
         projectName: backup.projectName.trim().slice(0, 160) || 'İçe aktarılan proje',
         desk: backup.desk,
         items: backup.items,
+        room: backup.room && typeof backup.room === 'object' ? backup.room : undefined,
       })
       setShowProjects(false)
       setSaveTarget('local')

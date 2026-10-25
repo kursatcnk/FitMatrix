@@ -54,6 +54,28 @@ public sealed class CatalogAndProjectControllerTests
     }
 
     [Fact]
+    public async Task Project_KeepsTheRoomThroughDuplicateAndClearsItOnUpdate()
+    {
+        await using var dbContext = CreateContext();
+        var controller = new ProjectsController(dbContext);
+        var room = new ProjectRoomDto(320, 280, 5);
+        var created = Assert.IsType<ProjectDto>(Assert.IsType<CreatedAtActionResult>(
+            (await controller.CreateProject(new ProjectUpsertRequest("Çalışma odası", 160, 80, 75, [], room), CancellationToken.None)).Result).Value);
+        Assert.Equal(room, created.Room);
+
+        var copy = Assert.IsType<ProjectDto>(Assert.IsType<CreatedAtActionResult>(
+            (await controller.DuplicateProject(created.Id, CancellationToken.None)).Result).Value);
+        Assert.Equal(room, copy.Room);
+
+        var updated = Assert.IsType<ProjectDto>(Assert.IsType<OkObjectResult>(
+            (await controller.UpdateProject(created.Id, new ProjectUpsertRequest("Çalışma odası", 160, 80, 75, []), CancellationToken.None)).Result).Value);
+        Assert.Null(updated.Room);
+
+        var invalid = await controller.CreateProject(new ProjectUpsertRequest("Dar oda", 160, 80, 75, [], new ProjectRoomDto(40, 280, 5)), CancellationToken.None);
+        Assert.IsType<BadRequestObjectResult>(invalid.Result);
+    }
+
+    [Fact]
     public async Task GetProducts_ReturnsStableNonOverlappingPages()
     {
         await using var dbContext = CreateContext();

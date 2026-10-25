@@ -7,6 +7,10 @@ public class DeskProject
     public decimal DeskWidthCm { get; set; }
     public decimal DeskDepthCm { get; set; }
     public decimal DeskHeightCm { get; set; }
+    // Optional room around the desk; all three are set together or left null.
+    public decimal? RoomWidthCm { get; set; }
+    public decimal? RoomDepthCm { get; set; }
+    public decimal? RoomWallGapCm { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
     public ICollection<DeskProjectItem> Items { get; set; } = [];

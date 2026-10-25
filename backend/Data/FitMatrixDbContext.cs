@@ -104,6 +104,9 @@ public class FitMatrixDbContext(DbContextOptions<FitMatrixDbContext> options) : 
             entity.Property(x => x.DeskWidthCm).HasPrecision(9, 2);
             entity.Property(x => x.DeskDepthCm).HasPrecision(9, 2);
             entity.Property(x => x.DeskHeightCm).HasPrecision(9, 2);
+            entity.Property(x => x.RoomWidthCm).HasPrecision(9, 2);
+            entity.Property(x => x.RoomDepthCm).HasPrecision(9, 2);
+            entity.Property(x => x.RoomWallGapCm).HasPrecision(9, 2);
         });
 
         modelBuilder.Entity<DeskProjectItem>(entity =>
