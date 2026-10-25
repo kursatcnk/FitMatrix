@@ -11,3 +11,5 @@ TestResults/
 .env.*
 !.env.example
 
+frontend/test-results/
+frontend/playwright-report/

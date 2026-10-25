@@ -9,6 +9,7 @@
     "build:demo": "tsc -b && vite build --mode demo && node scripts/build-demo-catalog.mjs dist",
     "lint": "oxlint",
     "test": "vitest run",
+    "e2e": "playwright test",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -21,6 +22,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",

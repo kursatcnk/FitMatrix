@@ -133,6 +133,7 @@ Kalite kontrolleri:
 ```powershell
 npm run lint
 npm test
+npm run e2e
 npm run build
 ```
 
@@ -234,10 +235,11 @@ dotnet test .\FitMatrix.slnx --no-restore
 Set-Location .\frontend
 npm run lint
 npm test -- --run
+npm run e2e
 npm run build
 ```
 
-Mevcut otomatik kapsam 88 backend ve 27 frontend testidir. Ek olarak ürün arama, proje yedekleme, masa ürünü ve çok katlı VESA monitör akışları çalışan uygulamada tarayıcı üzerinden doğrulanır.
+Mevcut otomatik kapsam 92 backend, 49 frontend birim testi ve 5 Playwright uçtan uca testidir. Uçtan uca testler statik demo derlemesini gerçek tarayıcıda açar: katalog yüklemesi, ürün ekleme, paylaşım bağlantısıyla düzeni yeni sekmede açma, oda kontrolleri ve PNG indirme. Yerelde kurulu Microsoft Edge kullanılır, CI Playwright Chromium kurar.
 
 ## Tamamlanma sınırı
 
