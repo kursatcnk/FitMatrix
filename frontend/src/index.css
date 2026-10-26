@@ -353,6 +353,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .ergonomics-score { font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: -.03em; }
 .ergonomics-score.good { color: var(--ok); }
 .ergonomics-score.warning { color: var(--warn); }
+.power-count { font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: -.03em; }
+.power-note { margin: 10px 0 0; color: var(--graphite); font-size: 12px; line-height: 1.45; }
 .ergonomics-list { margin: 4px 0 0; padding: 0; border-top: 1px solid var(--ink); list-style: none; }
 .ergonomics-check { display: grid; grid-template-columns: 16px 1fr; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
 .ergonomics-check > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }

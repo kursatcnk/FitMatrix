@@ -68,6 +68,7 @@ Yerel kullanım için tamamlanan uygulama:
 - Seçili ürünün sol, sağ, arka ve ön masa kenarlarına uzaklığını gösteren ölçü çizgileri
 - Düzeni adet, ölçü ve kaynak bağlantılarıyla malzeme listesi (CSV) olarak dışa aktarma
 - 3D görünümü seçim araçları olmadan PNG olarak indirme
+- Priz planı: masadaki prize takılan cihazları (monitör, kasa, hoparlör, lamba, şarj adaptörleri…) sayar ve bir boş priz payıyla uygun grup priz boyutunu önerir
 - Telefon ve tablet düzeni: dar ekranda 3D görünüm üstte, katalog ve düzenleyici altında sekmeyle seçilir
 - Türkçe ve İngilizce arayüz: dil tarayıcıya göre seçilir, üst çubuktaki TR/EN düğmesiyle değiştirilir ve hatırlanır
 - İsteğe bağlı oda: arka ve yan duvarlar, duvara mesafe; masanın odaya sığması ve sandalyeyi geri itecek alan ergonomi kontrolüne eklenir; oda projeyle, yedek dosyasıyla ve paylaşım bağlantısıyla birlikte kaydedilir
@@ -249,7 +250,7 @@ npm run e2e
 npm run build
 ```
 
-Mevcut otomatik kapsam 92 backend, 53 frontend birim testi ve 7 Playwright uçtan uca testidir. Uçtan uca testler statik demo derlemesini gerçek tarayıcıda açar: katalog yüklemesi, ürün ekleme, paylaşım bağlantısıyla düzeni yeni sekmede açma, oda kontrolleri, İngilizceye geçiş, telefon ekranı ve PNG indirme. Bir birim testi, ekranda gösterilen her Türkçe metnin İngilizce karşılığı olduğunu denetler. Yerelde kurulu Microsoft Edge kullanılır, CI Playwright Chromium kurar.
+Mevcut otomatik kapsam 92 backend, 56 frontend birim testi ve 7 Playwright uçtan uca testidir. Uçtan uca testler statik demo derlemesini gerçek tarayıcıda açar: katalog yüklemesi, ürün ekleme, paylaşım bağlantısıyla düzeni yeni sekmede açma, oda kontrolleri, İngilizceye geçiş, telefon ekranı ve PNG indirme. Bir birim testi, ekranda gösterilen her Türkçe metnin İngilizce karşılığı olduğunu denetler. Yerelde kurulu Microsoft Edge kullanılır, CI Playwright Chromium kurar.
 
 ## Tamamlanma sınırı
 

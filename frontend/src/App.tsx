@@ -6,6 +6,7 @@ import { equipmentCatalog, resolveEquipmentDefinition } from './data/equipmentCa
 import { findAvailablePlacement, getPlacementStatus } from './editor/placement'
 import { analyzeErgonomics } from './editor/ergonomics'
 import type { RoomSettings } from './editor/room'
+import { planPower } from './editor/power'
 import { CATALOG_PAGE_SIZE, countByCategory, filterCatalog, listBrands } from './data/catalogFilter'
 import { buildPartsList, partsListToCsv } from './data/partsList'
 import { createShareHash, readShareHash } from './data/shareLink'
@@ -291,6 +292,7 @@ function App() {
   const placement = selectedItem ? getPlacementStatus(selectedItem, items, desk, catalog) : null
   const invalidItemCount = items.filter((item) => !getPlacementStatus(item, items, desk, catalog).isValid).length
   const ergonomics = analyzeErgonomics(items, desk, userHeight, catalog, posture, room)
+  const power = planPower(items, catalog)
   const externalProduct = discovery?.externalMatch
   const externalIsDesk = externalDraft?.model === 'desk'
   const externalPreviewDefinition: EquipmentDefinition | null = externalProduct && externalDraft && externalProduct.widthCm && externalProduct.heightCm && externalProduct.depthCm
@@ -1087,6 +1089,26 @@ function App() {
                       <NumberField label="Oda derinliği" value={room.depth} suffix="cm" onChange={(depth) => setRoom({ depth })} />
                     </div>
                     <NumberField label="Arka duvara mesafe" value={room.wallGap} suffix="cm" onChange={(wallGap) => setRoom({ wallGap })} />
+                  </>
+                )}
+              </section>
+              <section className="inspector-section power-section" aria-label={t('Priz planı')}>
+                <div className="ergonomics-heading">
+                  <h3>{t('Priz planı')}</h3>
+                  <span className="power-count">{power.outlets}</span>
+                </div>
+                {power.outlets === 0 ? (
+                  <p className="power-note">{t('Masada prize takılan cihaz yok.')}</p>
+                ) : (
+                  <>
+                    <div className="dimensions-table">
+                      {power.devices.map((device) => <span key={device.model}>{t(device.label)} <strong>× {device.count}</strong></span>)}
+                    </div>
+                    <p className="power-note">
+                      {power.strip
+                        ? t('{outlets} priz gerekiyor; bir boş priz payıyla {strip} prizli grup priz yeterli.', { outlets: power.outlets, strip: power.strip })
+                        : t('{outlets} priz gerekiyor; birden fazla grup priz kullan.', { outlets: power.outlets })}
+                    </p>
                   </>
                 )}
               </section>

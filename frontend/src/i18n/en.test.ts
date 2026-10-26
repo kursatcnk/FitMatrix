@@ -26,6 +26,7 @@ function translatableTexts() {
   }
   objectValues(source('../App.tsx'), 'const categoryLabels').forEach((text) => texts.add(text))
   objectValues(source('../editor/HarvestPanel.tsx'), 'const outcomeLabels').forEach((text) => texts.add(text))
+  objectValues(source('../editor/power.ts'), 'const POWERED_MODELS').forEach((text) => texts.add(text))
   equipmentCatalog.forEach((definition) => texts.add(definition.name))
   // Single letters and units read the same in both languages.
   return [...texts].filter((text) => /\p{L}{2}/u.test(text))
